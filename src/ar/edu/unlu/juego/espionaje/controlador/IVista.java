@@ -12,7 +12,7 @@ public interface IVista {
 	
 	void mostrarJugando();
 
-	void mostrarSospecha() ;
+	void mostrarSospecha(int jugador) ;
 
 	void avisoGanador() ;
 
@@ -35,5 +35,9 @@ public interface IVista {
 	void avisoPerdio();
 
 	void mostrarError(String tError);
+
+	void mostrarSospechar();
+
+
 
 }

@@ -14,7 +14,7 @@ public interface IJuego extends IObservableRemoto, Serializable{
 
 	int getSospechado() throws RemoteException;
 
-	Enum getSospecha(int i) throws RemoteException;
+	Carta[] getSospecha() throws RemoteException;
 
 	void iniciarAplicacion() throws RemoteException;
 
@@ -52,8 +52,9 @@ public interface IJuego extends IObservableRemoto, Serializable{
 
 	void reiniciar() throws RemoteException;
 
-	void setSospecha(Enum enum1, Enum enum2) throws RemoteException;
-
 	void pasar() throws RemoteException;
+
+	void setSospecha(ArrayList<String> sospecha) throws RemoteException;
+
 
 }

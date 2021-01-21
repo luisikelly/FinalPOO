@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import ar.edu.unlu.juego.espionaje.controlador.Controlador;
 import ar.edu.unlu.juego.espionaje.modelo.AGENTES;
 import ar.edu.unlu.juego.espionaje.modelo.CIUDADES;
 import ar.edu.unlu.juego.espionaje.modelo.Carta;
@@ -28,6 +29,7 @@ public class Juego extends ObservableRemoto implements IJuego {
 	private int sospechado;
 	private Enum sospecha1;
 	private Enum sospecha2;
+	private Carta[] sospecha;
 	
 	
 	public static void main (String args[]) throws RemoteException {
@@ -68,7 +70,7 @@ public class Juego extends ObservableRemoto implements IJuego {
 	
 	@Override
 	public void iniciarJuego() throws IndexOutOfBoundsException, RemoteException {
-		if(jugadores.size() >= 2) {	
+		if(jugadores.size() >= 2 || jugadores.size() <= 4) {	
 			estado = ESTADOS.EN_JUEGO;
 			eEJ = E_EN_JUEGO.SOSPECHA;
 			this.setInfoSecreta();
@@ -78,8 +80,15 @@ public class Juego extends ObservableRemoto implements IJuego {
 			notificar(CambiosJuego.CAMBIO_JUGADOR);
 			notificar(CambiosJuego.CAMBIO_ESTADO);
 		} else {
-			IndexOutOfBoundsException ex = new IndexOutOfBoundsException();
-			throw(ex);
+			IndexOutOfBoundsException ex;
+			if(jugadores.size() < 2) {
+				ex = new IndexOutOfBoundsException("CantidadMinima");
+				throw(ex);
+			}
+			if(jugadores.size() > 4) {
+				ex = new IndexOutOfBoundsException("CantidadMaxina");
+				throw(ex);
+			}
 		}	
 	}
 	
@@ -152,9 +161,9 @@ public class Juego extends ObservableRemoto implements IJuego {
 	
 	
 	@Override
-	public void setSospecha(Enum enum1, Enum enum2) throws RemoteException {
-		this.sospecha1 = enum1;
-		this.sospecha2 = enum2;
+	public void setSospecha(ArrayList<String> s) throws RemoteException {
+		sospecha[0].setTipo(s.get(0));
+		sospecha[1].setTipo(s.get(1)) ;
 		this.sospechado = this.jugadorEnTurno ++;
 	}
 	
@@ -223,8 +232,9 @@ public class Juego extends ObservableRemoto implements IJuego {
 			// 4 es la cantidad maxima establecidas por el reglamento oficial.
 			jugadores.add(j);
 			j.setNroJugador(jugadores.size()-1);
-			nroJugador = j.getNroJugador();} 
-    	else {
+			nroJugador = j.getNroJugador();
+			notificar(CambiosJuego.CAMBIO_JUGADOR);
+    		} else {
 			IndexOutOfBoundsException ex = new IndexOutOfBoundsException();
 			throw(ex);
 		}
@@ -266,13 +276,6 @@ public class Juego extends ObservableRemoto implements IJuego {
 		return sospechado;
 	}
 
-	@Override
-	public Enum getSospecha(int i) throws RemoteException {
-		if(i==1)
-			return sospecha1;
-		else 
-			return sospecha2;
-	}
 
 	@Override
 	public IJugador getGanador() throws RemoteException{
@@ -312,6 +315,14 @@ public class Juego extends ObservableRemoto implements IJuego {
 	public Carta[] getInfoSecreta() throws RemoteException {
 		return infoSecreta;
 	}
+
+	@Override
+	public Carta[] getSospecha() throws RemoteException {
+		// TODO Auto-generated method stub
+		return sospecha;
+	}
+
+
 }
 
 

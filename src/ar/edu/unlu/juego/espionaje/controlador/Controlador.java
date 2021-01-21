@@ -26,10 +26,11 @@ public class Controlador implements IControladorRemoto {
 	private int nroJugador;
 	private String sospechado;
 
+
 	
 	public Controlador() {
 		//this.vista = vista;
-		//vista.setControlador(this);	
+		//vista.setControlador(this);
 
 	}
 	
@@ -59,7 +60,7 @@ public class Controlador implements IControladorRemoto {
 							if(juego.getEstadoEnJuego().name() == "ARRIESGA")
 								vista.mostrarArriesgar();
 							if(juego.getEstadoEnJuego().name() == "SOSPECHA")
-								vista.mostrarSospecha();
+								vista.mostrarSospechar();
 							if(juego.getEstadoEnJuego().name() == "RESPUESTA")
 								vista.mostrarRespuesta();
 							
@@ -92,7 +93,12 @@ public class Controlador implements IControladorRemoto {
 		try {
 			juego.iniciarJuego();
 		} catch (IndexOutOfBoundsException e) {
-			e.printStackTrace();
+			if(e.getMessage().equals("CantidadMinima")) {
+				vista.mostrarError(ErrorCantidadMinimaJugadores);
+			}
+			if(e.getMessage().equals("CantidadMaxima")) {
+				vista.mostrarError(ErrorCantidadMaximaJugadores);
+			}
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -117,7 +123,7 @@ public class Controlador implements IControladorRemoto {
 		try {
 			nroJugador = juego.agregarJugador(nombre);
 		} catch (IndexOutOfBoundsException e) {
-			vista.mostrarError(this.ErrorCantidadMaximaJugadores);
+		//	vista.mostrarError(this.ErrorCantidadMaximaJugadores);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -159,44 +165,6 @@ public class Controlador implements IControladorRemoto {
 			e.printStackTrace();
 		}
 		return false;
-	}
-
-	public Enum setSospecha(String string) {
-		Enum sospecha = null;
-		switch (string) {
-			case "ATENAS": sospecha = CIUDADES.ATENAS;
-				break;
-			case "PANAMA" : sospecha = CIUDADES.PANAMA;
-				break;
-			case "PARIS" : sospecha = CIUDADES.PARIS;
-				break;
-			case "TOKIO": sospecha = CIUDADES.TOKIO;
-				break;
-			case "LONDRES" : sospecha = CIUDADES.LONDRES;
-				break;
-			case "AVION" : sospecha = DISPOSITIVOS.AVION;
-				break;
-			case "AUTOPROPULSOR" : sospecha = DISPOSITIVOS.AUTOPROPULSOR;
-				break;
-			case "GAS_LETAL" : sospecha = DISPOSITIVOS.GAS_LETAL;
-				break;
-			case "HELICOPTERO" : sospecha = DISPOSITIVOS.HELICOPTERO;
-				break;
-			case "SATELITE" : sospecha = DISPOSITIVOS.SATELITE;
-				break;
-			case "AGENTE_AZUL" : sospecha = AGENTES.AGENTE_AZUL;
-				break;
-			case "AGENTE_BLANCO" : sospecha = AGENTES.AGENTE_BLANCO;
-				break;
-			case "AGENTE_NARANJA" : sospecha = AGENTES.AGENTE_NARANJA;
-				break;
-			case "AGENTE_ROJO" : sospecha = AGENTES.AGENTE_ROJO;
-				break;
-			case "AGENTE_VERDE" : sospecha = AGENTES.AGENTE_VERDE;
-				break;
-		}
-		return sospecha;
-
 	}
 
 	public Carta[] informacionConfidencial() {
@@ -242,15 +210,19 @@ public class Controlador implements IControladorRemoto {
 	
 	public void recibirSospecha(ArrayList<String> lista) {
 		try {
-			Enum s1 = this.setSospecha(lista.get(0));
-			Enum s2 = this.setSospecha(lista.get(1));
-			juego.setSospecha(s1,s2);
+		//	mostrarSospechar();
+			respuesta = null;
+			juego.setSospecha(lista
+					);
+			int jugador = juego.getSospechado();
+			vista.mostrarSospecha(jugador);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
 
 	}
 
+	
 	//GETTERS - SETTERS
 	
 
@@ -266,22 +238,11 @@ public class Controlador implements IControladorRemoto {
 		this.sospechado = sospechado;
 	}
 	
-	public Enum getSospecha(int i) {
-		if(i==1)
-			try {
-				return juego.getSospecha(1);
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-		else
-			try {
-				return juego.getSospecha(2);
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-		return null;
+	public Carta[] getSospecha() throws RemoteException {
+		return juego.getSospecha();
 	}
 
+	
 	public void paso() {
 		try {
 			juego.pasar();
@@ -302,8 +263,9 @@ public class Controlador implements IControladorRemoto {
 		juego.descartarArchivoConfidencial_AgendaPersonal();
 		
 	}
-	
-	
+	public Carta[] getInfoSecreta() throws RemoteException {
+		return juego.getInfoSecreta();
+	}
 
 
 /*public static void main(String[] args) {

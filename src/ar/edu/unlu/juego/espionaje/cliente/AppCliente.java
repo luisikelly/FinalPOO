@@ -43,7 +43,7 @@ public class AppCliente {
 				"Seleccione la IP en la corre el servidor", "IP del servidor", 
 				JOptionPane.QUESTION_MESSAGE, 
 				null,
-				null,
+				ips.toArray(),
 				null
 		);
 		String portServidor = (String) JOptionPane.showInputDialog(
@@ -56,7 +56,8 @@ public class AppCliente {
 		);
 
 		Controlador controlador = new Controlador();		
-		VistaConsola vista = new VistaConsola(controlador);		
+		VistaGrafica vista = new VistaGrafica();
+		vista.setControlador(controlador);
 		Cliente c = new Cliente(ip, Integer.parseInt(port), ipServidor, Integer.parseInt(portServidor));
 		
 		try {
