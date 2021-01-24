@@ -55,8 +55,9 @@ public class AppCliente {
 				8888
 		);
 
-		Controlador controlador = new Controlador();		
+		
 		VistaGrafica vista = new VistaGrafica();
+		Controlador controlador = new Controlador(vista);	
 		vista.setControlador(controlador);
 		Cliente c = new Cliente(ip, Integer.parseInt(port), ipServidor, Integer.parseInt(portServidor));
 		

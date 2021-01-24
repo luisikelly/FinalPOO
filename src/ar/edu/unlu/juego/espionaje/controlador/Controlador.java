@@ -28,8 +28,8 @@ public class Controlador implements IControladorRemoto {
 
 
 	
-	public Controlador() {
-		//this.vista = vista;
+	public Controlador(IVista vista) {
+		this.vista = vista;
 		//vista.setControlador(this);
 
 	}
@@ -43,11 +43,11 @@ public class Controlador implements IControladorRemoto {
 		if(arg1 instanceof CambiosJuego) {
 			CambiosJuego cambio = (CambiosJuego) arg1;
 			switch(cambio) {
-				case CAMBIO_JUGADOR: vista.mostrarJugando();
+				case CAMBIO_JUGADOR: vista.mostrarJugando(); // Chequear si es necesario
 					break;
 				case CAMBIO_LISTA_JUGADORES: vista.mostraJugadores();
 					break;
-				case JUGADOR_PERDIO: vista.avisoPerdio();
+				case JUGADOR_PERDIO: vista.avisoPerdio(); // Chequear si es necesario
 					break;
 				case HAY_GANADOR: vista.avisoGanador();
 					break;

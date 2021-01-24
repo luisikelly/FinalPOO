@@ -77,7 +77,7 @@ public class Juego extends ObservableRemoto implements IJuego {
             this.repartirAC();
             this.descartarArchivoConfidencial_AgendaPersonal();
 			//enJuego = true;
-			notificar(CambiosJuego.CAMBIO_JUGADOR);
+			//notificar(CambiosJuego.CAMBIO_JUGADOR);
 			notificar(CambiosJuego.CAMBIO_ESTADO);
 		} else {
 			IndexOutOfBoundsException ex;
@@ -233,7 +233,7 @@ public class Juego extends ObservableRemoto implements IJuego {
 			jugadores.add(j);
 			j.setNroJugador(jugadores.size()-1);
 			nroJugador = j.getNroJugador();
-			notificar(CambiosJuego.CAMBIO_JUGADOR);
+			notificar(CambiosJuego.CAMBIO_LISTA_JUGADORES);
     		} else {
 			IndexOutOfBoundsException ex = new IndexOutOfBoundsException();
 			throw(ex);

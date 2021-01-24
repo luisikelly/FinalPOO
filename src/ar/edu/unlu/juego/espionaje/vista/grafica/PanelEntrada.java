@@ -62,17 +62,25 @@ public class PanelEntrada extends JPanel implements ChangeListener{
 		panel.setLayout(null);
 		
 		JLabel lblTipo = new JLabel("Tipo");
-		lblTipo.setBounds(88, 38, 46, 14);
+		lblTipo.setBounds(75, 49, 46, 14);
 		panel.add(lblTipo);
 		
 		JLabel lblNombrejugador = new JLabel("NombreJugador");
-		lblNombrejugador.setBounds(250, 38, 46, 14);
+		lblNombrejugador.setBounds(226, 49, 46, 14);
 		panel.add(lblNombrejugador);
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(50, 74, 329, 156);
 		panel.add(scrollPane);
 		
+		JButton btnArriesgar = new JButton("ARRIESGAR");
+		btnArriesgar.setBounds(332, 11, 108, 23);
+		panel.add(btnArriesgar);
+		
+		if(tipoPantalla.equals("RESPONDER")) {
+			btnArriesgar.setVisible(false);
+		}
+			
 		JButton btnOk = 
 				new JButton("Ok");
 		btnOk.addActionListener(new ActionListener() {
@@ -97,6 +105,8 @@ public class PanelEntrada extends JPanel implements ChangeListener{
 		});
 		btnOk.setBounds(332, 252, 89, 23);
 		panel.add(btnOk);
+		
+		
 		
 		 
 		
@@ -144,26 +154,4 @@ public class PanelEntrada extends JPanel implements ChangeListener{
 		}
 		return pos;
 	}
-	
-/*	
-	ItemListener itemListener = new ItemListener () {
-		public  void itemStateChanged (ItemEvent itemEvent) {
-	        if(tipoPantalla.equals("SOSPECHAR")) {
-	        	 if(itemEvent.SELECTED && seleccionados < 2) {seleccionados++}
-		         if(itemEvent.DESELECTED && seleccionados > 0) {seleccionados--}
-		         if(itemEvent.SELECTED && seleccionados > 2) {JOptionPane.showMessageDialog(null,"La sospecha contiene 2 elementos");}
-	        }
-	        if(tipoPantalla.equals("RESPONDER")) {
-	        	if(itemEvent.SELECTED && seleccionados < 1) {seleccionados++}
-	        	if(itemEvent.DESELECTED && seleccionados > 0) {seleccionados--}
-		        if(itemEvent.SELECTED && seleccionados > 1) {JOptionPane.showMessageDialog(null,"La respuesta debe contener solo un elemento");}
-	        }
-	       }
-	}
-        
-     
-	
-	
-	*/
-	
 }
