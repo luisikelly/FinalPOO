@@ -43,7 +43,7 @@ public class Controlador implements IControladorRemoto {
 		if(arg1 instanceof CambiosJuego) {
 			CambiosJuego cambio = (CambiosJuego) arg1;
 			switch(cambio) {
-				case CAMBIO_JUGADOR: vista.mostrarJugando(); // Chequear si es necesario
+				case CAMBIO_JUGADOR: //vista.mostrarJugando(); // Chequear si es necesario
 					break;
 				case CAMBIO_LISTA_JUGADORES: vista.mostraJugadores();
 					break;

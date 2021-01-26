@@ -76,6 +76,7 @@ public class Juego extends ObservableRemoto implements IJuego {
 			this.setInfoSecreta();
             this.repartirAC();
             this.descartarArchivoConfidencial_AgendaPersonal();
+            this.jugadorEnTurno = 0;
 			//enJuego = true;
 			//notificar(CambiosJuego.CAMBIO_JUGADOR);
 			notificar(CambiosJuego.CAMBIO_ESTADO);
@@ -165,6 +166,8 @@ public class Juego extends ObservableRemoto implements IJuego {
 		sospecha[0].setTipo(s.get(0));
 		sospecha[1].setTipo(s.get(1)) ;
 		this.sospechado = this.jugadorEnTurno ++;
+		this.eEJ = E_EN_JUEGO.RESPONDER;
+		notificar(CambiosJuego.CAMBIO_ESTADO);
 	}
 	
 	public void recibioRespuesta(String respuesta) throws RemoteException {
@@ -172,7 +175,14 @@ public class Juego extends ObservableRemoto implements IJuego {
 			Carta  carta = this.getJugadorEnTurno().getAgendaPersonal().getCarta(i);
 			if(respuesta.equals(carta.getFigura()) && carta.cartaValida()) {
 				carta.descartar(true);
+				this.eEJ = E_EN_JUEGO.RESPUESTA;
+				notificar(CambiosJuego.CAMBIO_ESTADO);
 				}
+		}
+		if(respuesta.equals("")) {
+			this.sospechado = sospechado ++;
+			this.eEJ = E_EN_JUEGO.SOSPECHA;
+			notificar(CambiosJuego.CAMBIO_ESTADO);
 		}
 	}
 	
@@ -251,6 +261,8 @@ public class Juego extends ObservableRemoto implements IJuego {
 				notificar(CambiosJuego.HAY_GANADOR);
 				notificar(CambiosJuego.CAMBIO_ESTADO);
 			}
+			eEJ = E_EN_JUEGO.SOSPECHA;
+			notificar(CambiosJuego.CAMBIO_ESTADO);
 		}
 		if(jugadores.get(jugadorEnTurno).getEnJuego() == false) {
 			jugadorEnTurno ++;

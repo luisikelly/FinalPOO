@@ -185,7 +185,6 @@ public class VistaGrafica implements Serializable,IVista{
 		try {
 			contentPane.add(pantallaResponder = new PanelEntrada(RESPONDER,this.controlador), RESPONDER);
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		cardLayout.show(contentPane, RESPONDER);
@@ -198,7 +197,6 @@ public class VistaGrafica implements Serializable,IVista{
 	try {
 		contentPane.add(pantallaRespuesta = new PanelMostrar(this.controlador, RESPUESTA), RESPUESTA);
 	} catch (RemoteException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 	cardLayout.show(contentPane, RESPUESTA);
@@ -233,11 +231,10 @@ public class VistaGrafica implements Serializable,IVista{
 
 	@Override
 	public void mostrarSospechar() {
-		// TODO Auto-generated method stub
 		try {
-			contentPane.add(pantallaSospechar = this.crearPantallaEntrada(SOSPECHAR), SOSPECHAR);
+			contentPane.add(this.crearPantallaEntrada(SOSPECHAR), SOSPECHAR);
+			cardLayout.show(contentPane, SOSPECHAR);
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -301,7 +298,6 @@ public class VistaGrafica implements Serializable,IVista{
 			if(!textField.getText().equals("")) {
 				String nombre = textField.getText();
 				controlador.agregarJugador(nombre);
-				System.out.println(textField.getText());
 				} else {
 			    	JOptionPane.showMessageDialog(null,"Debe ingresar el nombre del jugador");
 				}
@@ -332,6 +328,7 @@ public class VistaGrafica implements Serializable,IVista{
 		return pantallaConfiguracion;
 	}
 	
+	
 	private JPanel crearPantallaEntrada(String tipo) throws RemoteException {
 		JPanel pantallaEntrada = new JPanel();
 		int seleccionados = 0;
@@ -339,23 +336,28 @@ public class VistaGrafica implements Serializable,IVista{
 		pantallaEntrada.setBackground(Color.DARK_GRAY);
 		pantallaEntrada.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblEspionaje = new JLabel("Espionaje");
+		Font sizedFont = boldFont.deriveFont(48f);
+		JLabel lblEspionaje = new JLabel("ESPIONAJE");
 		lblEspionaje.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEspionaje.setFont(sizedFont);
 		pantallaEntrada.add(lblEspionaje, BorderLayout.NORTH);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.DARK_GRAY);
-		
-		
 		pantallaEntrada.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
+		sizedFont = normalFont.deriveFont(18f);
 		JLabel lblTipo = new JLabel("Tipo");
+		lblTipo.setFont(sizedFont);
 		lblTipo.setBounds(75, 49, 46, 14);
 		panel.add(lblTipo);
 		
+		
 		JLabel lblNombrejugador = new JLabel("NombreJugador");
 		lblNombrejugador.setBounds(226, 49, 46, 14);
+		lblNombrejugador.setFont(sizedFont);
+		
 		panel.add(lblNombrejugador);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -364,6 +366,7 @@ public class VistaGrafica implements Serializable,IVista{
 		
 		JButton btnArriesgar = new JButton("ARRIESGAR");
 		btnArriesgar.setBounds(332, 11, 108, 23);
+		btnArriesgar.setFont(sizedFont);
 		panel.add(btnArriesgar);
 		
 		if(tipo.equals("RESPONDER")) {
@@ -396,50 +399,26 @@ public class VistaGrafica implements Serializable,IVista{
 		panel.add(btnOk);
 		
 		
+		JCheckBox cb;
+		sizedFont = normalFont.deriveFont(12f);
+		
 		if(tipo.equals("SOSPECHAR")) {
 			for(int i = 0; i<= controlador.getJugadorEnTurno().getAgendaPersonal().cantCartas()-1;i++) {
-				addCheckBox(scrollPane,controlador.getJugadorEnTurno().getAgendaPersonal().getCarta(i).getFigura(),pantallaEntrada);
+				cb = new JCheckBox(controlador.getJugadorEnTurno().getAgendaPersonal().getCarta(i).getFigura());
+				cb.setFont(sizedFont);
+				scrollPane.add(cb);
+			    scrollPane.revalidate();
 			}
 		}
 		if(tipo.equals("RESPONDER")) {
 			for(int i = 0; i<= controlador.getSospecha().length-1 ;i++) {
-				addCheckBox(scrollPane,controlador.getSospecha()[i].getFigura(),pantallaEntrada);
+				cb = new JCheckBox(controlador.getSospecha()[i].getFigura());
+				scrollPane.add(cb);
+			    scrollPane.revalidate();
 			}
 		}
 
 		return pantallaEntrada;
 	}
 	
-JCheckBox cb;
-	
-	private void addCheckBox(JScrollPane scrollPane ,String cbName, JPanel pantalla) {
-	       cb = new JCheckBox(cbName);	       
-	      cb.addChangeListener((ChangeListener) pantalla);
-	       scrollPane.add(cb);
-	       scrollPane.revalidate();
-	}
-	
-	public void stateChanged(ChangeEvent e){
-		if(cb.isSelected() && seleccionados < 2) {
-			seleccionados ++;
-			lista.add(cb.getName());
-		}
-		if(!cb.isSelected()&& seleccionados > 0) {
-			seleccionados --;
-			int p = this.buscarSeleccionados(lista, cb.getName());
-			if(p != -1) {
-				lista.remove(p);
-			}
-			
-		}
-	}
-	
-	private int buscarSeleccionados(ArrayList<String> l, String s) {
-		int pos= -1;
-		for(int i=0;i<= l.size()-1;i++) {
-			if(l.get(i).equals(s)) {pos= i;}
-		}
-		return pos;
-	}
-
 }
