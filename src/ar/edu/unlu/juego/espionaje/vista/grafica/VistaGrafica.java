@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -47,6 +48,10 @@ public class VistaGrafica implements Serializable,IVista{
 	private JPanel pantallaSospechar;
 	private JPanel pantallaResponder;
 	private JTextPane textJugadores;
+	private JLabel lblNombrejugador;
+	private JLabel lblTipo;
+	private JScrollPane opciones;
+	
 //	private PanelEntrada pantallaSospechar;
 //	private PanelEntrada pantallaResponder;
 	private PanelMostrar pantallaSospecha;
@@ -96,14 +101,16 @@ public class VistaGrafica implements Serializable,IVista{
 		Container contentPane = this.frmEspionaje.getContentPane();
 		contentPane.setLayout(cardLayout);
 		
+		//FUENTES
 		normalFont = Font.createFont(Font.TRUETYPE_FONT, isNormal);
 		boldFont = Font.createFont(Font.TRUETYPE_FONT, isBold);
 		lightFont = Font.createFont(Font.TRUETYPE_FONT, isLight);
 		
-		JPanel pantallaSospechar = this.crearPantallaEntrada(SOSPECHAR);
-		
+		// PANTALLAS
+		JPanel pantallaSospechar = this.crearPantallaEntrada();
 		contentPane.add(this.crearPantallaConfig(),CONFIG);	
 		contentPane.add(pantallaSospechar, SOSPECHAR);
+		
 		this.frmEspionaje.setVisible(true);
 	
 		
@@ -126,13 +133,23 @@ public class VistaGrafica implements Serializable,IVista{
 	@Override
 	public void mostrarSospecha(int jugador) {
 	//		contentPane.add(pantallaSospecha = new PanelMostrar(this.controlador, SOSPECHA), SOSPECHA);	
-		cardLayout.show(contentPane, SOSPECHA);
+		cardLayout.show(this.frmEspionaje.getContentPane(), SOSPECHA);
 	}
 	
 	@Override
 	public void mostrarSospechar() {
-		System.out.println("SOSPECHAR");
-		//cardLayout.show(contentPane, SOSPECHAR);
+		JCheckBox cbx;
+		this.lblTipo.setText("SOSPECHA A: ");
+		this.lblNombrejugador.setText(controlador.listaJugadores().get(controlador.getSospechado()).getNombre().toUpperCase());
+		for(int i=0;i<= controlador.getJugadorEnTurno().getAgendaPersonal().cantCartas()-1; i++) {
+			cbx = new JCheckBox(controlador.getJugadorEnTurno().getAgendaPersonal().getCarta(i).getFigura().toUpperCase());
+			Font sizedFont = sizedFont = normalFont.deriveFont(14f);
+			cbx.setFont(sizedFont);
+			opciones.add(cbx);
+			
+		    opciones.revalidate();
+		}
+		cardLayout.show(this.frmEspionaje.getContentPane(), SOSPECHAR);
 	}
 
 	@Override
@@ -142,7 +159,7 @@ public class VistaGrafica implements Serializable,IVista{
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
-		cardLayout.show(contentPane, GANADOR);
+		cardLayout.show(this.frmEspionaje.getContentPane(), GANADOR);
 	
 	}
 
@@ -166,7 +183,7 @@ public class VistaGrafica implements Serializable,IVista{
 
 	@Override
 	public void mostrarConfiguracion() {
-		cardLayout.show(contentPane, CONFIG);
+		cardLayout.show(this.frmEspionaje.getContentPane(), CONFIG);
 	}
 
 
@@ -191,7 +208,7 @@ public class VistaGrafica implements Serializable,IVista{
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
-		cardLayout.show(contentPane, RESPONDER);
+		cardLayout.show(this.frmEspionaje.getContentPane(), RESPONDER);
 		
 	}
 
@@ -203,7 +220,7 @@ public class VistaGrafica implements Serializable,IVista{
 	} catch (RemoteException e) {
 		e.printStackTrace();
 	}
-	cardLayout.show(contentPane, RESPUESTA);
+	cardLayout.show(this.frmEspionaje.getContentPane(), RESPUESTA);
 		
 	}
 
@@ -292,7 +309,7 @@ public class VistaGrafica implements Serializable,IVista{
 		btnAgregarJugador.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			if(!textField.getText().equals("")) {
-				String nombre = textField.getText();
+				String nombre = textField.getText().toUpperCase();
 				controlador.agregarJugador(nombre);
 				} else {
 			    	JOptionPane.showMessageDialog(null,"Debe ingresar el nombre del jugador");
@@ -325,15 +342,13 @@ public class VistaGrafica implements Serializable,IVista{
 	}
 	
 	
-	private JPanel crearPantallaEntrada(String tipo) {
+	private JPanel crearPantallaEntrada() {
 		JPanel pantallaEntrada = new JPanel();
-		int seleccionados = 0;
-
-		System.out.println("Entrada");
 		pantallaEntrada.setBackground(Color.DARK_GRAY);
+		pantallaEntrada.setLayout(null);
 		
 		Font sizedFont = boldFont.deriveFont(48f);
-		pantallaEntrada.setLayout(null);
+		
 		JLabel lblEspionaje = new JLabel("ESPIONAJE");
 		lblEspionaje.setBounds(10, 11, 465, 55);
 		lblEspionaje.setForeground(Color.WHITE);
@@ -343,14 +358,13 @@ public class VistaGrafica implements Serializable,IVista{
 		
 		sizedFont = normalFont.deriveFont(18f);
 		
-		
-		JLabel lblNombrejugador = new JLabel("NombreJugador");
+		lblNombrejugador = new JLabel("NombreJugador");
 		lblNombrejugador.setBounds(163, 69, 150, 34);
 		pantallaEntrada.add(lblNombrejugador);
 		lblNombrejugador.setForeground(Color.WHITE);
 		lblNombrejugador.setFont(sizedFont);
 		
-		JLabel lblTipo = new JLabel("Tipo");
+		lblTipo = new JLabel("Tipo");
 		lblTipo.setBounds(64, 71, 71, 34);
 		pantallaEntrada.add(lblTipo);
 		lblTipo.setForeground(Color.WHITE);
@@ -363,14 +377,14 @@ public class VistaGrafica implements Serializable,IVista{
 		pantallaEntrada.add(btnArriesgar);
 		btnArriesgar.setFont(sizedFont);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(64, 111, 329, 156);
-		pantallaEntrada.add(scrollPane);
-		
 		JButton btnEnviar = new JButton("ENVIAR");
 		btnEnviar.setBounds(349, 278, 89, 23);
 		btnEnviar.setFont(sizedFont);
 		pantallaEntrada.add(btnEnviar);
+		
+		opciones = new JScrollPane();
+		opciones.setBounds(67, 150, 260, 151);
+		pantallaEntrada.add(opciones);
 		
 		/*	
 		if(tipo.equals("RESPONDER") || tipo.equals("ARRIESGAR")) {

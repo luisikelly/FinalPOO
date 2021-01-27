@@ -55,14 +55,13 @@ public class Controlador implements IControladorRemoto {
 					ESTADOS e = juego.getEstado();
 					String estado = juego.getEstado().name();
 					if(e == ESTADOS.EN_JUEGO) {
-						
-						if(nroJugador == juego.getJugadorEnTurno().getNroJugador()) {
+						// if(nroJugador == juego.getJugadorEnTurno().getNroJugador()) {
 							if(juego.getEstadoEnJuego().name() == "ARRIESGA")
 								vista.mostrarArriesgar();
 							if(juego.getEstadoEnJuego().name() == "SOSPECHA") {
 								System.out.println("Actualizar");
 								vista.mostrarSospechar();
-							}
+							// }
 							
 							if(juego.getEstadoEnJuego().name() == "RESPUESTA")
 								vista.mostrarRespuesta();
@@ -103,9 +102,10 @@ public class Controlador implements IControladorRemoto {
 				vista.mostrarError(ErrorCantidadMaximaJugadores);
 			}
 		} catch (RemoteException e) {
-	
+			System.out.println("REMOTE EX");
 			e.printStackTrace();
 		}
+		System.out.println("OK");
 	}
 	
 	public void finalizarPartida() {

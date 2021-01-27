@@ -77,9 +77,9 @@ public class Juego extends ObservableRemoto implements IJuego {
             this.repartirAC();
             this.descartarArchivoConfidencial_AgendaPersonal();
             this.jugadorEnTurno = 0;
-			//enJuego = true;
-			//notificar(CambiosJuego.CAMBIO_JUGADOR);
+ 			notificar(CambiosJuego.CAMBIO_JUGADOR);
 			notificar(CambiosJuego.CAMBIO_ESTADO);
+			
 		} else {
 			IndexOutOfBoundsException ex;
 			if(jugadores.size() < 2) {
@@ -89,9 +89,10 @@ public class Juego extends ObservableRemoto implements IJuego {
 			if(jugadores.size() > 4) {
 				ex = new IndexOutOfBoundsException("CantidadMaxina");
 				throw(ex);
-			}
-			System.out.println("InicioJuego");
-		}	
+			}	
+		}
+		
+		System.out.println("InicioJuego");
 	}
 	
 	
