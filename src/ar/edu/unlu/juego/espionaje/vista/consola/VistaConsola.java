@@ -53,7 +53,7 @@ public class VistaConsola implements IVista, Serializable {
 	}
 
 	@Override
-	public void mostrarSospecha() {
+	public void mostrarSospecha(int jugador) {
 		// 7/9/2020: No se utiliza ese metodo en esta vista POR AHORA. La función esta implementada en el menu del juego.
 		
 	}
@@ -141,6 +141,12 @@ public class VistaConsola implements IVista, Serializable {
 		case "error":
 			break;	
 		}
+		
+	}
+
+	@Override
+	public void mostrarSospechar() {
+		// TODO Auto-generated method stub
 		
 	}
 

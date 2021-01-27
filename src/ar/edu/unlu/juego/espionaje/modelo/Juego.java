@@ -90,6 +90,7 @@ public class Juego extends ObservableRemoto implements IJuego {
 				ex = new IndexOutOfBoundsException("CantidadMaxina");
 				throw(ex);
 			}
+			System.out.println("InicioJuego");
 		}	
 	}
 	

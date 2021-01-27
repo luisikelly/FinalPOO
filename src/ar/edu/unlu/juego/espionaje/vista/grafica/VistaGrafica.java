@@ -31,6 +31,7 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.CardLayout;
 
@@ -99,8 +100,10 @@ public class VistaGrafica implements Serializable,IVista{
 		boldFont = Font.createFont(Font.TRUETYPE_FONT, isBold);
 		lightFont = Font.createFont(Font.TRUETYPE_FONT, isLight);
 		
-		contentPane.add(this.crearPantallaConfig(),CONFIG);		
-		//pantallaConfig = new PanelConfig(this.controlador), CONFIG);
+		JPanel pantallaSospechar = this.crearPantallaEntrada(SOSPECHAR);
+		
+		contentPane.add(this.crearPantallaConfig(),CONFIG);	
+		contentPane.add(pantallaSospechar, SOSPECHAR);
 		this.frmEspionaje.setVisible(true);
 	
 		
@@ -122,14 +125,15 @@ public class VistaGrafica implements Serializable,IVista{
 
 	@Override
 	public void mostrarSospecha(int jugador) {
-		try {
-			contentPane.add(pantallaSospecha = new PanelMostrar(this.controlador, SOSPECHA), SOSPECHA);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
+	//		contentPane.add(pantallaSospecha = new PanelMostrar(this.controlador, SOSPECHA), SOSPECHA);	
 		cardLayout.show(contentPane, SOSPECHA);
 	}
-
+	
+	@Override
+	public void mostrarSospechar() {
+		System.out.println("SOSPECHAR");
+		//cardLayout.show(contentPane, SOSPECHAR);
+	}
 
 	@Override
 	public void avisoGanador() {
@@ -229,15 +233,7 @@ public class VistaGrafica implements Serializable,IVista{
 	}
 
 
-	@Override
-	public void mostrarSospechar() {
-		try {
-			contentPane.add(this.crearPantallaEntrada(SOSPECHAR), SOSPECHAR);
-			cardLayout.show(contentPane, SOSPECHAR);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-	}
+
 	
 	public JPanel crearPantallaConfig() {
 		pantallaConfiguracion = new JPanel();
@@ -329,50 +325,58 @@ public class VistaGrafica implements Serializable,IVista{
 	}
 	
 	
-	private JPanel crearPantallaEntrada(String tipo) throws RemoteException {
+	private JPanel crearPantallaEntrada(String tipo) {
 		JPanel pantallaEntrada = new JPanel();
 		int seleccionados = 0;
-		
+
+		System.out.println("Entrada");
 		pantallaEntrada.setBackground(Color.DARK_GRAY);
-		pantallaEntrada.setLayout(new BorderLayout(0, 0));
 		
 		Font sizedFont = boldFont.deriveFont(48f);
+		pantallaEntrada.setLayout(null);
 		JLabel lblEspionaje = new JLabel("ESPIONAJE");
+		lblEspionaje.setBounds(10, 11, 465, 55);
+		lblEspionaje.setForeground(Color.WHITE);
 		lblEspionaje.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEspionaje.setFont(sizedFont);
-		pantallaEntrada.add(lblEspionaje, BorderLayout.NORTH);
-		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.DARK_GRAY);
-		pantallaEntrada.add(panel, BorderLayout.CENTER);
-		panel.setLayout(null);
+		pantallaEntrada.add(lblEspionaje);
 		
 		sizedFont = normalFont.deriveFont(18f);
-		JLabel lblTipo = new JLabel("Tipo");
-		lblTipo.setFont(sizedFont);
-		lblTipo.setBounds(75, 49, 46, 14);
-		panel.add(lblTipo);
 		
 		
 		JLabel lblNombrejugador = new JLabel("NombreJugador");
-		lblNombrejugador.setBounds(226, 49, 46, 14);
+		lblNombrejugador.setBounds(163, 69, 150, 34);
+		pantallaEntrada.add(lblNombrejugador);
+		lblNombrejugador.setForeground(Color.WHITE);
 		lblNombrejugador.setFont(sizedFont);
 		
-		panel.add(lblNombrejugador);
+		JLabel lblTipo = new JLabel("Tipo");
+		lblTipo.setBounds(64, 71, 71, 34);
+		pantallaEntrada.add(lblTipo);
+		lblTipo.setForeground(Color.WHITE);
+		lblTipo.setFont(sizedFont);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(50, 74, 329, 156);
-		panel.add(scrollPane);
+		sizedFont = normalFont.deriveFont(15f);
 		
 		JButton btnArriesgar = new JButton("ARRIESGAR");
-		btnArriesgar.setBounds(332, 11, 108, 23);
+		btnArriesgar.setBounds(323, 77, 115, 23);
+		pantallaEntrada.add(btnArriesgar);
 		btnArriesgar.setFont(sizedFont);
-		panel.add(btnArriesgar);
 		
-		if(tipo.equals("RESPONDER")) {
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(64, 111, 329, 156);
+		pantallaEntrada.add(scrollPane);
+		
+		JButton btnEnviar = new JButton("ENVIAR");
+		btnEnviar.setBounds(349, 278, 89, 23);
+		btnEnviar.setFont(sizedFont);
+		pantallaEntrada.add(btnEnviar);
+		
+		/*	
+		if(tipo.equals("RESPONDER") || tipo.equals("ARRIESGAR")) {
 			btnArriesgar.setVisible(false);
 		}
-			
+		
 		JButton btnOk = 
 				new JButton("Ok");
 		btnOk.addActionListener(new ActionListener() {
@@ -417,8 +421,7 @@ public class VistaGrafica implements Serializable,IVista{
 			    scrollPane.revalidate();
 			}
 		}
-
+*/
 		return pantallaEntrada;
 	}
-	
 }
