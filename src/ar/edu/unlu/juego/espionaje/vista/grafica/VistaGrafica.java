@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.table.DefaultTableModel;
 
 import ar.edu.unlu.juego.espionaje.controlador.Controlador;
 import ar.edu.unlu.juego.espionaje.controlador.IVista;
@@ -35,6 +36,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.CardLayout;
+import javax.swing.JTable;
 
 public class VistaGrafica implements Serializable,IVista{
 
@@ -50,7 +52,6 @@ public class VistaGrafica implements Serializable,IVista{
 	private JTextPane textJugadores;
 	private JLabel lblNombrejugador;
 	private JLabel lblTipo;
-	private JScrollPane opciones;
 	
 //	private PanelEntrada pantallaSospechar;
 //	private PanelEntrada pantallaResponder;
@@ -72,15 +73,25 @@ public class VistaGrafica implements Serializable,IVista{
 	private final String CONFIG = "CONFIG";
 	private final String SOSPECHAR = "SOSPECHAR";
 	private final String RESPONDER = "RESPONDER";
+	private final String ARRIESGAR = "ARRIESGAR";
 	private final String SOSPECHA = "SOSPECHA";
 	private final String RESPUESTA = "RESPUESTA";
 	private final String GANADOR = "GANADOR";
+	private final String TURNO = "TURNO";
 	private final String ErrorCantidadMinimaJugadores = "MenosJugadores";
 	private final String ErrorCantidadMaximaJugadores = "MasJugadores";
 	
 	//OTROS
+	
+	private JLabel lblnro;
+	
+	private JLabel lblTURNOJugador;
+	private JLabel lblTURNOText;
+	private JLabel lblTURNOSospechado;
 	private int seleccionados = 0; 
 	private ArrayList<String> lista = new ArrayList<String>();
+	private JTable table;
+	 private DefaultTableModel model;
 	
 	
 	
@@ -110,6 +121,7 @@ public class VistaGrafica implements Serializable,IVista{
 		JPanel pantallaSospechar = this.crearPantallaEntrada();
 		contentPane.add(this.crearPantallaConfig(),CONFIG);	
 		contentPane.add(pantallaSospechar, SOSPECHAR);
+		contentPane.add(this.crearPantallaTurno(), TURNO);
 		
 		this.frmEspionaje.setVisible(true);
 	
@@ -139,15 +151,15 @@ public class VistaGrafica implements Serializable,IVista{
 	@Override
 	public void mostrarSospechar() {
 		JCheckBox cbx;
+		String nro = controlador.getNroJugador() + "";
+		lblnro.setText(nro);
 		this.lblTipo.setText("SOSPECHA A: ");
 		this.lblNombrejugador.setText(controlador.listaJugadores().get(controlador.getSospechado()).getNombre().toUpperCase());
+		model = new DefaultTableModel(new Object[]{"Cartas","Seleccionar"}, 0);
+		
 		for(int i=0;i<= controlador.getJugadorEnTurno().getAgendaPersonal().cantCartas()-1; i++) {
-			cbx = new JCheckBox(controlador.getJugadorEnTurno().getAgendaPersonal().getCarta(i).getFigura().toUpperCase());
-			Font sizedFont = sizedFont = normalFont.deriveFont(14f);
-			cbx.setFont(sizedFont);
-			opciones.add(cbx);
 			
-		    opciones.revalidate();
+			model.addRow(new Object[]{controlador.getJugadorEnTurno().getAgendaPersonal().getCarta(i).getFigura(),false});
 		}
 		cardLayout.show(this.frmEspionaje.getContentPane(), SOSPECHAR);
 	}
@@ -248,9 +260,38 @@ public class VistaGrafica implements Serializable,IVista{
 			JOptionPane.showMessageDialog(null,"¡Superó la cantidad máxima de jugadores!");
 		}
 	}
+	
+	@Override
+	public void mostrarTurno(String string) {
+	
+		
+		
+		if(string.equals(SOSPECHA)) {
+			this.lblTURNOSospechado.setVisible(false);
+			this.lblTURNOJugador.setText(controlador.getJugadorEnTurno().getNombre());
+			this.lblTURNOText.setText("ESTÁ REALIZANDO SU SOSPECHA");
+		}
+		if(string.equals(RESPUESTA)) {
+			
+			this.lblTURNOJugador.setText(controlador.getJugadorEnTurno().getNombre());
+			this.lblTURNOText.setText("ENVIÓ SU SOSPECHA A ");
+			this.lblTURNOSospechado.setText(controlador.listaJugadores().get(controlador.getSospechado()).getNombre());
+		}
+		
+		if(string.equals(ARRIESGAR)) {
+			this.lblTURNOSospechado.setVisible(false);
+			this.lblTURNOJugador.setText(controlador.getJugadorEnTurno().getNombre());
+			this.lblTURNOText.setText("ESTÁ REALIZANDO SU ACUSACIÓN");
+
+		}			
+		
+		cardLayout.show(this.frmEspionaje.getContentPane(), TURNO);
+		
+	}
 
 
-
+// --- CREAR PANTALLAS ---
+	
 	
 	public JPanel crearPantallaConfig() {
 		pantallaConfiguracion = new JPanel();
@@ -359,13 +400,13 @@ public class VistaGrafica implements Serializable,IVista{
 		sizedFont = normalFont.deriveFont(18f);
 		
 		lblNombrejugador = new JLabel("NombreJugador");
-		lblNombrejugador.setBounds(163, 69, 150, 34);
+		lblNombrejugador.setBounds(258, 71, 179, 34);
 		pantallaEntrada.add(lblNombrejugador);
 		lblNombrejugador.setForeground(Color.WHITE);
 		lblNombrejugador.setFont(sizedFont);
 		
 		lblTipo = new JLabel("Tipo");
-		lblTipo.setBounds(64, 71, 71, 34);
+		lblTipo.setBounds(20, 71, 210, 34);
 		pantallaEntrada.add(lblTipo);
 		lblTipo.setForeground(Color.WHITE);
 		lblTipo.setFont(sizedFont);
@@ -373,69 +414,72 @@ public class VistaGrafica implements Serializable,IVista{
 		sizedFont = normalFont.deriveFont(15f);
 		
 		JButton btnArriesgar = new JButton("ARRIESGAR");
-		btnArriesgar.setBounds(323, 77, 115, 23);
+		btnArriesgar.setBounds(340, 220, 115, 23);
 		pantallaEntrada.add(btnArriesgar);
 		btnArriesgar.setFont(sizedFont);
 		
 		JButton btnEnviar = new JButton("ENVIAR");
-		btnEnviar.setBounds(349, 278, 89, 23);
+		btnEnviar.setForeground(Color.RED);
+		btnEnviar.setBounds(340, 260, 115, 23);
 		btnEnviar.setFont(sizedFont);
 		pantallaEntrada.add(btnEnviar);
 		
-		opciones = new JScrollPane();
-		opciones.setBounds(67, 150, 260, 151);
-		pantallaEntrada.add(opciones);
 		
-		/*	
-		if(tipo.equals("RESPONDER") || tipo.equals("ARRIESGAR")) {
-			btnArriesgar.setVisible(false);
-		}
+		table = new JTable();
+		table.setBounds(30, 114, 283, 169);
+		pantallaEntrada.add(table);
 		
-		JButton btnOk = 
-				new JButton("Ok");
-		btnOk.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(tipo.equals("SOSPECHAR")) {
-					if(seleccionados == 2) {
-						controlador.recibirSospecha(lista);
-					}else {
-						JOptionPane.showMessageDialog(null,"La sospecha contiene 2 elementos");
-					}
-				}
-				if(tipo.equals("RESPONDER")) {
-					if(seleccionados == 1) {
-						controlador.setRespuesta(lista.get(0));
-					}else {
-						JOptionPane.showMessageDialog(null,"La respuesta debe contener solo un elemento");
-					}
-				}
-					
-					
-			}
-		});
-		btnOk.setBounds(332, 252, 89, 23);
-		panel.add(btnOk);
+		lblnro = new JLabel("-");
+		lblnro.setForeground(Color.LIGHT_GRAY);
+		lblnro.setBounds(409, 11, 46, 14);
+		lblnro.setFont(sizedFont);
+		pantallaEntrada.add(lblnro);
 		
-		
-		JCheckBox cb;
-		sizedFont = normalFont.deriveFont(12f);
-		
-		if(tipo.equals("SOSPECHAR")) {
-			for(int i = 0; i<= controlador.getJugadorEnTurno().getAgendaPersonal().cantCartas()-1;i++) {
-				cb = new JCheckBox(controlador.getJugadorEnTurno().getAgendaPersonal().getCarta(i).getFigura());
-				cb.setFont(sizedFont);
-				scrollPane.add(cb);
-			    scrollPane.revalidate();
-			}
-		}
-		if(tipo.equals("RESPONDER")) {
-			for(int i = 0; i<= controlador.getSospecha().length-1 ;i++) {
-				cb = new JCheckBox(controlador.getSospecha()[i].getFigura());
-				scrollPane.add(cb);
-			    scrollPane.revalidate();
-			}
-		}
-*/
 		return pantallaEntrada;
+	}
+
+private JPanel crearPantallaTurno() {
+		JPanel pantallaTurno = new JPanel();
+		pantallaTurno.setBackground(Color.DARK_GRAY);
+		pantallaTurno.setLayout(null);
+		
+		Font sizedFontTitulo = boldFont.deriveFont(48f);
+		Font sizedFont= normalFont.deriveFont(24f);
+		
+		JLabel label = new JLabel("ESPIONAJE");
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setForeground(Color.WHITE);
+		label.setFont(sizedFontTitulo);
+		label.setBounds(0, 11, 465, 55);
+		pantallaTurno.add(label);
+		
+		 lblTURNOText = new JLabel("TEXT");
+		 lblTURNOText.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTURNOText.setForeground(Color.WHITE);
+		lblTURNOText.setFont(sizedFont);
+		lblTURNOText.setBounds(10, 149, 445, 41);
+		pantallaTurno.add(lblTURNOText);
+		
+		lblTURNOJugador = new JLabel("Jugador");
+		lblTURNOJugador.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTURNOJugador.setFont(sizedFont);
+		lblTURNOJugador.setForeground(Color.ORANGE);
+		lblTURNOJugador.setBounds(81, 89, 273, 35);
+		pantallaTurno.add(lblTURNOJugador);
+		
+		lblTURNOSospechado = new JLabel("Jugador");
+		lblTURNOSospechado.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTURNOSospechado.setFont(sizedFont);
+		lblTURNOSospechado.setForeground(Color.RED);
+		lblTURNOSospechado.setBounds(81, 204, 260, 41);
+		pantallaTurno.add(lblTURNOSospechado);
+		
+		JLabel lblnro = new JLabel("New label");
+		lblnro.setForeground(Color.LIGHT_GRAY);
+		lblnro.setBounds(10, 286, 46, 14);
+		lblnro.setFont(sizedFont);
+	
+		pantallaTurno.add(lblnro);
+		return pantallaTurno;
 	}
 }

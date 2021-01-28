@@ -39,5 +39,8 @@ public interface IVista {
 	void mostrarSospechar();
 
 
+	void mostrarTurno(String string);
+
+
 
 }

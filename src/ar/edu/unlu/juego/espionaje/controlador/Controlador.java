@@ -55,18 +55,26 @@ public class Controlador implements IControladorRemoto {
 					ESTADOS e = juego.getEstado();
 					String estado = juego.getEstado().name();
 					if(e == ESTADOS.EN_JUEGO) {
-						// if(nroJugador == juego.getJugadorEnTurno().getNroJugador()) {
+						if(nroJugador == juego.getJugadorEnTurno().getNroJugador()) {
 							if(juego.getEstadoEnJuego().name() == "ARRIESGA")
 								vista.mostrarArriesgar();
 							if(juego.getEstadoEnJuego().name() == "SOSPECHA") {
-								System.out.println("Actualizar");
 								vista.mostrarSospechar();
-							// }
-							
+								System.out.println(juego.getJugadorEnTurno().getNroJugador());
+							 }
 							if(juego.getEstadoEnJuego().name() == "RESPUESTA")
-								vista.mostrarRespuesta();
-							
+								vista.mostrarRespuesta();	
+										
 						} else {
+							if(juego.getEstadoEnJuego().name() == "SOSPECHA"  ) {
+								vista.mostrarTurno("SOSPECHA");
+							 }
+							if(juego.getEstadoEnJuego().name() == "ARRIESGAR"  ) {
+								vista.mostrarTurno("ARRIESGAR");
+							 }
+							if(juego.getEstadoEnJuego().name() == "RESPUESTA"  ) {
+								vista.mostrarTurno("RESPUESTA");
+							 }
 							if(nroJugador == juego.getSospechado()) {
 								if(juego.getEstadoEnJuego().name() == "RESPONDER")
 									vista.mostrarElegirRespuesta();
@@ -126,11 +134,18 @@ public class Controlador implements IControladorRemoto {
 	public void agregarJugador(String nombre)  {
 		try {
 			nroJugador = juego.agregarJugador(nombre);
+			System.out.println(getNroJugador());
 		} catch (IndexOutOfBoundsException e) {
-		//	vista.mostrarError(this.ErrorCantidadMaximaJugadores);
+			if(e.getMessage().equals("CantidadMinima")) {
+				vista.mostrarError(ErrorCantidadMinimaJugadores);
+			}
+			if(e.getMessage().equals("CantidadMaxima")) {
+				vista.mostrarError(ErrorCantidadMaximaJugadores);
+			}
 		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}	
 	}
 
 	public IJugador getJugadorEnTurno() {

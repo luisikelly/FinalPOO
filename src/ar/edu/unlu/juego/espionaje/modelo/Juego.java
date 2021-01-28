@@ -77,6 +77,8 @@ public class Juego extends ObservableRemoto implements IJuego {
             this.repartirAC();
             this.descartarArchivoConfidencial_AgendaPersonal();
             this.jugadorEnTurno = 0;
+            System.out.println(this.getJugadorEnTurno().getNombre());
+            this.sospechado = this.jugadorEnTurno ++;
  			notificar(CambiosJuego.CAMBIO_JUGADOR);
 			notificar(CambiosJuego.CAMBIO_ESTADO);
 			
@@ -91,8 +93,6 @@ public class Juego extends ObservableRemoto implements IJuego {
 				throw(ex);
 			}	
 		}
-		
-		System.out.println("InicioJuego");
 	}
 	
 	
@@ -253,6 +253,8 @@ public class Juego extends ObservableRemoto implements IJuego {
     	return nroJugador; // Devuelve el numero de jugador que se utiliza en el controlador y la vista para mostrar permitir que accion realizar dependiendo si es su turno o si tiene que responder una sospecha realizada por el jugador en turno
 	}
 
+
+    
     @Override
 	public void cambiarJugador() throws RemoteException {
 		jugadorEnTurno ++;
