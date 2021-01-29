@@ -14,7 +14,7 @@ public interface IJuego extends IObservableRemoto, Serializable{
 
 	int getSospechado() throws RemoteException;
 
-	Carta[] getSospecha() throws RemoteException;
+	ArrayList<String> getSospecha() throws RemoteException;
 
 	void iniciarAplicacion() throws RemoteException;
 
@@ -55,6 +55,12 @@ public interface IJuego extends IObservableRemoto, Serializable{
 	void pasar() throws RemoteException;
 
 	void setSospecha(ArrayList<String> sospecha) throws RemoteException;
+
+	ArrayList<String> verificarRespuesta() throws RemoteException;
+
+	void setRespuesta(String r) throws RemoteException;
+
+	String getRespuesta() throws RemoteException;
 
 
 }

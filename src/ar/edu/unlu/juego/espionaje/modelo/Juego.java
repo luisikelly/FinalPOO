@@ -29,7 +29,8 @@ public class Juego extends ObservableRemoto implements IJuego {
 	private int sospechado;
 	private Enum sospecha1;
 	private Enum sospecha2;
-	private Carta[] sospecha;
+	private ArrayList<String> sospecha;
+	private String respuesta;
 	
 	
 	public static void main (String args[]) throws RemoteException {
@@ -70,7 +71,7 @@ public class Juego extends ObservableRemoto implements IJuego {
 	
 	@Override
 	public void iniciarJuego() throws IndexOutOfBoundsException, RemoteException {
-		if(jugadores.size() >= 2 || jugadores.size() <= 4) {	
+		if(jugadores.size() >= 2 && jugadores.size() <= 4) {	
 			estado = ESTADOS.EN_JUEGO;
 			eEJ = E_EN_JUEGO.SOSPECHA;
 			this.setInfoSecreta();
@@ -165,11 +166,23 @@ public class Juego extends ObservableRemoto implements IJuego {
 	
 	@Override
 	public void setSospecha(ArrayList<String> s) throws RemoteException {
-		sospecha[0].setTipo(s.get(0));
-		sospecha[1].setTipo(s.get(1)) ;
-		this.sospechado = this.jugadorEnTurno ++;
+		sospecha = s;
 		this.eEJ = E_EN_JUEGO.RESPONDER;
 		notificar(CambiosJuego.CAMBIO_ESTADO);
+	}
+	
+	@Override
+	public void setRespuesta(String r) throws RemoteException {
+		if(! r.equals("")) {
+			respuesta = r;
+			eEJ = E_EN_JUEGO.RESPUESTA;
+			notificar(CambiosJuego.CAMBIO_ESTADO);
+		}else {
+			sospechado++;
+			eEJ = E_EN_JUEGO.SOSPECHA;
+			notificar(CambiosJuego.CAMBIO_ESTADO);
+		}
+		
 	}
 	
 	public void recibioRespuesta(String respuesta) throws RemoteException {
@@ -265,6 +278,7 @@ public class Juego extends ObservableRemoto implements IJuego {
 				notificar(CambiosJuego.HAY_GANADOR);
 				notificar(CambiosJuego.CAMBIO_ESTADO);
 			}
+			sospecha = null;
 			eEJ = E_EN_JUEGO.SOSPECHA;
 			notificar(CambiosJuego.CAMBIO_ESTADO);
 		}
@@ -333,10 +347,31 @@ public class Juego extends ObservableRemoto implements IJuego {
 	}
 
 	@Override
-	public Carta[] getSospecha() throws RemoteException {
-		// TODO Auto-generated method stub
+	public ArrayList<String> getSospecha() throws RemoteException {
 		return sospecha;
 	}
+	@Override
+	public String getRespuesta() throws RemoteException {
+		return respuesta;
+	}
+
+	@Override
+	public ArrayList<String> verificarRespuesta() throws RemoteException {
+		ArrayList<String> opcionesRespuesta = new ArrayList<String>();
+		int opciones = 0 ;
+		IJugador j = this.getJugadores().get(this.getSospechado());
+		for(int i=0; i<= this.getJugadores().get(this.getSospechado()).getCartasSecretas().cantCartas() -1;i++) {
+			if((j.getCartasSecretas().getCarta(i).getFigura().equals(this.sospecha.get(0)) || j.getCartasSecretas().getCarta(i).getFigura().equals(this.sospecha.get(1))) && opciones <= 1) {
+				opcionesRespuesta.add(j.getCartasSecretas().getCarta(i).getFigura());
+				opciones ++;
+			}
+		}
+		return opcionesRespuesta;
+	}
+
+	
+
+	
 
 
 }

@@ -10,9 +10,9 @@ public interface IVista {
 
 	void mostrarArriesgar();
 	
-	void mostrarJugando();
+//	void mostrarJugando();
 
-	void mostrarSospecha(int jugador) ;
+//	void mostrarSospecha(int jugador) ;
 
 	void avisoGanador() ;
 
@@ -24,11 +24,11 @@ public interface IVista {
 	
 	void mostrarTerminado();
 
-	void  mostrarElegirRespuesta();
+// void  mostrarElegirRespuesta();
 
 	void mostrarResponder();
 	
-	void mostrarRespuesta();
+	void mostrarRespuesta(String string);
 
 	void iniciarJuego();
 

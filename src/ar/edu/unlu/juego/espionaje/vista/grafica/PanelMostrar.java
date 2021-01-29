@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
 import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
 
 public class PanelMostrar extends JPanel {
 
@@ -24,45 +25,17 @@ public class PanelMostrar extends JPanel {
 		setLayout(null);
 		
 		
-		JLabel lblTipo = new JLabel("Tipo ");
-		lblTipo.setBounds(114, 34, 46, 14);
+		JLabel lblTipo = new JLabel("JUGADOR");
+		lblTipo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTipo.setForeground(Color.RED);
+		lblTipo.setBounds(10, 113, 194, 36);
 		add(lblTipo);
 		
-		JLabel lblNombrejugador = new JLabel("nombreJugador");
-		lblNombrejugador.setBounds(223, 34, 46, 14);
+		JLabel lblNombrejugador = new JLabel("RESPONDE:");
+		lblNombrejugador.setForeground(Color.WHITE);
+		lblNombrejugador.setBounds(214, 113, 206, 36);
 		add(lblNombrejugador);
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(25, 81, 390, 147);
-		add(panel);
-		panel.setLayout(null);
-		
-		JLabel lblCartaRespuesta = new JLabel("CartaRespuesta");
-		lblCartaRespuesta.setBounds(147, 60, 103, 14);
-		if(tipo.equals("RESPUESTA")) {
-			lblCartaRespuesta.setText(controlador.getRespuesta());
-		} else {
-			lblCartaRespuesta.setVisible(false);
-		}
-		panel.add(lblCartaRespuesta);
-		
-		JLabel lblCartaSospecha1 = new JLabel("CartaSospecha1");
-		lblCartaSospecha1.setBounds(33, 60, 103, 14);
-		if(tipo.equals("SOSPECHA")) {
-			lblCartaSospecha1.setText(controlador.getSospecha()[0].getFigura());
-		} else {
-			lblCartaSospecha1.setVisible(false);
-		}
-		panel.add(lblCartaSospecha1);
-		
-		JLabel lblCartaSospecha2 = new JLabel("CartaSospecha2");
-		lblCartaSospecha2.setBounds(260, 60, 103, 14);
-		if(tipo.equals("SOSPECHA")) {
-			lblCartaSospecha2.setText(controlador.getSospecha()[1].getFigura());
-		} else {
-			lblCartaSospecha2.setVisible(false);
-		}
-		panel.add(lblCartaSospecha2);
 		
 		JButton btnOk = new JButton("OK");
 		btnOk.addActionListener(new ActionListener() {
@@ -70,8 +43,14 @@ public class PanelMostrar extends JPanel {
 				
 			}
 		});
-		btnOk.setBounds(331, 266, 89, 23);
+		btnOk.setBounds(330, 241, 90, 36);
 		add(btnOk);
+		
+		JLabel lblCarta = new JLabel("CARTA");
+		lblCarta.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCarta.setForeground(Color.ORANGE);
+		lblCarta.setBounds(121, 160, 206, 36);
+		add(lblCarta);
 
 	}
 }

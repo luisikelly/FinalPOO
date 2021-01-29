@@ -60,14 +60,13 @@ public class Controlador implements IControladorRemoto {
 								vista.mostrarArriesgar();
 							if(juego.getEstadoEnJuego().name() == "SOSPECHA") {
 								vista.mostrarSospechar();
-								System.out.println(juego.getJugadorEnTurno().getNroJugador());
 							 }
 							if(juego.getEstadoEnJuego().name() == "RESPUESTA")
-								vista.mostrarRespuesta();	
+								vista.mostrarRespuesta(juego.getRespuesta());	
 										
 						} else {
 							if(juego.getEstadoEnJuego().name() == "SOSPECHA"  ) {
-								vista.mostrarTurno("SOSPECHA");
+								vista.mostrarTurno("SOSPECHAR");
 							 }
 							if(juego.getEstadoEnJuego().name() == "ARRIESGAR"  ) {
 								vista.mostrarTurno("ARRIESGAR");
@@ -77,7 +76,7 @@ public class Controlador implements IControladorRemoto {
 							 }
 							if(nroJugador == juego.getSospechado()) {
 								if(juego.getEstadoEnJuego().name() == "RESPONDER")
-									vista.mostrarElegirRespuesta();
+									vista.mostrarResponder();
 							}	
 						}			
 					}
@@ -113,7 +112,8 @@ public class Controlador implements IControladorRemoto {
 			System.out.println("REMOTE EX");
 			e.printStackTrace();
 		}
-		System.out.println("OK");
+		
+		
 	}
 	
 	public void finalizarPartida() {
@@ -134,11 +134,7 @@ public class Controlador implements IControladorRemoto {
 	public void agregarJugador(String nombre)  {
 		try {
 			nroJugador = juego.agregarJugador(nombre);
-			System.out.println(getNroJugador());
 		} catch (IndexOutOfBoundsException e) {
-			if(e.getMessage().equals("CantidadMinima")) {
-				vista.mostrarError(ErrorCantidadMinimaJugadores);
-			}
 			if(e.getMessage().equals("CantidadMaxima")) {
 				vista.mostrarError(ErrorCantidadMaximaJugadores);
 			}
@@ -166,16 +162,6 @@ public class Controlador implements IControladorRemoto {
 		return null;
 	}
 
-// TODO IMPORTANTE: ¿QUÉ ES ESTO? REVISAR	
-	/* public ArrayList<Enum> rtaSospecha(){
-		try {
-		if (paquete.size() == 1) // la lista paquete tiene en las primeras posiciones el/los elemento/s que se envian
-			return juego.sospecha(this.receptor, this.setSospecha(paquete.get(0)), this.setSospecha(paquete.get(1))); //En este caso las sospechas.
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-		return null;
-	} */
 
 	public boolean rtaSospechaFinal(Enum agentes, Enum dispositivos, Enum ciudades) {
 		try {
@@ -229,12 +215,9 @@ public class Controlador implements IControladorRemoto {
 	
 	public void recibirSospecha(ArrayList<String> lista) {
 		try {
-		//	mostrarSospechar();
 			respuesta = null;
-			juego.setSospecha(lista
-					);
+			juego.setSospecha(lista);
 			int jugador = juego.getSospechado();
-			vista.mostrarSospecha(jugador);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -249,15 +232,15 @@ public class Controlador implements IControladorRemoto {
 		return respuesta;
 	}
 
-	public void setRespuesta(String respuesta) {
-		this.respuesta = respuesta;
+	public void setRespuesta(String respuesta) throws RemoteException {
+		juego.setRespuesta(respuesta);
 	}
 
 	public void setSospechado(String sospechado) {
 		this.sospechado = sospechado;
 	}
 	
-	public Carta[] getSospecha() throws RemoteException {
+	public ArrayList<String> getSospecha() throws RemoteException {
 		return juego.getSospecha();
 	}
 
@@ -284,6 +267,10 @@ public class Controlador implements IControladorRemoto {
 	}
 	public Carta[] getInfoSecreta() throws RemoteException {
 		return juego.getInfoSecreta();
+	}
+
+	public ArrayList<String> verificarRespuesta() throws RemoteException {
+		return juego.verificarRespuesta();
 	}
 
 
