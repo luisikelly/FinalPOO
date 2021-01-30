@@ -58,9 +58,9 @@ public interface IJuego extends IObservableRemoto, Serializable{
 
 	ArrayList<String> verificarRespuesta() throws RemoteException;
 
-	void setRespuesta(String r) throws RemoteException;
-
 	String getRespuesta() throws RemoteException;
+
+	void setRespuesta(String respuesta) throws RemoteException;
 
 
 }

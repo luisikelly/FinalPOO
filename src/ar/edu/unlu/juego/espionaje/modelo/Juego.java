@@ -25,7 +25,7 @@ public class Juego extends ObservableRemoto implements IJuego {
 	private boolean enJuego = true;
 	private IJugador ganador = null;
 	private boolean gano = false;
-	private int jugadorEnTurno;
+	private int jugadorEnTurno = 0;
 	private int sospechado;
 	private Enum sospecha1;
 	private Enum sospecha2;
@@ -78,11 +78,9 @@ public class Juego extends ObservableRemoto implements IJuego {
             this.repartirAC();
             this.descartarArchivoConfidencial_AgendaPersonal();
             this.jugadorEnTurno = 0;
-            System.out.println(this.getJugadorEnTurno().getNombre());
-            this.sospechado = this.jugadorEnTurno ++;
+            this.sospechado = 1;
  			notificar(CambiosJuego.CAMBIO_JUGADOR);
 			notificar(CambiosJuego.CAMBIO_ESTADO);
-			
 		} else {
 			IndexOutOfBoundsException ex;
 			if(jugadores.size() < 2) {
@@ -146,23 +144,7 @@ public class Juego extends ObservableRemoto implements IJuego {
 		}
 	}
 	
-	
-	//TODO IMPORTANTE: ¿QUÉ ES ESTO? REVISAR
-	
-	/*	@Override 
-	public ArrayList<Enum> sospecha(IJugador j, Enum s1, Enum s2 ) throws RemoteException {
-		ArrayList<Enum> resp = new ArrayList<Enum>();
-		for(int jug=0; jug<= jugadores.size() - 1; jug++ ) {
-			if(jugadores.get(jug).equals(j)) {
-				// Debería enviarle la sospecha al jugador sospechado ¿Como hacerlo?
-			    resp = jugadores.get(jug).respuestaSospecha(s1, s2);
-			}
-		}
-		eEJ = E_EN_JUEGO.RESPONDER;
-		notificar(CambiosJuego.CAMBIO_ESTADO);
-		return resp;
-	} */
-	
+		
 	
 	@Override
 	public void setSospecha(ArrayList<String> s) throws RemoteException {
@@ -171,7 +153,7 @@ public class Juego extends ObservableRemoto implements IJuego {
 		notificar(CambiosJuego.CAMBIO_ESTADO);
 	}
 	
-	@Override
+	/*@Override
 	public void setRespuesta(String r) throws RemoteException {
 		if(! r.equals("")) {
 			respuesta = r;
@@ -183,22 +165,30 @@ public class Juego extends ObservableRemoto implements IJuego {
 			notificar(CambiosJuego.CAMBIO_ESTADO);
 		}
 		
-	}
+	}*/
 	
-	public void recibioRespuesta(String respuesta) throws RemoteException {
-		for(int i = 0; i<= this.getJugadorEnTurno().getAgendaPersonal().cantCartas()-1; i++) {
+	@Override
+	public void setRespuesta(String respuesta) throws RemoteException {
+		this.respuesta = respuesta;
+		if(!respuesta.equals("")){
+			for(int i = 0; i<= this.getJugadorEnTurno().getAgendaPersonal().cantCartas()-1; i++) {
 			Carta  carta = this.getJugadorEnTurno().getAgendaPersonal().getCarta(i);
 			if(respuesta.equals(carta.getFigura()) && carta.cartaValida()) {
 				carta.descartar(true);
 				this.eEJ = E_EN_JUEGO.RESPUESTA;
 				notificar(CambiosJuego.CAMBIO_ESTADO);
 				}
-		}
-		if(respuesta.equals("")) {
-			this.sospechado = sospechado ++;
-			this.eEJ = E_EN_JUEGO.SOSPECHA;
-			notificar(CambiosJuego.CAMBIO_ESTADO);
-		}
+			}
+		}else {
+				if(jugadores.size() > 2 && (sospechado != jugadorEnTurno)) {
+					if(sospechado == jugadores.size()-1){ sospechado = 0;}
+			    	else {sospechado++;}
+					this.eEJ = E_EN_JUEGO.SOSPECHA;
+					notificar(CambiosJuego.CAMBIO_ESTADO);
+				}else {
+					this.pasar();
+				}
+			}
 	}
 	
 	@Override
@@ -270,31 +260,36 @@ public class Juego extends ObservableRemoto implements IJuego {
     
     @Override
 	public void cambiarJugador() throws RemoteException {
-		jugadorEnTurno ++;
-		if (jugadorEnTurno == jugadores.size()) {
-			jugadorEnTurno = 0;
-			if (ganador()) {
-				estado = ESTADOS.FINALIZADO;
-				notificar(CambiosJuego.HAY_GANADOR);
-				notificar(CambiosJuego.CAMBIO_ESTADO);
+    	if (ganador()) {
+			estado = ESTADOS.FINALIZADO;
+			notificar(CambiosJuego.HAY_GANADOR);
+			notificar(CambiosJuego.CAMBIO_ESTADO);
+		} else {
+			if (jugadorEnTurno == jugadores.size()-1) {
+				jugadorEnTurno = 0;
+				sospechado = 1;	
+			}else {
+				jugadorEnTurno ++;
+				int j = jugadorEnTurno;
+		    	if(sospechado == jugadores.size()-1){ sospechado = 0;}
+		    	else {sospechado = j++;}
+
 			}
-			sospecha = null;
 			eEJ = E_EN_JUEGO.SOSPECHA;
 			notificar(CambiosJuego.CAMBIO_ESTADO);
 		}
-		if(jugadores.get(jugadorEnTurno).getEnJuego() == false) {
-			jugadorEnTurno ++;
-		}
-		//if (estado != ESTADOS.FINALIZADO) {
-			//notificar(CambiosJuego.CAMBIO_JUGADOR);
-		//}
+			
+		
 	}
 
     
 	@Override
 	public void pasar() throws RemoteException {
 		this.cambiarJugador();
-		notificar(CambiosJuego.CAMBIO_JUGADOR);
+		this.respuesta = "";
+		for(int i=0; i> sospecha.size()-1;i++) {
+			this.sospecha.remove(i);
+		}
 	}
 
 	
@@ -358,15 +353,8 @@ public class Juego extends ObservableRemoto implements IJuego {
 	@Override
 	public ArrayList<String> verificarRespuesta() throws RemoteException {
 		ArrayList<String> opcionesRespuesta = new ArrayList<String>();
-		int opciones = 0 ;
-		IJugador j = this.getJugadores().get(this.getSospechado());
-		for(int i=0; i<= this.getJugadores().get(this.getSospechado()).getCartasSecretas().cantCartas() -1;i++) {
-			if((j.getCartasSecretas().getCarta(i).getFigura().equals(this.sospecha.get(0)) || j.getCartasSecretas().getCarta(i).getFigura().equals(this.sospecha.get(1))) && opciones <= 1) {
-				opcionesRespuesta.add(j.getCartasSecretas().getCarta(i).getFigura());
-				opciones ++;
-			}
-		}
-		return opcionesRespuesta;
+		Jugador j = (Jugador) this.getJugadores().get(sospechado);
+		return opcionesRespuesta = j.respuestaSospecha(sospecha);
 	}
 
 	

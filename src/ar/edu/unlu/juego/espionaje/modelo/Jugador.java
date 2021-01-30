@@ -1,3 +1,4 @@
+
 package ar.edu.unlu.juego.espionaje.modelo;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -39,15 +40,15 @@ public class Jugador implements IJugador{
 		return cartasSecretas;
 	}
 	
-	public ArrayList<Enum> respuestaSospecha(Enum fig1, Enum fig2) {
-		ArrayList<Enum> tiene = new ArrayList<Enum>();
+	public ArrayList<String> respuestaSospecha(ArrayList<String> r) {
+		ArrayList<String> tiene = new ArrayList<String>();
 		boolean coincide= false;
-		for(int i = 0; i<= cartasSecretas.cantCartas();i++) {
-			if((fig1.name().equals(cartasSecretas.getCarta(i).getFigura()))) {
-				tiene.add(fig1);
+		for(int i = 0; i<= cartasSecretas.cantCartas()-1;i++) {
+			if((r.get(0).equals(cartasSecretas.getCarta(i).getFigura()))) {
+				tiene.add(r.get(0));
 			}
-			if((fig2.name().equals(cartasSecretas.getCarta(i).getFigura()))) {
-				tiene.add(fig2);
+			if((r.get(1).equals(cartasSecretas.getCarta(i).getFigura()))) {
+				tiene.add(r.get(1));
 			}
 		}
 		return tiene;

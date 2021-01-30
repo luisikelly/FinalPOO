@@ -20,11 +20,10 @@ public class Controlador implements IControladorRemoto {
 	private IJuego juego;
 	private IVista vista;
 	private ArrayList<String> sospecha;
-	private String respuesta;
 	private final String ErrorCantidadMinimaJugadores = "MenosJugadores";
 	private final String ErrorCantidadMaximaJugadores = "MasJugadores";
 	private int nroJugador;
-	private String sospechado;
+	//private String sospechado;
 
 
 	
@@ -127,8 +126,21 @@ public class Controlador implements IControladorRemoto {
 
 // Control juego	
 	
-	public int getNroJugador() {
-		return nroJugador;
+	public void paso() {
+		try {
+			juego.pasar();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void reiniciar() {
+		try {
+			juego.reiniciar();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public void agregarJugador(String nombre)  {
@@ -144,24 +156,27 @@ public class Controlador implements IControladorRemoto {
 		}	
 	}
 
-	public IJugador getJugadorEnTurno() {
+	public ArrayList<IJugador> listaJugadores() {
 		try {
-			return juego.getJugadorEnTurno();
+			return juego.getJugadores();
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	public IJugador getGanador() {
-		try {
-			return juego.getGanador();
-		} catch (RemoteException e) {
-			e.printStackTrace();
+	public IJugador buscarJugador(String s) throws RemoteException {
+		IJugador jugador = null;
+		int i = 0;
+		while( i>= juego.getJugadores().size()-1) {
+			if(juego.getJugadores().get(i).getNombre().equals(s))
+				jugador = juego.getJugadores().get(i);
+			else 
+				i++;
+				
 		}
-		return null;
+		return jugador;
 	}
-
 
 	public boolean rtaSospechaFinal(Enum agentes, Enum dispositivos, Enum ciudades) {
 		try {
@@ -182,77 +197,46 @@ public class Controlador implements IControladorRemoto {
 	}
 
 
-	public ArrayList<IJugador> listaJugadores() {
-		try {
-			return juego.getJugadores();
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-		return null;
+	public void descartar() throws RemoteException {
+		juego.descartarArchivoConfidencial_AgendaPersonal();
+		
 	}
-
-	public void reiniciar() {
-		try {
-			juego.reiniciar();
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-
+	public ArrayList<String> verificarRespuesta() throws RemoteException {
+		return juego.verificarRespuesta();
 	}
-
-	public IJugador buscarJugador(String s) throws RemoteException {
-		IJugador jugador = null;
-		int i = 0;
-		while( i>= juego.getJugadores().size()-1) {
-			if(juego.getJugadores().get(i).getNombre().equals(s))
-				jugador = juego.getJugadores().get(i);
-			else 
-				i++;
-				
-		}
-		return jugador;
+	public boolean hayRespuesta() throws RemoteException{
+		boolean hay;
+		if(!this.verificarRespuesta().isEmpty()) {
+			hay = true;
+		} else{hay = false; }
+		return hay;
 	}
 	
-	public void recibirSospecha(ArrayList<String> lista) {
+	//GETTERS - SETTERS
+	
+	//SETTERS
+	
+	public void setSospecha(ArrayList<String> lista) {
 		try {
-			respuesta = null;
 			juego.setSospecha(lista);
 			int jugador = juego.getSospechado();
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
-
 	}
 
+	public String getRespuesta() throws RemoteException {return juego.getRespuesta();}
+
+	public void setRespuesta(String respuesta) throws RemoteException { juego.setRespuesta(respuesta);}
+
+	// GETTERS
 	
-	//GETTERS - SETTERS
+	public ArrayList<String> getSospecha() throws RemoteException {return juego.getSospecha();}
 	
-
-	public String getRespuesta() {
-		return respuesta;
-	}
-
-	public void setRespuesta(String respuesta) throws RemoteException {
-		juego.setRespuesta(respuesta);
-	}
-
-	public void setSospechado(String sospechado) {
-		this.sospechado = sospechado;
-	}
+	public Carta[] getInfoSecreta() throws RemoteException {return juego.getInfoSecreta();}
 	
-	public ArrayList<String> getSospecha() throws RemoteException {
-		return juego.getSospecha();
-	}
-
+	public int getNroJugador() {return nroJugador;}
 	
-	public void paso() {
-		try {
-			juego.pasar();
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public int getSospechado() {
 		try {
 			return juego.getSospechado();
@@ -261,30 +245,25 @@ public class Controlador implements IControladorRemoto {
 		}
 		return -1;
 	}
-	public void descartar() throws RemoteException {
-		juego.descartarArchivoConfidencial_AgendaPersonal();
-		
-	}
-	public Carta[] getInfoSecreta() throws RemoteException {
-		return juego.getInfoSecreta();
-	}
-
-	public ArrayList<String> verificarRespuesta() throws RemoteException {
-		return juego.verificarRespuesta();
+	
+	public IJugador getJugadorEnTurno() {
+		try {
+			return juego.getJugadorEnTurno();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
-
-/*public static void main(String[] args) {
-	IJuego j = new Juego();
-	IVista vista = new VConsola();
-	Controlador controlador = new Controlador(j,vista);
-	try {
-		j.iniciarAplicacion();
-	} catch (RemoteException e) {
-
-		e.printStackTrace();
+	public IJugador getGanador() {
+		try {
+			return juego.getGanador();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
-}*/
 
+	
 				
 }
