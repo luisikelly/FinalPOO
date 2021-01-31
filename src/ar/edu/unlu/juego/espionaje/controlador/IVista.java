@@ -24,7 +24,8 @@ public interface IVista {
 	
 	void mostrarTerminado();
 
-// void  mostrarElegirRespuesta();
+
+	// void  mostrarElegirRespuesta();
 
 	void mostrarResponder();
 	

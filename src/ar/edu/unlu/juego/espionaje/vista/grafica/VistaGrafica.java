@@ -55,6 +55,9 @@ public class VistaGrafica implements Serializable,IVista{
 	private JPanel pantallaArriesgar;
 	private JPanel pantallaGanador;
 	private JPanel pantallaTerminado;
+	
+	private JButton btnEnviar;
+	private JButton btnArriesgar;
 
 
 	private JLabel lblNombrejugadorPSospecha;
@@ -68,13 +71,18 @@ public class VistaGrafica implements Serializable,IVista{
 	private JLabel lblSeleccionTuRespuesta;
 	private JLabel lblCarta;
 	private JLabel lblNombrejugadorPResponder;
+	private JLabel lblMensaje;
+	private JLabel lblIcono;
 	
 	private JTextArea textJugadores;
 	private JTextArea textArea;
 	
 	private JComboBox s1;
 	private JComboBox s2;
-	JComboBox cbRespuesta;
+	private JComboBox cbRespuesta;
+	private JComboBox cbCiudad;
+	private JComboBox cbAgente;
+	private JComboBox cbDispositivo;
 	
 	private PanelMostrar pantallaRespuesta;
 	private CardLayout cardLayout;
@@ -104,7 +112,7 @@ public class VistaGrafica implements Serializable,IVista{
 	//OTROS
 	
 	private ArrayList<String> lista = new ArrayList<String>();
-	 private DefaultTableModel model;
+
 
 
 	
@@ -142,7 +150,6 @@ public class VistaGrafica implements Serializable,IVista{
 		contentPane.add(pantallaSospechar, SOSPECHAR);
 		contentPane.add(this.crearPantallaResponder(), RESPONDER);
 		contentPane.add(this.crearPantallaArriesgar(), ARRIESGAR);
-		contentPane.add(this.crearPantallaGanador(), GANADOR);
 		contentPane.add(this.crearPantallaTerminado(), TERMINO);
 		contentPane.add(this.crearPantallaMostrar(), RESPUESTA);
 		contentPane.add(this.crearPantallaTurno(), TURNO);
@@ -167,12 +174,27 @@ public class VistaGrafica implements Serializable,IVista{
 	
 	@Override
 	public void mostrarArriesgar() {
-		cardLayout.show(contentPane, SOSPECHAR);
+		for(int i=0; i<= controlador.getJugadorEnTurno().getAgendaPersonal().cantCartas()-1;i++) {
+			if(controlador.getJugadorEnTurno().getAgendaPersonal().getCarta(i).cartaValida()){
+				if(controlador.getJugadorEnTurno().getAgendaPersonal().getCarta(i).getTipo().equals("CIUDAD")  ) {
+					cbCiudad.addItem(controlador.getJugadorEnTurno().getAgendaPersonal().getCarta(i).getFigura());
+				}
+				if(controlador.getJugadorEnTurno().getAgendaPersonal().getCarta(i).getTipo().equals("AGENTE")  ) {
+					cbAgente.addItem(controlador.getJugadorEnTurno().getAgendaPersonal().getCarta(i).getFigura());
+				}
+				if(controlador.getJugadorEnTurno().getAgendaPersonal().getCarta(i).getTipo().equals("DISPOSITIVO")  ) {
+					cbDispositivo.addItem(controlador.getJugadorEnTurno().getAgendaPersonal().getCarta(i).getFigura());
+				}
+
+			}
+		}
+		cardLayout.show(contentPane, ARRIESGAR);
 	}
 	
 	@Override
 	public void mostrarSospechar() {
-		JCheckBox cbx;
+		if(!btnEnviar.isEnabled()) {btnEnviar.setEnabled(true);}
+		if(!btnArriesgar.isEnabled()) {btnArriesgar.setEnabled(true);}
 		String nro = controlador.getNroJugador() + "";
 		lblnro.setText(nro);	
 		System.out.println(controlador.getSospechado());
@@ -426,18 +448,26 @@ public class VistaGrafica implements Serializable,IVista{
 		
 		sizedFont = normalFont.deriveFont(15f);
 		
-		JButton btnArriesgar = new JButton("ARRIESGAR");
+		btnArriesgar = new JButton("ARRIESGAR");
 		btnArriesgar.setBounds(20, 260, 115, 23);
 		pantallaEntrada.add(btnArriesgar);
 		btnArriesgar.setFont(sizedFont);
 		
-		JButton btnEnviar = new JButton("ENVIAR");
+		btnEnviar = new JButton("ENVIAR");
 		btnEnviar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				lista.clear();
 				if(!s1.getSelectedItem().equals(s2.getSelectedItem())) {
+					if(!lista.isEmpty()) {System.out.println(lista.get(0)+" " + lista.get(1));}
 					lista.add((String) s1.getSelectedItem());
 					lista.add((String) s2.getSelectedItem());
 					controlador.setSospecha(lista);
+					s1.removeAllItems();
+					s2.removeAllItems();
+					btnArriesgar.setEnabled(false);
+					btnEnviar.setEnabled(false);
+					JOptionPane.showMessageDialog(null, "Esperando respuesta de "+controlador.listaJugadores().get(controlador.getSospechado()).getNombre());
+					
 				}else {
 				 	JOptionPane.showMessageDialog(null,"Deben ser dos cartas distintas");
 				}
@@ -575,12 +605,63 @@ public class VistaGrafica implements Serializable,IVista{
 		pantallaArriesgar.setLayout(null);
 		
 		JLabel label_1 = new JLabel("ESPIONAJE");
+		label_1.setFont(boldFont.deriveFont(40f));
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
 		label_1.setForeground(Color.WHITE);
 		label_1.setFont(new Font("Dialog", Font.PLAIN, 40));
 		label_1.setBounds(0, 11, 465, 55);
 		pantallaArriesgar.add(label_1);
+		
 
+		JLabel lblElegLasCartas = new JLabel("ELEG\u00CD LAS CARTAS DE TU ACUSACI\u00D3N:");
+		lblElegLasCartas.setFont(normalFont.deriveFont(20f));
+		lblElegLasCartas.setHorizontalAlignment(SwingConstants.CENTER);
+		lblElegLasCartas.setBounds(45, 77, 388, 36);
+		pantallaArriesgar.add(lblElegLasCartas);
+		
+		JLabel lblCiudad = new JLabel("CIUDAD:");
+		lblCiudad.setFont(normalFont.deriveFont(18f));
+		lblCiudad.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCiudad.setBounds(45, 124, 169, 34);
+		pantallaArriesgar.add(lblCiudad);
+		
+		cbCiudad = new JComboBox();
+		cbCiudad.setFont(normalFont.deriveFont(18f));
+		cbCiudad.setBounds(224, 131, 156, 20);
+		pantallaArriesgar.add(cbCiudad);
+		
+		cbAgente = new JComboBox();
+		cbAgente.setFont(normalFont.deriveFont(18f));
+		cbAgente.setBounds(224, 162, 156, 20);
+		pantallaArriesgar.add(cbAgente);
+		
+		cbDispositivo = new JComboBox();
+		cbDispositivo.setFont(normalFont.deriveFont(18f));
+		cbDispositivo.setBounds(224, 191, 156, 20);
+		pantallaArriesgar.add(cbDispositivo);
+		
+		JLabel lblAgente = new JLabel("AGENTE:");
+		lblAgente.setFont(normalFont.deriveFont(18f));
+		lblAgente.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAgente.setBounds(45, 148, 169, 34);
+		pantallaArriesgar.add(lblAgente);
+		
+		JLabel lblDispositivo = new JLabel("DISPOSITIVO:");
+		lblDispositivo.setFont(normalFont.deriveFont(18f));
+		lblDispositivo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDispositivo.setBounds(45, 177, 169, 34);
+		pantallaArriesgar.add(lblDispositivo);
+		
+		JButton btnEnviar_1 = new JButton("ENVIAR");
+		btnEnviar_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controlador.rtaSospechaFinal((String) cbCiudad.getSelectedItem(), (String) cbDispositivo.getSelectedItem(),(String)  cbAgente.getSelectedItem());
+			}
+		});
+		btnEnviar_1.setBounds(334, 253, 109, 34);
+		pantallaArriesgar.add(btnEnviar_1);
+		contentPane.add(this.crearPantallaGanador(), GANADOR);
+		
 
 		return pantallaArriesgar;
 
@@ -592,11 +673,26 @@ public class VistaGrafica implements Serializable,IVista{
 		pantallaGanador.setLayout(null);
 		
 		JLabel label_2 = new JLabel("ESPIONAJE");
+		label_2.setFont(boldFont.deriveFont(40f));
 		label_2.setHorizontalAlignment(SwingConstants.CENTER);
 		label_2.setForeground(Color.WHITE);
 		label_2.setFont(new Font("Dialog", Font.PLAIN, 40));
 		label_2.setBounds(0, 11, 465, 55);
 		pantallaGanador.add(label_2);
+
+		lblMensaje = new JLabel("MENSAJE");
+		lblMensaje.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMensaje.setForeground(Color.RED);
+		lblMensaje.setBounds(22, 169, 433, 69);
+		pantallaGanador.add(lblMensaje);
+		
+		lblIcono = new JLabel("Icono");
+		lblIcono.setBounds(205, 108, 46, 14);
+		pantallaGanador.add(lblIcono);
+		
+		JButton btnEnviar_2 = new JButton("Ok");
+		btnEnviar_2.setBounds(370, 271, 85, 29);
+		pantallaGanador.add(btnEnviar_2);
 
 		return pantallaGanador;
 	}
@@ -604,14 +700,38 @@ public class VistaGrafica implements Serializable,IVista{
 	private JPanel crearPantallaTerminado() {
 		this.pantallaTerminado = new JPanel();
 		pantallaTerminado.setLayout(null);
-
 		pantallaTerminado.setBackground(Color.DARK_GRAY);
+		
 		JLabel lblTitulo = new JLabel("ESPIONAJE");
+		lblTitulo.setFont(normalFont.deriveFont(40f));
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitulo.setForeground(Color.WHITE);
 		lblTitulo.setFont(new Font("Dialog", Font.PLAIN, 40));
 		lblTitulo.setBounds(0, 11, 465, 55);
 		pantallaTerminado.add(lblTitulo);
+		
+		JButton btnVolverAJugar = new JButton("VOLVER A JUGAR");
+		btnVolverAJugar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controlador.reiniciar();
+			}
+		});
+		btnVolverAJugar.setFont(normalFont.deriveFont(20f));
+		btnVolverAJugar.setBounds(60, 189, 163, 38);
+		pantallaTerminado.add(btnVolverAJugar);
+		
+		JButton btnSalir = new JButton("SALIR");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controlador.salir();
+				frmEspionaje.setVisible(false);
+				frmEspionaje.dispose();
+			}
+		});
+		btnSalir.setFont(normalFont.deriveFont(20f));
+		btnSalir.setBounds(240, 189, 142, 38);
+		pantallaTerminado.add(btnSalir);
+		
 		return pantallaTerminado;
 	}
 	

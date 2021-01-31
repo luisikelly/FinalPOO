@@ -46,17 +46,7 @@ public class VistaConsola implements IVista, Serializable {
 		// 7/9/2020: No se utiliza ese metodo en esta vista POR AHORA. La función esta implementada en el menu del juego.		
 	}
 
-	@Override
-	public void mostrarJugando() {
-		menu = new MenuJuego(controlador);
-		menu.mostrarMenu();
-	}
 
-	@Override
-	public void mostrarSospecha(int jugador) {
-		// 7/9/2020: No se utiliza ese metodo en esta vista POR AHORA. La función esta implementada en el menu del juego.
-		
-	}
 
 	@Override
 	public void avisoGanador() {
@@ -91,11 +81,7 @@ public class VistaConsola implements IVista, Serializable {
 		System.out.println("--------        ESPIONAJE     -----------");		
 	}
 
-	@Override
-	public void mostrarElegirRespuesta() {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	@Override
 	public void mostrarResponder() {
@@ -103,11 +89,7 @@ public class VistaConsola implements IVista, Serializable {
 		
 	}
 
-	@Override
-	public void mostrarRespuesta() {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 		
 
@@ -146,6 +128,18 @@ public class VistaConsola implements IVista, Serializable {
 
 	@Override
 	public void mostrarSospechar() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mostrarRespuesta(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mostrarTurno(String string) {
 		// TODO Auto-generated method stub
 		
 	}

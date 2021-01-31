@@ -32,7 +32,7 @@ public interface IJuego extends IObservableRemoto, Serializable{
 
 //	ArrayList<Enum> sospecha(IJugador j, Enum s1, Enum s2) throws RemoteException;
 
-	boolean verificarSospechaFinal(Enum agente, Enum dispositivo, Enum ciudad) throws RemoteException;
+	//boolean verificarSospechaFinal(Enum agente, Enum dispositivo, Enum ciudad) throws RemoteException;
 
 	void descartarArchivoConfidencial_AgendaPersonal() throws RemoteException;
 
@@ -61,6 +61,10 @@ public interface IJuego extends IObservableRemoto, Serializable{
 	String getRespuesta() throws RemoteException;
 
 	void setRespuesta(String respuesta) throws RemoteException;
+
+	void salir(int nroJugador);
+
+	boolean verificarSospechaFinal(String agentes, String dispositivos, String ciudades) throws RemoteException;
 
 
 }

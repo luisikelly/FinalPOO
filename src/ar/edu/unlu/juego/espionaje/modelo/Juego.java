@@ -20,6 +20,8 @@ public class Juego extends ObservableRemoto implements IJuego {
 	private Mazo archivoConfidencial; 
 	private Carta[] infoSecreta;
 	private ArrayList<Jugador> jugadores;
+	
+	
 	private ESTADOS estado = ESTADOS.CONFIGURANDO;
 	private E_EN_JUEGO eEJ;
 	private boolean enJuego = true;
@@ -97,6 +99,12 @@ public class Juego extends ObservableRemoto implements IJuego {
 	
 //PROCEDIMIENTOS PARA EL DESARROLLO DEL JUEGO
 
+	public void resetSospecha() {
+		this.respuesta = "";
+		sospecha.clear();
+
+	}
+	
 	@Override
 	public boolean ganador() throws RemoteException{
 		return gano;
@@ -183,6 +191,7 @@ public class Juego extends ObservableRemoto implements IJuego {
 				if(jugadores.size() > 2 && (sospechado != jugadorEnTurno)) {
 					if(sospechado == jugadores.size()-1){ sospechado = 0;}
 			    	else {sospechado++;}
+					this.resetSospecha();
 					this.eEJ = E_EN_JUEGO.SOSPECHA;
 					notificar(CambiosJuego.CAMBIO_ESTADO);
 				}else {
@@ -191,37 +200,6 @@ public class Juego extends ObservableRemoto implements IJuego {
 			}
 	}
 	
-	@Override
-	public boolean verificarSospechaFinal(Enum agente, Enum dispositivo, Enum ciudad) throws RemoteException {
-		boolean resultado = false;
-			if((infoSecreta[1].getFigura().equals(agente.name())) && (infoSecreta[2].getFigura().equals(dispositivo.name())) && (infoSecreta[0].getFigura().equals(ciudad.name()))) {
-								resultado = true; }
-		if(resultado) {
-			ganador = this.getJugadorEnTurno();
-			gano= true;
-			notificar(CambiosJuego.HAY_GANADOR);
-			estado = ESTADOS.FINALIZADO;	} 
-		else {
-			notificar(CambiosJuego.JUGADOR_PERDIO);
-			int cantJugadores =0;
-			for(int jugador =0; jugador <= jugadores.size()-1; jugador ++ ) {
-				if(jugadores.get(jugador).getEnJuego())
-					cantJugadores++; }
-		if(cantJugadores == 2) {
-			this.cambiarJugador();
-			ganador = this.getJugadorEnTurno();
-			gano = true;
-			notificar(CambiosJuego.HAY_GANADOR);
-			estado = ESTADOS.FINALIZADO;}
-		else {
-			this.getJugadorEnTurno().sacarjuego();
-			this.pasar();
-			notificar(CambiosJuego.CAMBIO_JUGADOR);}
-		}
-		
-		return resultado;
-		
-	}
 	
 	
 	@Override
@@ -272,13 +250,15 @@ public class Juego extends ObservableRemoto implements IJuego {
 				jugadorEnTurno ++;
 				int j = jugadorEnTurno;
 		    	if(sospechado == jugadores.size()-1){ sospechado = 0;}
-		    	else {sospechado = j++;}
+		    	else {sospechado = ++j;}
 
 			}
+		
 			eEJ = E_EN_JUEGO.SOSPECHA;
 			notificar(CambiosJuego.CAMBIO_ESTADO);
 		}
-			
+    	System.out.println(jugadorEnTurno);
+    	System.out.println(sospechado);			
 		
 	}
 
@@ -286,10 +266,7 @@ public class Juego extends ObservableRemoto implements IJuego {
 	@Override
 	public void pasar() throws RemoteException {
 		this.cambiarJugador();
-		this.respuesta = "";
-		for(int i=0; i> sospecha.size()-1;i++) {
-			this.sospecha.remove(i);
-		}
+		this.resetSospecha();
 	}
 
 	
@@ -357,8 +334,43 @@ public class Juego extends ObservableRemoto implements IJuego {
 		return opcionesRespuesta = j.respuestaSospecha(sospecha);
 	}
 
-	
+	@Override
+	public void salir(int nroJugador) {
+		this.jugadores.remove(nroJugador);
+		
+		
+	}
 
+	@Override
+	public boolean verificarSospechaFinal(String agente, String dispositivo, String ciudad) throws RemoteException {
+		boolean resultado = false;
+		if((infoSecreta[1].getFigura().equals(agente)) && (infoSecreta[2].getFigura().equals(dispositivo)) && (infoSecreta[0].getFigura().equals(ciudad))) {
+							resultado = true; }
+	if(resultado) {
+		ganador = this.getJugadorEnTurno();
+		gano= true;
+		notificar(CambiosJuego.HAY_GANADOR);
+		estado = ESTADOS.FINALIZADO;	} 
+	else {
+		notificar(CambiosJuego.JUGADOR_PERDIO);
+		int cantJugadores =0;
+		for(int jugador =0; jugador <= jugadores.size()-1; jugador ++ ) {
+			if(jugadores.get(jugador).getEnJuego())
+				cantJugadores++; }
+	if(cantJugadores == 2) {
+		this.cambiarJugador();
+		ganador = this.getJugadorEnTurno();
+		gano = true;
+		notificar(CambiosJuego.HAY_GANADOR);
+		estado = ESTADOS.FINALIZADO;}
+	else {
+		this.getJugadorEnTurno().sacarjuego();
+		this.pasar();
+		notificar(CambiosJuego.CAMBIO_JUGADOR);}
+	}
+	
+	return resultado;
+	}
 	
 
 

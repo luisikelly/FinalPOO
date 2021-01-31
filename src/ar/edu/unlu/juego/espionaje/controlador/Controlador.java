@@ -178,7 +178,7 @@ public class Controlador implements IControladorRemoto {
 		return jugador;
 	}
 
-	public boolean rtaSospechaFinal(Enum agentes, Enum dispositivos, Enum ciudades) {
+	public boolean rtaSospechaFinal(String agentes, String dispositivos, String ciudades) {
 		try {
 			return juego.verificarSospechaFinal(agentes, dispositivos, ciudades);
 		} catch (RemoteException e) {
@@ -262,6 +262,11 @@ public class Controlador implements IControladorRemoto {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public void salir() {
+		juego.salir(this.nroJugador);
+		
 	}
 
 	
