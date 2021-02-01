@@ -62,9 +62,11 @@ public interface IJuego extends IObservableRemoto, Serializable{
 
 	void setRespuesta(String respuesta) throws RemoteException;
 
-	void salir(int nroJugador);
+	// void salir(int nroJugador);
 
 	boolean verificarSospechaFinal(String agentes, String dispositivos, String ciudades) throws RemoteException;
+
+	void arriesgar() throws RemoteException;
 
 
 }

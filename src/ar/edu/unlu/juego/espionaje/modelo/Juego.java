@@ -1,5 +1,12 @@
 package ar.edu.unlu.juego.espionaje.modelo;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -12,16 +19,15 @@ import ar.edu.unlu.juego.espionaje.modelo.DISPOSITIVOS;
 import ar.edu.unlu.rmimvc.observer.ObservableRemoto;
 
 
-public class Juego extends ObservableRemoto implements IJuego {
+public class Juego extends ObservableRemoto implements IJuego,Serializable {
 	
 	
 	public static enum E_EN_JUEGO {SOSPECHA,ARRIESGA,RESPUESTA,RESPONDER, MENU, INICIAL};
 	
 	private Mazo archivoConfidencial; 
 	private Carta[] infoSecreta;
-	private ArrayList<Jugador> jugadores;
-	
-	
+	private ArrayList<Jugador> jugadores;	
+	private ArrayList<String> rankingJugadores = new ArrayList<String>();
 	private ESTADOS estado = ESTADOS.CONFIGURANDO;
 	private E_EN_JUEGO eEJ;
 	private boolean enJuego = true;
@@ -33,6 +39,7 @@ public class Juego extends ObservableRemoto implements IJuego {
 	private Enum sospecha2;
 	private ArrayList<String> sospecha;
 	private String respuesta;
+	
 	
 	
 	public static void main (String args[]) throws RemoteException {
@@ -83,6 +90,9 @@ public class Juego extends ObservableRemoto implements IJuego {
             this.sospechado = 1;
  			notificar(CambiosJuego.CAMBIO_JUGADOR);
 			notificar(CambiosJuego.CAMBIO_ESTADO);
+			System.out.println(this.getInfoSecreta()[0].getFigura());
+			System.out.println(this.getInfoSecreta()[1].getFigura());
+			System.out.println(this.getInfoSecreta()[2].getFigura());
 		} else {
 			IndexOutOfBoundsException ex;
 			if(jugadores.size() < 2) {
@@ -239,7 +249,6 @@ public class Juego extends ObservableRemoto implements IJuego {
     @Override
 	public void cambiarJugador() throws RemoteException {
     	if (ganador()) {
-			estado = ESTADOS.FINALIZADO;
 			notificar(CambiosJuego.HAY_GANADOR);
 			notificar(CambiosJuego.CAMBIO_ESTADO);
 		} else {
@@ -253,9 +262,11 @@ public class Juego extends ObservableRemoto implements IJuego {
 		    	else {sospechado = ++j;}
 
 			}
-		
+		if(! eEJ.equals(E_EN_JUEGO.ARRIESGA)) {
 			eEJ = E_EN_JUEGO.SOSPECHA;
 			notificar(CambiosJuego.CAMBIO_ESTADO);
+		}
+			
 		}
     	System.out.println(jugadorEnTurno);
     	System.out.println(sospechado);			
@@ -335,42 +346,92 @@ public class Juego extends ObservableRemoto implements IJuego {
 	}
 
 	@Override
-	public void salir(int nroJugador) {
-		this.jugadores.remove(nroJugador);
-		
-		
-	}
-
-	@Override
 	public boolean verificarSospechaFinal(String agente, String dispositivo, String ciudad) throws RemoteException {
 		boolean resultado = false;
-		if((infoSecreta[1].getFigura().equals(agente)) && (infoSecreta[2].getFigura().equals(dispositivo)) && (infoSecreta[0].getFigura().equals(ciudad))) {
-							resultado = true; }
+		if((infoSecreta[0].getFigura().equals(ciudad)) && (infoSecreta[1].getFigura().equals(agente)) && (infoSecreta[2].getFigura().equals(dispositivo))) {
+			resultado = true; 
+			System.out.println("####");
+		}
+		
+		System.out.println("------"+ infoSecreta[0].getFigura()+  "---"+ infoSecreta[1].getFigura()+ "----" + infoSecreta[2].getFigura() +"-----");
+		System.out.println("------"+ ciudad+  "---"+ agente+ "----" + dispositivo +"-----");
 	if(resultado) {
-		ganador = this.getJugadorEnTurno();
-		gano= true;
-		notificar(CambiosJuego.HAY_GANADOR);
-		estado = ESTADOS.FINALIZADO;	} 
-	else {
-		notificar(CambiosJuego.JUGADOR_PERDIO);
-		int cantJugadores =0;
-		for(int jugador =0; jugador <= jugadores.size()-1; jugador ++ ) {
-			if(jugadores.get(jugador).getEnJuego())
-				cantJugadores++; }
-	if(cantJugadores == 2) {
-		this.cambiarJugador();
-		ganador = this.getJugadorEnTurno();
-		gano = true;
-		notificar(CambiosJuego.HAY_GANADOR);
-		estado = ESTADOS.FINALIZADO;}
-	else {
-		this.getJugadorEnTurno().sacarjuego();
-		this.pasar();
-		notificar(CambiosJuego.CAMBIO_JUGADOR);}
-	}
+		System.out.println("RESULTADO TRUE");
+			ganador = this.getJugadorEnTurno();
+			gano = true;
+			notificar(CambiosJuego.HAY_GANADOR);
+			
+		}else {
+			notificar(CambiosJuego.JUGADOR_PERDIO);
+			if(jugadores.size()> 2) {
+				this.getJugadorEnTurno().sacarjuego();
+				this.pasar();
+			
+				eEJ = E_EN_JUEGO.ARRIESGA;
+				notificar(CambiosJuego.CAMBIO_ESTADO);
+			}
+	
+		}
 	
 	return resultado;
 	}
+
+	@Override
+	public void arriesgar() throws RemoteException {
+			eEJ = E_EN_JUEGO.ARRIESGA;
+			notificar(CambiosJuego.CAMBIO_ESTADO);		
+		
+	}
+	/*
+	private ArrayList<Jugador> getjugadoresEnElRanking() {
+		ObjectInputStream ois = null;
+		FileInputStream fis;
+		ArrayList<Jugador> jugadoresRanking =  new ArrayList<Jugador>();
+		
+		try {
+			fis = new FileInputStream("ultimosGanadores.txt");
+			ois = new ObjectInputStream(fis);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Jugador jugador;
+		try {
+			while(ois.readLine() != null) {
+				jugador = (Jugador) ois.readObject();
+				jugadoresRanking.add(jugador);
+			}
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		return jugadoresRanking;
+	}
+	
+	public void addUltimosGanadores(Jugador ganador) {
+		FileOutputStream fos = new FileOutputStream("ultimosGanadores.txt");
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+		
+		ArrayList<Jugador> jugadoresEnElRanking = new ArrayList<Jugador>();
+		jugadoresEnElRanking = getjugadoresEnElRanking();
+		if(jugadoresEnElRanking.size() <= 5) {
+			oos.writeObject(ganador);
+			oos.flush();
+			oos.close();
+		}else {
+			jugadoresEnElRanking.remove(0);
+			jugadoresEnElRanking.add(ganador);
+			for(int i=0; i<= jugadoresEnElRanking.size()-1;i++) {
+				oos.writeObject(jugadoresEnElRanking.get(i));
+				oos.flush();
+				oos.close();
+			}
+		}
+		
+	}
+		
+*/
 	
 
 

@@ -22,7 +22,6 @@ public class MenuJuego extends Menu {
 		System.out.println("-----------------------------------------");
 		System.out.println();
 		System.out.println();
-		if (miControlador.getJugadorEnTurno().getNroJugador() == miControlador.getNroJugador()) {
 			System.out.println("¡Es tu turno!");
 			System.out.println(" __________________________________ ");
 			System.out.println("| ______   AGENDA PERSONAL _______ |");
@@ -53,12 +52,7 @@ public class MenuJuego extends Menu {
 					
 					break;
 			}
-				
-		} else {
-			System.out.println("-----------------------------------------");
-			System.out.println("Ahora es el turno de " + miControlador.getJugadorEnTurno().getNombre());
-			System.out.println("-----------------------------------------");
-		}
+		
 		System.out.println("");
 		
 		System.out.println();
@@ -120,7 +114,7 @@ public class MenuJuego extends Menu {
 		acusacion.add(ciudad);
 		acusacion.add(agente);
 		
- 		miControlador.recibirSospecha(acusacion);
+ 		miControlador.setSospecha(acusacion);
 	}
 
 
@@ -141,7 +135,7 @@ public class MenuJuego extends Menu {
 		ArrayList<String> sospecha = new ArrayList<String>();
 		sospecha =this.elegirOpcion(2, "un elemento", "sospecha");
 		
-		miControlador.recibirSospecha(sospecha);
+		miControlador.setSospecha(sospecha);
 	
 	}
 

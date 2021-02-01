@@ -7,6 +7,7 @@ import ar.edu.unlu.juego.espionaje.controlador.IVista;
 import ar.edu.unlu.juego.espionaje.modelo.IJugador;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 
 public class VistaConsola implements IVista, Serializable {
 
@@ -75,15 +76,6 @@ public class VistaConsola implements IVista, Serializable {
 	}
 
 	@Override
-	public void mostrarTerminado() {
-		System.out.println("------------ FIN DEL JUEGO ----------------");
-		System.out.println();
-		System.out.println("--------        ESPIONAJE     -----------");		
-	}
-
-
-
-	@Override
 	public void mostrarResponder() {
 		// TODO Auto-generated method stub
 		
@@ -95,8 +87,20 @@ public class VistaConsola implements IVista, Serializable {
 
 	@Override
 	public void avisoPerdio() {
-		//No lo utilizo en esta vista.
-		
+		if(controlador.getGanador().getNroJugador() == controlador.getNroJugador()) {
+			System.out.println("------ " + controlador.getJugadorEnTurno().getNombre() + " ------"  );
+			System.out.println("                          ------ PERDISTE ------");
+			System.out.println("               ------ TU SOSPECHA FINAL FUE INCORRECTA ------");
+			System.out.println("");
+			System.out.println("LA INFORMACION CONFIDENCIAL ES:");
+			System.out.println();
+			System.out.println("CIUDAD: " + controlador.informacionConfidencial()[0].getFigura());
+			System.out.println();
+			System.out.println("AGENTE: " + controlador.informacionConfidencial()[1].getFigura());
+			System.out.println();
+			System.out.println("DISPOSITIVO: " + controlador.informacionConfidencial()[2].getFigura());
+			System.out.println();
+		}
 	}
 
 	@Override
@@ -128,20 +132,38 @@ public class VistaConsola implements IVista, Serializable {
 
 	@Override
 	public void mostrarSospechar() {
-		// TODO Auto-generated method stub
-		
+		menu = new MenuJuego(controlador);
+		menu.mostrarMenu();
 	}
 
 	@Override
 	public void mostrarRespuesta(String string) {
-		// TODO Auto-generated method stub
+		System.out.println(controlador.listaJugadores().get(controlador.getSospechado()).getNombre()+ " responde:");
+		System.out.println();
+			try {
+				System.out.println(controlador.getRespuesta().toUpperCase());
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
 		
 	}
 
 	@Override
 	public void mostrarTurno(String string) {
-		// TODO Auto-generated method stub
+		System.out.println("-----------------------------------------");
+		System.out.println("Ahora es el turno de " + controlador.getJugadorEnTurno().getNombre());
+		System.out.println("-----------------------------------------");
 		
+	}
+
+	@Override
+	public void quienGano() {
+		System.out.println("------ " + controlador.getJugadorEnTurno().getNombre() + " ------"  );
+		System.out.println("                          ------ PERDISTE ------");
+		System.out.println(controlador.getGanador().getNombre()+ "  GANÓ LA PARTIDA");
+
 	}
 
 	

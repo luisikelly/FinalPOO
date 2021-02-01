@@ -48,7 +48,13 @@ public class Controlador implements IControladorRemoto {
 					break;
 				case JUGADOR_PERDIO: vista.avisoPerdio(); // Chequear si es necesario
 					break;
-				case HAY_GANADOR: vista.avisoGanador();
+				case HAY_GANADOR:
+					if(nroJugador == juego.getGanador().getNroJugador()) {
+						vista.avisoGanador();						
+					} else {
+					
+						vista.quienGano();					
+						}
 					break;
 				case CAMBIO_ESTADO:
 					ESTADOS e = juego.getEstado();
@@ -61,8 +67,7 @@ public class Controlador implements IControladorRemoto {
 								vista.mostrarSospechar();
 							 }
 							if(juego.getEstadoEnJuego().name() == "RESPUESTA")
-								vista.mostrarRespuesta(juego.getRespuesta());	
-										
+								vista.mostrarRespuesta(juego.getRespuesta());						
 						} else {
 							if(juego.getEstadoEnJuego().name() == "SOSPECHA"  ) {
 								vista.mostrarTurno("SOSPECHAR");
@@ -82,7 +87,6 @@ public class Controlador implements IControladorRemoto {
 					else if (e == ESTADOS.CONFIGURANDO) {
 						vista.mostrarConfiguracion();
 					} else if (e == ESTADOS.FINALIZADO) {
-						vista.mostrarTerminado();
 					}
 					break;
 			}
@@ -151,7 +155,6 @@ public class Controlador implements IControladorRemoto {
 				vista.mostrarError(ErrorCantidadMaximaJugadores);
 			}
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	}
@@ -265,7 +268,12 @@ public class Controlador implements IControladorRemoto {
 	}
 
 	public void salir() {
-		juego.salir(this.nroJugador);
+	//	juego.salir(this.nroJugador);
+		
+	}
+
+	public void arriesgar() throws RemoteException {
+		juego.arriesgar();
 		
 	}
 
