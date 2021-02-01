@@ -427,7 +427,7 @@ public class VistaGrafica implements Serializable,IVista{
 		pantallaConfiguracion.add(btnAgregarJugador);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(37, 201, 2, 2);
+		scrollPane.setBounds(38, 179, 212, 94);
 		pantallaConfiguracion.add(scrollPane);
 	
 		
@@ -704,7 +704,7 @@ public class VistaGrafica implements Serializable,IVista{
 		JButton btnEnviar_1 = new JButton("ENVIAR");
 		btnEnviar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controlador.rtaSospechaFinal((String) cbCiudad.getSelectedItem(), (String) cbDispositivo.getSelectedItem(),(String)  cbAgente.getSelectedItem());
+				controlador.rtaSospechaFinal((String) cbAgente.getSelectedItem(), (String) cbDispositivo.getSelectedItem(),(String)  cbCiudad.getSelectedItem());
 			}
 		});
 		btnEnviar_1.setBounds(334, 253, 109, 34);

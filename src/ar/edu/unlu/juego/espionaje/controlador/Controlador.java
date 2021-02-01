@@ -46,13 +46,13 @@ public class Controlador implements IControladorRemoto {
 					break;
 				case CAMBIO_LISTA_JUGADORES: vista.mostraJugadores();
 					break;
-				case JUGADOR_PERDIO: vista.avisoPerdio(); // Chequear si es necesario
+				case JUGADOR_PERDIO: vista.avisoPerdio(); 
 					break;
 				case HAY_GANADOR:
 					if(nroJugador == juego.getGanador().getNroJugador()) {
 						vista.avisoGanador();						
 					} else {
-					
+						vista.avisoPerdio();
 						vista.quienGano();					
 						}
 					break;
