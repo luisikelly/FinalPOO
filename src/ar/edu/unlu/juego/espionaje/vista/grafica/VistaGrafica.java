@@ -111,7 +111,7 @@ public class VistaGrafica implements Serializable,IVista{
 	private Icon iconTokio= new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconTokio.png"));
 	private Icon iconAutopropulsor;//= new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconAutopropulsor.png"));
 	private Icon iconHelicoptero= new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconHelicoptero.png"));
-	private Icon iconGasLetal= new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconGasLetalGris.png"));
+	private Icon iconGasLetal= new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconGasLetal.png"));
 	private Icon iconSatelite= new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconSatelite.png"));
 	private Icon iconAvion= new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconAvion.png"));
 	private Icon iconARojo= new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconARojo.png"));

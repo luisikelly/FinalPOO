@@ -75,7 +75,7 @@ public class MenuJuego extends Menu {
 			elegidas.add(miControlador.getJugadorEnTurno().getAgendaPersonal().getCarta(opcionElegida - 1).getFigura());
 		}
 		return elegidas;
-	}
+	} 
 	
 	
 	private void menuAcusacion() { //ARRIESGAR 

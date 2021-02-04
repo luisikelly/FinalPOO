@@ -237,7 +237,7 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 			j.setNroJugador(jugadores.size()-1);
 			nroJugador = j.getNroJugador();
 			notificar(CambiosJuego.CAMBIO_LISTA_JUGADORES);
-    		} else {
+    	} else {
 			IndexOutOfBoundsException ex = new IndexOutOfBoundsException();
 			throw(ex);
 		}

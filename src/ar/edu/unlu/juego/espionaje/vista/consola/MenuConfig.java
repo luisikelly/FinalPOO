@@ -24,12 +24,8 @@ public class MenuConfig extends Menu {
 		System.out.println("-----------------------------------------");
 		System.out.println();
 
-		System.out.println("-----------------------------------------");
-		System.out.println();
-		System.out.println("Ingresa tu nombre:");
-		String nombre = s.nextLine();
-			miControlador.agregarJugador(nombre);
-		System.out.println();
+		miVista.agregarJugador();
+		
 		System.out.println("-----------------------------------------");
 		System.out.println();
 		System.out.println("1. Iniciar juego");
@@ -42,7 +38,7 @@ public class MenuConfig extends Menu {
 		switch(opcion) {
 		case "0": miControlador.finalizarPartida();
 				  break;
-		case "1": miVista.iniciarJuego();      
+		case "1": miControlador.iniciarPartida();      
 				  break;
 		case "2": miVista.mostraJugadores();
 				  mostrarMenu();

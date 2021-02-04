@@ -16,21 +16,20 @@ public class VistaConsola implements IVista, Serializable {
 	private Scanner entrada = new Scanner(System.in);
 	
 	public VistaConsola() {
-		controlador.setVista(this);
-		this.mostrarConfiguracion();
+	
 	}
 	
 	@Override
 	public void setControlador(Controlador c) {
 		this.controlador = c;
 		menu = new MenuConfig(controlador, this);
-		
+		this.iniciarJuego();
 	}
 	
 	@Override
 	public void iniciarJuego() {
 		try{
-			controlador.iniciarPartida();
+			this.mostrarConfiguracion();
 		} catch(IndexOutOfBoundsException e) {
 			this.mostrarError("-jugadores");
 			menu.mostrarMenu();
@@ -188,6 +187,7 @@ public class VistaConsola implements IVista, Serializable {
 				}else {
 					System.out.println(".............................................................");
 					System.out.println("         NO TENES NINGUNA CARTA DE LA SOSPECHA");
+					
 				}
 			}
 			System.out.println(".............................................................");
@@ -291,6 +291,20 @@ public class VistaConsola implements IVista, Serializable {
 		System.out.println("                          ------ PERDISTE ------");
 		System.out.println(controlador.getGanador().getNombre()+ "  GANÓ LA PARTIDA");
 
+	}
+
+	protected void agregarJugador() {
+		System.out.println("-----------------------------------------");
+		System.out.println();
+		System.out.println("Ingresa tu nombre:");
+		
+		String nombre = entrada.next();
+		if(!nombre.isEmpty() && !nombre.equals("")) {
+			controlador.agregarJugador(nombre);
+		}
+			
+		
+			System.out.println();
 	}
 
 	

@@ -149,7 +149,9 @@ public class Controlador implements IControladorRemoto {
 
 	public void agregarJugador(String nombre)  {
 		try {
+			System.out.println(nombre);
 			nroJugador = juego.agregarJugador(nombre);
+			System.out.println(nroJugador);
 		} catch (IndexOutOfBoundsException e) {
 			if(e.getMessage().equals("CantidadMaxima")) {
 				vista.mostrarError(ErrorCantidadMaximaJugadores);

@@ -54,12 +54,26 @@ public class AppCliente {
 				null,
 				8888
 		);
-
 		
+		ArrayList<String> vistas = new ArrayList<String>();
+		vistas.add("Grafica");
+		vistas.add("Consola");
+		String v = (String) JOptionPane.showInputDialog(
+				null, 
+				"Seleccione el tipo de vista que desea utilizar", "Vista", 
+				JOptionPane.QUESTION_MESSAGE,
+				null,
+				vistas.toArray(),
+				null
+		);
 
-		
-		VistaGrafica vista = new VistaGrafica();
-//		VistaConsola vista = new VistaConsola();
+		IVista vista;
+
+		if(v.equals("Grafica")) {
+			 vista = new VistaGrafica();
+		}else {
+			vista = new VistaConsola();
+		}
 		Controlador controlador = new Controlador(vista);	
 		vista.setControlador(controlador);
 		Cliente c = new Cliente(ip, Integer.parseInt(port), ipServidor, Integer.parseInt(portServidor));
