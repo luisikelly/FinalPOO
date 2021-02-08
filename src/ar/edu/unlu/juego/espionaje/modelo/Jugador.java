@@ -81,7 +81,10 @@ public class Jugador implements IJugador{
 	public void setNroJugador(int nroJugador) {
 		this.nroJugador = nroJugador;
 	}
-
+	
+	public boolean estadoJugador() {
+		return juega;
+	}
 	
 	
 

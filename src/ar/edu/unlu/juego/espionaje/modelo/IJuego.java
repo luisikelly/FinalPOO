@@ -68,5 +68,7 @@ public interface IJuego extends IObservableRemoto, Serializable{
 
 	void arriesgar() throws RemoteException;
 
+	ArrayList<String> getGanadores() throws RemoteException;
+
 
 }

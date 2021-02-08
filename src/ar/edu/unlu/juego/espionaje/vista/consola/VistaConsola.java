@@ -14,28 +14,28 @@ public class VistaConsola implements IVista, Serializable {
 	private Controlador controlador;
 	private Menu menu;
 	private Scanner entrada = new Scanner(System.in);
+	private final String ErrorCantidadMinimaJugadores = "MenosJugadores";
+	private final String ErrorCantidadMaximaJugadores = "MasJugadores";
 	
 	public VistaConsola() {
-	
+		System.out.println("-----------------------------------------");
+		System.out.println("--------        ESPIONAJE     -----------");
+		System.out.println("-----------------------------------------");
+		System.out.println();
 	}
 	
 	@Override
 	public void setControlador(Controlador c) {
 		this.controlador = c;
 		menu = new MenuConfig(controlador, this);
-		this.iniciarJuego();
+		this.mostrarConfiguracion();
+		
 	}
 	
 	@Override
 	public void iniciarJuego() {
-		try{
-			this.mostrarConfiguracion();
-		} catch(IndexOutOfBoundsException e) {
-			this.mostrarError("-jugadores");
-			menu.mostrarMenu();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		controlador.iniciarPartida();
+		
 	}
 	
 	// "Pantallas" del juego 
@@ -228,7 +228,7 @@ public class VistaConsola implements IVista, Serializable {
 	@Override
 	public void mostrarError(String tError) {
 		switch(tError) {
-		case "-jugadores":
+		case "MenosJugadores":
 			System.out.println("~~~~~~~~~~~~~~~~~~~~~ ¡ERROR! ~~~~~~~~~~~~~~~~~~~~~");
 			System.out.println();
 			System.out.println("La cantidad de jugadores registrados debe ser mayor a 2");
@@ -236,7 +236,7 @@ public class VistaConsola implements IVista, Serializable {
 			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 			System.out.println();
 			break;
-		case "+jugadores":
+		case "MasJugadores":
 			System.out.println("~~~~~~~~~~~~~~~~~~~~~ ¡ERROR! ~~~~~~~~~~~~~~~~~~~~~");
 			System.out.println();
 			System.out.println("HA SUPERADO LA CANTIDAD DE JUGADORES!");
@@ -246,8 +246,6 @@ public class VistaConsola implements IVista, Serializable {
 			System.out.println();
 
 			break;
-		case "error":
-			break;	
 		}
 		
 	}

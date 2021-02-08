@@ -19,13 +19,7 @@ public class MenuConfig extends Menu {
 	public void mostrarMenu() {
 		Scanner s = new Scanner(System.in);
 
-		System.out.println("-----------------------------------------");
-		System.out.println("--------        ESPIONAJE     -----------");
-		System.out.println("-----------------------------------------");
-		System.out.println();
-
-		miVista.agregarJugador();
-		
+		miVista.agregarJugador();		
 		System.out.println("-----------------------------------------");
 		System.out.println();
 		System.out.println("1. Iniciar juego");

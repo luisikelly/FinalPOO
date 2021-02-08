@@ -1,4 +1,5 @@
 package ar.edu.unlu.juego.espionaje.controlador;
+import java.awt.Component;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -12,6 +13,8 @@ import ar.edu.unlu.juego.espionaje.modelo.DISPOSITIVOS;
 import ar.edu.unlu.juego.espionaje.modelo.IJuego;
 import ar.edu.unlu.juego.espionaje.modelo.IJugador;
 import ar.edu.unlu.juego.espionaje.modelo.Juego;
+import ar.edu.unlu.juego.espionaje.modelo.Juego.E_EN_JUEGO;
+import ar.edu.unlu.juego.espionaje.modelo.Jugador;
 import ar.edu.unlu.rmimvc.cliente.IControladorRemoto;
 import ar.edu.unlu.rmimvc.observer.IObservableRemoto;
 import ar.edu.unlu.juego.espionaje.modelo.ESTADOS;
@@ -26,7 +29,7 @@ public class Controlador implements IControladorRemoto {
 	//private String sospechado;
 
 
-	
+
 	public Controlador(IVista vista) {
 		this.vista = vista;
 		//vista.setControlador(this);
@@ -46,7 +49,10 @@ public class Controlador implements IControladorRemoto {
 					break;
 				case CAMBIO_LISTA_JUGADORES: vista.mostraJugadores();
 					break;
-				case JUGADOR_PERDIO: vista.avisoPerdio(); 
+				case JUGADOR_PERDIO: 
+					if(!juego.getJugadores().get(nroJugador).estadoJugador()) {
+						vista.avisoPerdio();
+					}
 					break;
 				case HAY_GANADOR:
 					if(nroJugador == juego.getGanador().getNroJugador()) {
@@ -72,9 +78,12 @@ public class Controlador implements IControladorRemoto {
 							if(juego.getEstadoEnJuego().name() == "SOSPECHA"  ) {
 								vista.mostrarTurno("SOSPECHAR");
 							 }
-							if(juego.getEstadoEnJuego().name() == "ARRIESGAR"  ) {
-								vista.mostrarTurno("ARRIESGAR");
-							 }
+							if(juego.getJugadores().get(nroJugador).estadoJugador()) {
+								if(juego.getEstadoEnJuego().name() == "ARRIESGA"  ) {
+									vista.mostrarTurno("ARRIESGAR");
+								 }
+							}
+							
 							if(juego.getEstadoEnJuego().name() == "RESPUESTA"  ) {
 								vista.mostrarTurno("RESPUESTA");
 							 }
@@ -87,6 +96,7 @@ public class Controlador implements IControladorRemoto {
 					else if (e == ESTADOS.CONFIGURANDO) {
 						vista.mostrarConfiguracion();
 					} else if (e == ESTADOS.FINALIZADO) {
+						
 					}
 					break;
 			}
@@ -103,7 +113,10 @@ public class Controlador implements IControladorRemoto {
 	
 	public void iniciarPartida(){
 		try {
-			juego.iniciarJuego();
+			if(nroJugador == -1) {vista.mostrarError(ErrorCantidadMaximaJugadores);
+			}else {
+				juego.iniciarJuego();	
+			}
 		} catch (IndexOutOfBoundsException e) {
 			if(e.getMessage().equals("CantidadMinima")) {
 				vista.mostrarError(ErrorCantidadMinimaJugadores);
@@ -152,10 +165,12 @@ public class Controlador implements IControladorRemoto {
 			System.out.println(nombre);
 			nroJugador = juego.agregarJugador(nombre);
 			System.out.println(nroJugador);
-		} catch (IndexOutOfBoundsException e) {
-			if(e.getMessage().equals("CantidadMaxima")) {
+			if(nroJugador == -1) {
 				vista.mostrarError(ErrorCantidadMaximaJugadores);
 			}
+		} catch (IndexOutOfBoundsException e) {
+				vista.mostrarError(ErrorCantidadMaximaJugadores);
+			
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}	
@@ -277,6 +292,11 @@ public class Controlador implements IControladorRemoto {
 	public void arriesgar() throws RemoteException {
 		juego.arriesgar();
 		
+	}
+
+	public ArrayList<String> getGanadores() throws RemoteException {
+		ArrayList<String> ganadores = juego.getGanadores();
+		return ganadores;
 	}
 
 	

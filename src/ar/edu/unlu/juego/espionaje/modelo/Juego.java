@@ -171,19 +171,6 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 		notificar(CambiosJuego.CAMBIO_ESTADO);
 	}
 	
-	/*@Override
-	public void setRespuesta(String r) throws RemoteException {
-		if(! r.equals("")) {
-			respuesta = r;
-			eEJ = E_EN_JUEGO.RESPUESTA;
-			notificar(CambiosJuego.CAMBIO_ESTADO);
-		}else {
-			sospechado++;
-			eEJ = E_EN_JUEGO.SOSPECHA;
-			notificar(CambiosJuego.CAMBIO_ESTADO);
-		}
-		
-	}*/
 	
 	@Override
 	public void setRespuesta(String respuesta) throws RemoteException {
@@ -209,7 +196,6 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 				}
 			}
 	}
-	
 	
 	
 	@Override
@@ -238,6 +224,8 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 			nroJugador = j.getNroJugador();
 			notificar(CambiosJuego.CAMBIO_LISTA_JUGADORES);
     	} else {
+    		if(jugadores.size() >= 4) {nroJugador = -1;}
+    		
 			IndexOutOfBoundsException ex = new IndexOutOfBoundsException();
 			throw(ex);
 		}
@@ -268,8 +256,7 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 		}
 			
 		}
-    	System.out.println(jugadorEnTurno);
-    	System.out.println(sospechado);			
+    			
 		
 	}
 
@@ -277,6 +264,7 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 	@Override
 	public void pasar() throws RemoteException {
 		this.cambiarJugador();
+		if(eEJ.equals(E_EN_JUEGO.SOSPECHA))
 		this.resetSospecha();
 	}
 
@@ -350,27 +338,23 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 		boolean resultado = false;
 		if((infoSecreta[0].getFigura().equals(ciudad)) && (infoSecreta[1].getFigura().equals(agente)) && (infoSecreta[2].getFigura().equals(dispositivo))) {
 			resultado = true; 
-			System.out.println("####");
 		}
-		
-		System.out.println("------"+ infoSecreta[0].getFigura()+  "---"+ infoSecreta[1].getFigura()+ "----" + infoSecreta[2].getFigura() +"-----");
-		System.out.println("------"+ ciudad+  "---"+ agente+ "----" + dispositivo +"-----");
 	if(resultado) {
-		System.out.println("RESULTADO TRUE");
 			ganador = this.getJugadorEnTurno();
 			gano = true;
 			notificar(CambiosJuego.HAY_GANADOR);
+			this.estado = ESTADOS.FINALIZADO;
+			notificar(CambiosJuego.CAMBIO_ESTADO);
+			this.addUltimosGanadores(ganador);
+			
 			
 		}else {
 			notificar(CambiosJuego.JUGADOR_PERDIO);
-			if(jugadores.size()> 2) {
+			
 				this.getJugadorEnTurno().sacarjuego();
 				this.pasar();
-			
 				eEJ = E_EN_JUEGO.ARRIESGA;
 				notificar(CambiosJuego.CAMBIO_ESTADO);
-			}
-	
 		}
 	
 	return resultado;
@@ -382,7 +366,7 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 			notificar(CambiosJuego.CAMBIO_ESTADO);		
 		
 	}
-	/*
+	
 	private ArrayList<Jugador> getjugadoresEnElRanking() {
 		ObjectInputStream ois = null;
 		FileInputStream fis;
@@ -408,30 +392,62 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 		
 		return jugadoresRanking;
 	}
+
+	@Override
+	public ArrayList<String> getGanadores() throws RemoteException{
+		ArrayList<String> ganadores = new ArrayList<String>();
+		for(int i=0; i<= this.getjugadoresEnElRanking().size() -1; i++) {
+			ganadores.add(this.getjugadoresEnElRanking().get(i).getNombre());
+		}
+		return ganadores;
+	}
 	
-	public void addUltimosGanadores(Jugador ganador) {
-		FileOutputStream fos = new FileOutputStream("ultimosGanadores.txt");
-		ObjectOutputStream oos = new ObjectOutputStream(fos);
+	private void addUltimosGanadores(IJugador ganador)  {
+		FileOutputStream fos;
+		ObjectOutputStream oos = null;
+		try {
+			fos = new FileOutputStream("ultimosGanadores.txt");
+			oos = new ObjectOutputStream(fos);
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		ArrayList<Jugador> jugadoresEnElRanking = new ArrayList<Jugador>();
 		jugadoresEnElRanking = getjugadoresEnElRanking();
 		if(jugadoresEnElRanking.size() <= 5) {
-			oos.writeObject(ganador);
-			oos.flush();
-			oos.close();
-		}else {
-			jugadoresEnElRanking.remove(0);
-			jugadoresEnElRanking.add(ganador);
-			for(int i=0; i<= jugadoresEnElRanking.size()-1;i++) {
-				oos.writeObject(jugadoresEnElRanking.get(i));
+			try {
+				oos.writeObject(ganador);
 				oos.flush();
 				oos.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}else {
+			jugadoresEnElRanking.remove(0);
+			jugadoresEnElRanking.add((Jugador) ganador);
+			for(int i=0; i<= jugadoresEnElRanking.size()-1;i++) {
+				try {
+					oos.writeObject(jugadoresEnElRanking.get(i));
+					oos.flush();
+					oos.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			}
 		}
 		
 	}
 		
-*/
+
 	
 
 

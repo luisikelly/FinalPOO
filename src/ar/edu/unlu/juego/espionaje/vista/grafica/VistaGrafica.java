@@ -30,6 +30,8 @@ import java.awt.FontFormatException;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -62,7 +64,6 @@ public class VistaGrafica implements Serializable,IVista{
 	
 	private JButton btnEnviar;
 	private JButton btnArriesgar;
-
 
 	private JLabel lblNombrejugadorPSospecha;
 	private JLabel lblNombrejugadorPRespuesta;
@@ -124,10 +125,7 @@ public class VistaGrafica implements Serializable,IVista{
 	private Icon iconGO = new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/go.png"));
 	private Icon iconTitulo = new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconTitulo.png"));
 
-	
-	
-	
-	
+		
 	//CONSTANTES
 	private final String CONFIG = "CONFIG";
 	private final String SOSPECHAR = "SOSPECHAR";
@@ -144,11 +142,6 @@ public class VistaGrafica implements Serializable,IVista{
 	
 	private ArrayList<String> lista = new ArrayList<String>();
 
-
-
-	
-	
-	
 	/**
 	 * Create the frame.
 	 * @param controlador2 
@@ -166,6 +159,12 @@ public class VistaGrafica implements Serializable,IVista{
 		Container contentPane = this.frmEspionaje.getContentPane();
 		contentPane.setLayout(cardLayout);
 		
+		frmEspionaje.addWindowListener(new WindowAdapter(){
+			public void windowClosing(WindowEvent evt) {
+				controlador.salir();
+			}
+		});
+	
 		//FUENTES
 		normalFont = Font.createFont(Font.TRUETYPE_FONT, isNormal);
 		boldFont = Font.createFont(Font.TRUETYPE_FONT, isBold);
@@ -174,18 +173,13 @@ public class VistaGrafica implements Serializable,IVista{
 		// PANTALLAS
 		JPanel pantallaSospechar = this.crearPantallaEntrada();
 		contentPane.add(this.crearPantallaConfig(),CONFIG);	
-		
-
-
 		contentPane.add(pantallaSospechar, SOSPECHAR);
 		contentPane.add(this.crearPantallaResponder(), RESPONDER);
 		contentPane.add(this.crearPantallaArriesgar(), ARRIESGAR);
 		contentPane.add(this.crearPantallaMostrar(), RESPUESTA);
 		contentPane.add(this.crearPantallaTurno(), TURNO);
 		contentPane.add(this.crearPantallaGanador(), GANADOR);
-		
-		
-
+	
 		this.frmEspionaje.setVisible(true);	
 	}
 
@@ -428,7 +422,7 @@ public class VistaGrafica implements Serializable,IVista{
 		lblSimbolo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSimbolo.setForeground(Color.WHITE);
 		lblSimbolo.setFont(sizedFont);
-		lblSimbolo.setBounds(87, 5, 269, 70);
+		lblSimbolo.setBounds(38, 5, 417, 70);
 		pantallaConfiguracion.add(lblSimbolo);
 		this.setIcon("TITULO", lblSimbolo);
 		
@@ -462,7 +456,8 @@ public class VistaGrafica implements Serializable,IVista{
 		btnReglasDelJuego.setFont(sizedFont2);
 		btnReglasDelJuego.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
+			Instrucciones ventanaAyuda = new Instrucciones();
+			ventanaAyuda.setVisible(true);
 			}
 		});
 		btnReglasDelJuego.setBounds(287, 126, 142, 31);
@@ -484,6 +479,17 @@ public class VistaGrafica implements Serializable,IVista{
 		});
 		btnAgregarJugador.setBounds(287, 84, 142, 31);
 		pantallaConfiguracion.add(btnAgregarJugador);
+		
+		JButton btnGanadores = new JButton("GANADORES");
+		btnAgregarJugador.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				crearGanadores();
+			}
+		});	
+		btnGanadores.setFont(sizedFont2);
+		btnGanadores.setBounds(287, 165, 142, 31);
+		
+		pantallaConfiguracion.add(btnGanadores);
 		
 		sizedFont2 = normalFont.deriveFont(28f);
 		JLabel lblJugadores = new JLabel("JUGADORES");
@@ -882,7 +888,7 @@ public class VistaGrafica implements Serializable,IVista{
 		this.setIcon("TITULO", label);
 		
 		 lblTURNOText = new JLabel("TEXT");
-		 lblTURNOText.setHorizontalAlignment(SwingConstants.RIGHT);
+		 lblTURNOText.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTURNOText.setForeground(Color.WHITE);
 		lblTURNOText.setFont(sizedFont);
 		lblTURNOText.setBounds(10, 149, 445, 41);
@@ -892,14 +898,14 @@ public class VistaGrafica implements Serializable,IVista{
 		lblTURNOJugador.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTURNOJugador.setFont(sizedFont);
 		lblTURNOJugador.setForeground(Color.ORANGE);
-		lblTURNOJugador.setBounds(182, 91, 273, 35);
+		lblTURNOJugador.setBounds(100, 91, 273, 35);
 		pantallaTurno.add(lblTURNOJugador);
 		
 		lblTURNOSospechado = new JLabel("Jugador");
 		lblTURNOSospechado.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTURNOSospechado.setFont(sizedFont);
 		lblTURNOSospechado.setForeground(Color.RED);
-		lblTURNOSospechado.setBounds(195, 201, 260, 41);
+		lblTURNOSospechado.setBounds(113, 202, 260, 41);
 		pantallaTurno.add(lblTURNOSospechado);
 		
 		JLabel lblnro = new JLabel("");
@@ -960,4 +966,73 @@ public class VistaGrafica implements Serializable,IVista{
 
 		return pantallaMostrar;
 	}
+	
+	private void crearGanadores() {
+		JFrame ganadores = new JFrame();
+		ganadores.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ganadores.setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBackground(Color.DARK_GRAY);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		ganadores.setContentPane(contentPane);
+		contentPane.setLayout(null);
+		Font sfTitulo = boldFont.deriveFont(32f);
+		JLabel lblEspionaje = new JLabel("ESPIONAJE");
+		lblEspionaje.setIcon(new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconTitulo.png")));
+		lblEspionaje.setFont(sfTitulo);
+		lblEspionaje.setForeground(Color.WHITE);
+		lblEspionaje.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEspionaje.setBounds(10, 11, 414, 57);
+		contentPane.add(lblEspionaje);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(130, 106, 271, 97);
+		contentPane.add(scrollPane);
+		Font sf = normalFont.deriveFont(13f); 
+		JTextArea textArea = new JTextArea();
+		textArea.setFont(sf);
+		String s ="";
+		/*try {
+			if(controlador.getGanadores().isEmpty()) {
+				s= "NO HAY NINGÚN GANADOR REGISTRADO";
+			}else {
+				for(int i=0; i<= controlador.getGanadores().size()-1;i++) {
+					s = s + controlador.getGanadores().get(i) +"\n";
+				}
+			
+			}
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}*/
+			textArea.setText(s);
+		textArea.setBackground(Color.LIGHT_GRAY);
+		textArea.setEditable(false);
+		scrollPane.setViewportView(textArea);
+		
+		JButton btnVolver = new JButton("VOLVER ");
+		btnVolver.setFont(sf);
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ganadores.setVisible(false);
+			}
+		});
+		btnVolver.setBounds(335, 226, 89, 23);
+		contentPane.add(btnVolver);
+		
+		sf = normalFont.deriveFont(28f);
+		JLabel lblGanadores = new JLabel("GANADORES");
+		lblGanadores.setFont(sf);
+		lblGanadores.setForeground(Color.ORANGE);
+		lblGanadores.setBounds(154, 54, 225, 55);
+		contentPane.add(lblGanadores);
+		lblGanadores.setHorizontalAlignment(SwingConstants.CENTER);
+
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/trofeo.png")));
+		label.setBounds(0, 67, 144, 149);
+		contentPane.add(label);
+	}
+		
+	
 }

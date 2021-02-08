@@ -8,6 +8,7 @@ public interface IJugador extends Serializable {
 	public Mazo getAgendaPersonal();
 	public Mazo getCartasSecretas();
 	public int getNroJugador();
+	public boolean estadoJugador();
 	
 
 }

@@ -1,5 +1,6 @@
 package ar.edu.unlu.juego.espionaje.cliente;
 
+import java.awt.EventQueue;
 import java.awt.FontFormatException;
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -66,18 +67,14 @@ public class AppCliente {
 				vistas.toArray(),
 				null
 		);
-
-		IVista vista;
-
-		if(v.equals("Grafica")) {
-			 vista = new VistaGrafica();
-		}else {
-			vista = new VistaConsola();
-		}
+	
+		
+		IVista vista = null;
+		if(v.equals("Grafica")) {vista = new VistaGrafica(); }
+		else { vista = new VistaConsola(); }
 		Controlador controlador = new Controlador(vista);	
 		vista.setControlador(controlador);
-		Cliente c = new Cliente(ip, Integer.parseInt(port), ipServidor, Integer.parseInt(portServidor));
-		
+		Cliente c = new Cliente(ip, Integer.parseInt(port), ipServidor, Integer.parseInt(portServidor));			
 		try {
 			c.iniciar(controlador);
 		} catch (RMIMVCException e) {
@@ -85,7 +82,7 @@ public class AppCliente {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+			
+		
 	}
-
 }
