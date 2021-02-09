@@ -340,6 +340,9 @@ public class VistaGrafica implements Serializable,IVista{
 		if(tError.equals(ErrorCantidadMaximaJugadores)) {
 			JOptionPane.showMessageDialog(null,"¡Superó la cantidad máxima de jugadores!");
 		}
+		if(tError.equals("NombreRepetido")) {
+			JOptionPane.showMessageDialog(null,"¡Ya existe un jugador con ese nombre!");
+		}
 	}
 	
 	//TODO MOSTRAR TURNO

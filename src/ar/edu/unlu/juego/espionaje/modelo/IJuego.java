@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import javax.xml.bind.ValidationException;
+
 import ar.edu.unlu.juego.espionaje.modelo.Juego.E_EN_JUEGO;
 import ar.edu.unlu.rmimvc.observer.IObservableRemoto;
 
@@ -42,7 +44,7 @@ public interface IJuego extends IObservableRemoto, Serializable{
 
 	Jugador getJugadorEnTurno() throws RemoteException;
 
-	int agregarJugador(String nombre) throws IndexOutOfBoundsException, RemoteException;
+	int agregarJugador(String nombre) throws IndexOutOfBoundsException, RemoteException, ValidationException, Exception;
 
 	ESTADOS getEstado() throws RemoteException;
 

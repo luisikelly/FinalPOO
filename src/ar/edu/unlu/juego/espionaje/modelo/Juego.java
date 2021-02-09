@@ -11,6 +11,8 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import javax.xml.bind.ValidationException;
+
 import ar.edu.unlu.juego.espionaje.controlador.Controlador;
 import ar.edu.unlu.juego.espionaje.modelo.AGENTES;
 import ar.edu.unlu.juego.espionaje.modelo.CIUDADES;
@@ -214,20 +216,26 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 	
     
     @Override
-	public int agregarJugador(String nombre) throws IndexOutOfBoundsException, RemoteException {
+	public int agregarJugador(String nombre) throws IndexOutOfBoundsException, RemoteException, ValidationException{
 	    Jugador j = new Jugador(nombre);
-	    int nroJugador;
-    	if (jugadores.size() < 4 && estado == ESTADOS.CONFIGURANDO) {
-			// 4 es la cantidad maxima establecidas por el reglamento oficial.
+	    int nroJugador=-1;
+    	if ((jugadores.size() < 4) && (estado == ESTADOS.CONFIGURANDO) && (this.buscarJugador(nombre) == -1)) {
+			// buscarJugador = -1 significa que no existe ningun juagdor con ese nombre
+    		// 4 es la cantidad maxima establecidas por el reglamento oficial.
 			jugadores.add(j);
 			j.setNroJugador(jugadores.size()-1);
 			nroJugador = j.getNroJugador();
 			notificar(CambiosJuego.CAMBIO_LISTA_JUGADORES);
     	} else {
-    		if(jugadores.size() >= 4) {nroJugador = -1;}
+    		if(jugadores.size() >= 4) {
+    			IndexOutOfBoundsException ex = new IndexOutOfBoundsException();
+    			throw(ex);
+    		}
+    		if(this.buscarJugador(nombre)!= -1) {
+    			ValidationException ex = new ValidationException("NombreRepetido");
+    			throw(ex);
+    		}
     		
-			IndexOutOfBoundsException ex = new IndexOutOfBoundsException();
-			throw(ex);
 		}
     	return nroJugador; // Devuelve el numero de jugador que se utiliza en el controlador y la vista para mostrar permitir que accion realizar dependiendo si es su turno o si tiene que responder una sospecha realizada por el jugador en turno
 	}
@@ -447,7 +455,15 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 		
 	}
 		
-
+	private int buscarJugador(String s) {
+		int nJugador = -1;
+		for(int i=0; i<= jugadores.size()-1; i++) {
+			if(jugadores.get(i).getNombre().equals(s)) {
+				nJugador = i;
+			}
+		}
+		return nJugador;
+	}
 	
 
 

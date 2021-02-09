@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.xml.bind.ValidationException;
+
 import ar.edu.unlu.juego.espionaje.modelo.AGENTES;
 import ar.edu.unlu.juego.espionaje.modelo.CIUDADES;
 import ar.edu.unlu.juego.espionaje.modelo.CambiosJuego;
@@ -160,7 +162,7 @@ public class Controlador implements IControladorRemoto {
 
 	}
 
-	public void agregarJugador(String nombre)  {
+	public void agregarJugador(String nombre)   {
 		try {
 			System.out.println(nombre);
 			nroJugador = juego.agregarJugador(nombre);
@@ -172,6 +174,11 @@ public class Controlador implements IControladorRemoto {
 				vista.mostrarError(ErrorCantidadMaximaJugadores);
 			
 		} catch (RemoteException e) {
+			e.printStackTrace();
+		} catch (ValidationException e) {
+			vista.mostrarError("NombreRepetido");
+			e.printStackTrace();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}	
 	}
@@ -285,7 +292,8 @@ public class Controlador implements IControladorRemoto {
 	}
 
 	public void salir() {
-	//	juego.salir(this.nroJugador);
+		
+		//juego.salir(this.nroJugador);
 		
 	}
 
