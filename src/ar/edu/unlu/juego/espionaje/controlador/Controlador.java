@@ -68,38 +68,31 @@ public class Controlador implements IControladorRemoto {
 					ESTADOS e = juego.getEstado();
 					String estado = juego.getEstado().name();
 					if(e == ESTADOS.EN_JUEGO) {
-						if(nroJugador == juego.getJugadorEnTurno().getNroJugador()) {
-							if(juego.getEstadoEnJuego().name() == "ARRIESGA")
-								vista.mostrarArriesgar();
-							if(juego.getEstadoEnJuego().name() == "SOSPECHA") {
-								vista.mostrarSospechar();
-							 }
-							if(juego.getEstadoEnJuego().name() == "RESPUESTA")
-								vista.mostrarRespuesta(juego.getRespuesta());						
-						} else {
-							if(juego.getEstadoEnJuego().name() == "SOSPECHA"  ) {
-								vista.mostrarTurno("SOSPECHAR");
-							 }
+// --------------------Si es jugador en turno ----------------------------------------------
+						if(nroJugador == juego.getJugadorEnTurno().getNroJugador()) { 
+							if(juego.getEstadoEnJuego().name() == "ARRIESGA")  {vista.mostrarArriesgar();}
+							if(juego.getEstadoEnJuego().name() == "SOSPECHA")  {vista.mostrarSospechar();}
+							if(juego.getEstadoEnJuego().name() == "RESPUESTA") {vista.mostrarRespuesta(juego.getRespuesta());}
+							if(juego.getEstadoEnJuego().name() == "RESPONDER") {vista.mostrarTurno("RESPONDER_JET");}
+						} else { 
+
+// ------------------- Resto de los jugadores ----------------------------------------------
+							if(juego.getEstadoEnJuego().name() == "SOSPECHA"  ) {vista.mostrarTurno("SOSPECHAR");}
 							if(juego.getJugadores().get(nroJugador).estadoJugador()) {
-								if(juego.getEstadoEnJuego().name() == "ARRIESGA"  ) {
-									vista.mostrarTurno("ARRIESGAR");
-								 }
+								if(juego.getEstadoEnJuego().name() == "ARRIESGA"  ) { vista.mostrarTurno("ARRIESGAR"); }
 							}
+							if(juego.getEstadoEnJuego().name() == "RESPONDER") {vista.mostrarTurno("RESPONDER");}
+							if(juego.getEstadoEnJuego().name() == "RESPUESTA"  ) {	vista.mostrarTurno("RESPUESTA");}
 							
-							if(juego.getEstadoEnJuego().name() == "RESPUESTA"  ) {
-								vista.mostrarTurno("RESPUESTA");
-							 }
-							if(nroJugador == juego.getSospechado()) {
-								if(juego.getEstadoEnJuego().name() == "RESPONDER")
-									vista.mostrarResponder();
-							}	
+// --------------------Si es jugador sospechado ----------------------------------------------
+							if(nroJugador == juego.getSospechado()) { 
+								if(juego.getEstadoEnJuego().name() == "RESPONDER"){vista.mostrarResponder();}
+							} 
 						}			
 					}
 					else if (e == ESTADOS.CONFIGURANDO) {
 						vista.mostrarConfiguracion();
-					} else if (e == ESTADOS.FINALIZADO) {
-						
-					}
+					} else if (e == ESTADOS.FINALIZADO) {}
 					break;
 			}
 		}
@@ -247,6 +240,7 @@ public class Controlador implements IControladorRemoto {
 		try {
 			juego.setSospecha(lista);
 			int jugador = juego.getSospechado();
+			System.out.println(jugador);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

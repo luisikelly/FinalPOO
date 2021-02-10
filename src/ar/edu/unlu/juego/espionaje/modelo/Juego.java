@@ -1,5 +1,6 @@
 package ar.edu.unlu.juego.espionaje.modelo;
 
+import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -190,7 +191,6 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 				if(jugadores.size() > 2 && (sospechado != jugadorEnTurno)) {
 					if(sospechado == jugadores.size()-1){ sospechado = 0;}
 			    	else {sospechado++;}
-					this.resetSospecha();
 					this.eEJ = E_EN_JUEGO.SOSPECHA;
 					notificar(CambiosJuego.CAMBIO_ESTADO);
 				}else {
@@ -375,10 +375,14 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 		
 	}
 	
-	private ArrayList<Jugador> getjugadoresEnElRanking() {
+	
+	
+	// TODO PERSISTENCIA OBJETO JUGADOR -- REGISTRO DE GANADORES --
+	private ArrayList<IJugador> getjugadoresEnElRanking() {
 		ObjectInputStream ois = null;
-		FileInputStream fis;
-		ArrayList<Jugador> jugadoresRanking =  new ArrayList<Jugador>();
+		FileInputStream fis = null;
+	
+		ArrayList<IJugador> jugadoresRanking = new ArrayList<IJugador>();
 		
 		try {
 			fis = new FileInputStream("ultimosGanadores.txt");
@@ -389,15 +393,16 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 			e.printStackTrace();
 		}
 		Jugador jugador;
-		try {
-			while(ois.readLine() != null) {
-				jugador = (Jugador) ois.readObject();
-				jugadoresRanking.add(jugador);
+		try {	
+			
+			while( fis.available() > 0) { // metodo available() devuleve el numero de bytes restantes que se pueden leer. 
+				jugadoresRanking = (ArrayList<IJugador>) ois.readObject(); //TODO HAY UN PROBLEMA ACA
+				//jugadoresRanking.add(jugador);
 			}
+				
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}
-		
 		return jugadoresRanking;
 	}
 
@@ -408,14 +413,14 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 			ganadores.add(this.getjugadoresEnElRanking().get(i).getNombre());
 		}
 		return ganadores;
-	}
+	} 
 	
-	private void addUltimosGanadores(IJugador ganador)  {
+	private void addUltimosGanadores(IJugador ganador2)  {
 		FileOutputStream fos;
 		ObjectOutputStream oos = null;
 		try {
-			fos = new FileOutputStream("ultimosGanadores.txt");
-			oos = new ObjectOutputStream(fos);
+			 fos = new FileOutputStream("ultimosGanadores.txt");
+			 oos = new ObjectOutputStream(fos);
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -425,32 +430,26 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 			e.printStackTrace();
 		}
 		
-		ArrayList<Jugador> jugadoresEnElRanking = new ArrayList<Jugador>();
-		jugadoresEnElRanking = getjugadoresEnElRanking();
-		if(jugadoresEnElRanking.size() <= 5) {
-			try {
-				oos.writeObject(ganador);
-				oos.flush();
-				oos.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		ArrayList<IJugador> jugadoresEnElRanking = getjugadoresEnElRanking();
+		
+		if(jugadoresEnElRanking != null) {
+			jugadoresEnElRanking = getjugadoresEnElRanking();
 			
+		}
+		if(jugadoresEnElRanking.size() <= 10) {
+				jugadoresEnElRanking.add( ganador);
 		}else {
 			jugadoresEnElRanking.remove(0);
-			jugadoresEnElRanking.add((Jugador) ganador);
-			for(int i=0; i<= jugadoresEnElRanking.size()-1;i++) {
-				try {
-					oos.writeObject(jugadoresEnElRanking.get(i));
-					oos.flush();
-					oos.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			jugadoresEnElRanking.add( ganador);
+		}
 				
-			}
+		try {
+			oos.writeObject(jugadoresEnElRanking);
+			oos.flush();
+			oos.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 	}
@@ -464,6 +463,10 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 		}
 		return nJugador;
 	}
+
+	
+
+	
 	
 
 

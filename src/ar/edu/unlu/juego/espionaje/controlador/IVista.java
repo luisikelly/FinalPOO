@@ -33,6 +33,10 @@ public interface IVista {
 
 	void quienGano();
 
+	void mostrarGanadores();
+
+	void mostrarAyuda();
+
 
 
 }

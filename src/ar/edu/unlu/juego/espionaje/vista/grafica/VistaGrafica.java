@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 
 import ar.edu.unlu.juego.espionaje.controlador.Controlador;
 import ar.edu.unlu.juego.espionaje.controlador.IVista;
+import net.miginfocom.swing.MigLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -84,6 +85,7 @@ public class VistaGrafica implements Serializable,IVista{
 	
 	private JTextArea textJugadores;
 	private JTextArea textArea;
+	private JTextArea text;
 	
 	private JComboBox s1;
 	private JComboBox s2;
@@ -119,7 +121,7 @@ public class VistaGrafica implements Serializable,IVista{
 	private Icon iconAVerde= new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconAVerde.png"));
 	private Icon iconAAzul= new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconAAzul.png"));
 	private Icon iconABlanco= new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconABlanco.png"));
-	private Icon iconAAmarillo= new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconAAmarillo.png"));
+	private Icon iconANaranja= new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconAAmarillo.png"));
 	private Icon iconGanador = new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/trofeo.png"));
 	private Icon iconEspia = new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconEspia.png"));
 	private Icon iconGO = new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/go.png"));
@@ -133,6 +135,7 @@ public class VistaGrafica implements Serializable,IVista{
 	private final String RESPUESTA = "RESPUESTA";
 	private final String ARRIESGAR = "ARRIESGAR";
 	private final String TERMINO = "TERMINO";
+	private final String AYUDA = "AYUDA";
 	private final String GANADOR = "GANADOR";
 	private final String TURNO = "TURNO";
 	private final String ErrorCantidadMinimaJugadores = "MenosJugadores";
@@ -179,8 +182,51 @@ public class VistaGrafica implements Serializable,IVista{
 		contentPane.add(this.crearPantallaMostrar(), RESPUESTA);
 		contentPane.add(this.crearPantallaTurno(), TURNO);
 		contentPane.add(this.crearPantallaGanador(), GANADOR);
-	
+		contentPane.add(this.crearSubPantallasConfig(),AYUDA);
+		contentPane.add(this.crearSubPantallasConfig(),"GANADORES");
+		
+		
 		this.frmEspionaje.setVisible(true);	
+	}
+
+
+	private JPanel crearSubPantallasConfig() {
+		JPanel panelText = new JPanel();
+		panelText.setBackground(Color.DARK_GRAY);
+		panelText.setLayout(null);
+		Font sFont = boldFont.deriveFont(32f); 
+		JLabel label = new JLabel("ESPIONAJE");
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setForeground(Color.WHITE);
+		label.setFont(sFont);
+		this.setIcon("ESPIA", label);
+		label.setBounds(0, 11, 465, 55);
+		panelText.add(label);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(49, 77, 368, 165);
+		panelText.add(scrollPane);
+		
+		sFont = normalFont.deriveFont(14f);
+		
+		text = new JTextArea();
+		text.setBackground(Color.LIGHT_GRAY);
+		text.setFont(sFont);
+		text.setEditable(false);
+		scrollPane.setViewportView(text);
+		
+		sFont = normalFont.deriveFont(15f);
+		JButton btnVolver_1 = new JButton("VOLVER");
+		btnVolver_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(frmEspionaje.getContentPane(), CONFIG);
+			}
+		});
+		btnVolver_1.setFont(sFont);
+		btnVolver_1.setBounds(356, 266, 99, 34);
+		panelText.add(btnVolver_1);
+		
+		return panelText;
 	}
 
 
@@ -209,7 +255,7 @@ public class VistaGrafica implements Serializable,IVista{
 		case "AGENTE_AZUL": lbl.setIcon(iconAAzul); break;
 		case "AGENTE_VERDE": lbl.setIcon(iconAVerde); break;
 		case "AGENTE_ROJO": lbl.setIcon(iconARojo); break;
-		case "AGENTE_AMARILLO": lbl.setIcon(iconAAmarillo); break;
+		case "AGENTE_NARANJA": lbl.setIcon(iconANaranja); break;
 		case "GAS_LETAL": lbl.setIcon(iconGasLetal); break;
 		case "SATELITE": lbl.setIcon(iconSatelite);break;
 		case "AVION": lbl.setIcon(iconAvion); break;
@@ -223,7 +269,35 @@ public class VistaGrafica implements Serializable,IVista{
 		}
 	}
 	
+	/* private void setFigura(String s, JLabel lbl) {
+		if(lbl != null) {
+				lbl.setText(s);
+				switch (s) {
+				case "AGENTE_BLANCO": 
+					lbl.setText("AGENTE BLANCO");
+					break;
+				case "AGENTE_AZUL": 
+					lbl.setText("AGENTE AZUL");
+					break;
+				case "AGENTE_VERDE": 
+					lbl.setText("AGENTE VERDE");
+					break;
+				case "AGENTE_ROJO": 
+					lbl.setText("AGENTE ROJO");
+					break;
+				case "AGENTE_NARANJA": 
+					lbl.setText("AGENTE NARANJA");
+					break;
+				case "GAS_LETAL": 
+					lbl.setText("GAS LETAL");
+					break;
+			}
+		}
+	} */
+	
 	//TODO ----- MÉTODOS MOSTRAR -----
+	
+	
 	
 	//TODO MOSTRAR ARRIESGAR
 	@Override
@@ -343,13 +417,15 @@ public class VistaGrafica implements Serializable,IVista{
 		if(tError.equals("NombreRepetido")) {
 			JOptionPane.showMessageDialog(null,"¡Ya existe un jugador con ese nombre!");
 		}
+		
+		
 	}
 	
 	//TODO MOSTRAR TURNO
 	@Override
 	public void mostrarTurno(String string) {
-		if(string.equals(SOSPECHAR)) {
-			this.lblTURNOSospechado.setVisible(false);
+		if(string.equals(SOSPECHAR)){
+			this.lblTURNOSospechado.setText("");
 			this.lblTURNOJugador.setText(controlador.getJugadorEnTurno().getNombre());
 			this.lblTURNOText.setText("ESTÁ REALIZANDO SU SOSPECHA");
 		}
@@ -358,8 +434,14 @@ public class VistaGrafica implements Serializable,IVista{
 			this.lblTURNOText.setText("ENVIÓ SU SOSPECHA A ");
 			this.lblTURNOSospechado.setText(controlador.listaJugadores().get(controlador.getSospechado()).getNombre());
 		}
+		if(string.equals("RESPONDER_JET")) {	
+			this.lblTURNOJugador.setText("");
+			this.lblTURNOText.setText("ESPERANDO RESPUESTA DE  ");
+			this.lblTURNOSospechado.setText(controlador.listaJugadores().get(controlador.getSospechado()).getNombre());
+		}
+
 		if(string.equals(ARRIESGAR)) {
-			this.lblTURNOSospechado.setVisible(false);
+			this.lblTURNOSospechado.setText("");
 			this.lblTURNOJugador.setText(controlador.getJugadorEnTurno().getNombre());
 			this.lblTURNOText.setText("ESTÁ REALIZANDO SU ACUSACIÓN");
 		}			
@@ -409,7 +491,7 @@ public class VistaGrafica implements Serializable,IVista{
 	
 	
 	
-//TODO ----- MÉTODOS PARA CREAR PANTALLAS -----
+// ----- MÉTODOS PARA CREAR PANTALLAS -----
 	
 // TODO CREAR CONFIGURACION	
 	public JPanel crearPantallaConfig() {
@@ -459,8 +541,7 @@ public class VistaGrafica implements Serializable,IVista{
 		btnReglasDelJuego.setFont(sizedFont2);
 		btnReglasDelJuego.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			Instrucciones ventanaAyuda = new Instrucciones();
-			ventanaAyuda.setVisible(true);
+				mostrarAyuda();
 			}
 		});
 		btnReglasDelJuego.setBounds(287, 126, 142, 31);
@@ -484,11 +565,11 @@ public class VistaGrafica implements Serializable,IVista{
 		pantallaConfiguracion.add(btnAgregarJugador);
 		
 		JButton btnGanadores = new JButton("GANADORES");
-		btnAgregarJugador.addActionListener(new ActionListener() {
+		btnGanadores.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				crearGanadores();
+				mostrarGanadores();
 			}
-		});	
+		});
 		btnGanadores.setFont(sizedFont2);
 		btnGanadores.setBounds(287, 165, 142, 31);
 		
@@ -517,6 +598,9 @@ public class VistaGrafica implements Serializable,IVista{
 		return pantallaConfiguracion;
 	}
 	
+
+
+
 	// TODO CREAR ENTRADA : Se utiliza para la sospecha		
 	private JPanel crearPantallaEntrada() {
 		JPanel pantallaEntrada = new JPanel();
@@ -575,9 +659,7 @@ public class VistaGrafica implements Serializable,IVista{
 					s1.removeAllItems();
 					s2.removeAllItems();
 					btnArriesgar.setEnabled(false);
-					btnEnviar.setEnabled(false);
-					JOptionPane.showMessageDialog(null, "Esperando respuesta de "+controlador.listaJugadores().get(controlador.getSospechado()).getNombre());
-					
+					btnEnviar.setEnabled(false);					
 				}else {
 				 	JOptionPane.showMessageDialog(null,"Deben ser dos cartas distintas");
 				}
@@ -810,6 +892,7 @@ public class VistaGrafica implements Serializable,IVista{
 				controlador.finalizarPartida();
 				frmEspionaje.setVisible(false);
 				frmEspionaje.dispose();
+				System.exit(0);
 			}
 		});
 		btnSalir.setFont(sizedFontBotones);
@@ -970,72 +1053,89 @@ public class VistaGrafica implements Serializable,IVista{
 		return pantallaMostrar;
 	}
 	
-	private void crearGanadores() {
-		JFrame ganadores = new JFrame();
-		ganadores.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		ganadores.setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBackground(Color.DARK_GRAY);
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		ganadores.setContentPane(contentPane);
-		contentPane.setLayout(null);
-		Font sfTitulo = boldFont.deriveFont(32f);
-		JLabel lblEspionaje = new JLabel("ESPIONAJE");
-		lblEspionaje.setIcon(new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconTitulo.png")));
-		lblEspionaje.setFont(sfTitulo);
-		lblEspionaje.setForeground(Color.WHITE);
-		lblEspionaje.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEspionaje.setBounds(10, 11, 414, 57);
-		contentPane.add(lblEspionaje);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(130, 106, 271, 97);
-		contentPane.add(scrollPane);
-		Font sf = normalFont.deriveFont(13f); 
-		JTextArea textArea = new JTextArea();
-		textArea.setFont(sf);
-		String s ="";
-		/*try {
-			if(controlador.getGanadores().isEmpty()) {
-				s= "NO HAY NINGÚN GANADOR REGISTRADO";
-			}else {
-				for(int i=0; i<= controlador.getGanadores().size()-1;i++) {
-					s = s + controlador.getGanadores().get(i) +"\n";
-				}
-			
-			}
-		} catch (RemoteException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}*/
-			textArea.setText(s);
-		textArea.setBackground(Color.LIGHT_GRAY);
-		textArea.setEditable(false);
-		scrollPane.setViewportView(textArea);
-		
-		JButton btnVolver = new JButton("VOLVER ");
-		btnVolver.setFont(sf);
-		btnVolver.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ganadores.setVisible(false);
-			}
-		});
-		btnVolver.setBounds(335, 226, 89, 23);
-		contentPane.add(btnVolver);
-		
-		sf = normalFont.deriveFont(28f);
-		JLabel lblGanadores = new JLabel("GANADORES");
-		lblGanadores.setFont(sf);
-		lblGanadores.setForeground(Color.ORANGE);
-		lblGanadores.setBounds(154, 54, 225, 55);
-		contentPane.add(lblGanadores);
-		lblGanadores.setHorizontalAlignment(SwingConstants.CENTER);
 
-		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/trofeo.png")));
-		label.setBounds(0, 67, 144, 149);
-		contentPane.add(label);
+	@Override
+	public void mostrarGanadores() {
+		String s = "";
+
+		try {
+			if(controlador.getGanadores().isEmpty()) {
+				s = "¡No se han registrado ganadores todavia!";
+			}else {
+			for(int i =0; i<= controlador.getGanadores().size() -1; i++) {
+				s = controlador.getGanadores().get(i) + "\n";
+			 	}
+			}
+			
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	text.setText(s);
+	cardLayout.show(frmEspionaje.getContentPane(), "GANADORES");
+
+
 	}
-		
 	
+	
+	@Override
+	public void mostrarAyuda() {
+		Font sFont = normalFont.deriveFont(14f);
+		text.setFont(sFont);
+		text.setText("                               |  REGLAS DE JUEGO  |\r\n" + 
+				"\r\n" + 
+				"\r\n" + 
+				"2 a 4 JUGADORES +10 AÑOS\r\n" + 
+				"____________________________________________________________________\r\n" + 
+				"\r\n" + 
+				"OBJETIVO\r\n" + 
+				"\r\n" + 
+				"Descubrir las tres cartas de INFORMACIÓN SECRETA: Agente, Ciudad y Dispositivo.\r\n" + 
+				"____________________________________________________________________\r\n" + 
+				"\r\n" + 
+				"~ PREPARATIVOS ~\r\n" + 
+				"\r\n" + 
+				"Cada jugador tendrá un mazo de AGENDA PERSONAL cada mazo tiene 15 cartas de color negro.\r\n" + 
+				"\r\n" + 
+				"El juego toma 3 cartas del ARCHIVO CONFIDENCIAL de color amarillo, que tiene 15 cartas y se tendrán como INFORMACIÓN SECRETA. Las 12 cartas restantes serán repartidas entre los jugadores.\r\n" + 
+				"____________________________________________________________________\r\n" + 
+				"\r\n" + 
+				"¡A JUGAR!\r\n" + 
+				"\r\n" + 
+				"~ Descartaremos las cartas del ARCHIVO PERSONAL de cada jugador que coincidan con las cartas amarillas del ARCHIVO CONFIDENCIAL que le tocó a cada uno de los jugadores.\r\n" + 
+				"\r\n" + 
+				"~ Un jugador comienza a jugar realizando una sospecha al jugador de su izquierda. Debe seleccionar el jugador e incluir dos elementos de las variables de ciudad, agente y dispositivo. Pueden incluir dos elementos iguales, por ejemplo dos ciudades, dos dispositivos o dos agentes.\r\n" + 
+				"\r\n" + 
+				"~Una vez realizada la sospecha el jugador situado a la izquierda examina sus carta de archivo confidencial, si tiene una o las dos debe -obligatoriamente- mostrar una sola de ellas al jugador que formulo la sospecha, sin que los demás lo vean. \r\n" + 
+				"¡el jugador que responde no puede mentir!\r\n" + 
+				"\r\n" + 
+				"Entonces, el jugador que hizo la sospecha descartará dicha carta de su agenda personal. De esta forma podrá deducir que cartas \"no están\" en la pila de información secreta.\r\n" + 
+				"\r\n" + 
+				"~ Si el jugador sospechado no tiene ninguna de esas cartas dice envia el mensaje \"PASO\" y la misma sospecha pasa al proximo jugador de la izquierda ** y así continua hasta que se haya mostrado alguna carta de archivo confidencial o hasta que haya \"pasado\" por todos los jugadores.\r\n" + 
+				"\r\n" + 
+				"Finaliza el turno del jugador y comienza el turno del siguiente jugador quien realiza una sospecha.\r\n" + 
+				"\r\n" + 
+				"--------------------------------------------------------------------\r\n" + 
+				"El juego continua de esta manera hasta que un  jugador cree saber cuales son las cartas secretas. Entonces puede realizar una acusación para ganar el juego.                    		\r\n" + 
+				"--------------------------------------------------------------------\r\n" + 
+				"\r\n" + 
+				"~ REALIZAR UNA ACUSACIÓN ~\r\n" + 
+				"\r\n" + 
+				"~ Si un jugador cree saber cuales son las 3 cartas de información secreta, durante su turno puede hacer una acusación (arriesgar cuales son las 3 cartas de cartas secretas).\r\n" + 
+				"\r\n" + 
+				"En este caso el jugador selecciona que desea realizar la acusación y el juego se detiene.  \r\n" + 
+				"Si el jugador arriesga para intentar ganar el juego en ese turno ya no podrá preguntar emitiendo una sospecha. Entonces:\r\n" + 
+				"\r\n" + 
+				"	- Todos los jugadores seleccionan las tres cartas de sus agendas personales que creen 	que son las cartas ocultas.\r\n" + 
+				"	- El jugador que realizó la acusación podrá ver cuales son las cartas secretas.\r\n" + 
+				"		\r\n" + 
+				"A: Si la acusación es correcta el jugador gana el juego!\r\n" + 
+				"B: Si la acusación es incorrecta (las tres cartas no coinciden), el siguiente jugador podrá ver si sus tres cartas coinciden con la información confidencial, en ese caso será el ganador, sino el siguiente jugador tendrá oportunidad y así hasta que cada jugador pueda arriesgar su acusación. \r\n" + 
+				"____________________________________________________________________\r\n" + 
+				"\r\n" + 
+				"Trabajo Final de la asignatura Programaciòn Orientada a Objetos - Universidad Nacional de Lujàn-\r\n" + 
+				"Juego Espionaje de la Marca YETEM - EL uso del mismo es unicamnete pata fines academicos.  \r\n" + 
+				" ");
+		text.repaint();
+		cardLayout.show(frmEspionaje.getContentPane(), AYUDA);
+	}
 }
