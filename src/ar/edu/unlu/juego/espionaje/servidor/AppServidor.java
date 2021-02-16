@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import ar.edu.unlu.juego.espionaje.modelo.IJuego;
 import ar.edu.unlu.juego.espionaje.modelo.Juego;
 import ar.edu.unlu.rmimvc.RMIMVCException;
 import ar.edu.unlu.rmimvc.Util;
@@ -32,7 +33,7 @@ public class AppServidor {
 				null,
 				8888
 		);
-		Juego juego = new Juego();
+		IJuego juego = new Juego();
 		Servidor servidor = new Servidor(ip, Integer.parseInt(port));
 		try {
 			servidor.iniciar(juego);

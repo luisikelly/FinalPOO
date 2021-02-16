@@ -1,6 +1,7 @@
 package ar.edu.unlu.juego.espionaje.modelo;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -38,8 +39,6 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 	private boolean gano = false;
 	private int jugadorEnTurno = 0;
 	private int sospechado;
-	private Enum sospecha1;
-	private Enum sospecha2;
 	private ArrayList<String> sospecha;
 	private String respuesta;
 	
@@ -63,6 +62,9 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 	@Override
 	public void finalizar() throws RemoteException {
 		enJuego = false;
+		ganador = null;
+		this.respuesta =" ";
+		gano = false;
 		estado = ESTADOS.FINALIZADO;
 		notificar(CambiosJuego.CAMBIO_ESTADO);
 	}
@@ -170,6 +172,7 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 	@Override
 	public void setSospecha(ArrayList<String> s) throws RemoteException {
 		sospecha = s;
+		
 		this.eEJ = E_EN_JUEGO.RESPONDER;
 		notificar(CambiosJuego.CAMBIO_ESTADO);
 	}
@@ -188,13 +191,17 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 				}
 			}
 		}else {
-				if(jugadores.size() > 2 && (sospechado != jugadorEnTurno)) {
+				if(jugadores.size() > 2 ) {
 					if(sospechado == jugadores.size()-1){ sospechado = 0;}
 			    	else {sospechado++;}
-					this.eEJ = E_EN_JUEGO.SOSPECHA;
-					notificar(CambiosJuego.CAMBIO_ESTADO);
+					if((sospechado != jugadorEnTurno)) {
+						this.eEJ = E_EN_JUEGO.RESPONDER;
+						notificar(CambiosJuego.CAMBIO_ESTADO);
+					}
+					else {this.pasar();}
 				}else {
 					this.pasar();
+					
 				}
 			}
 	}
@@ -244,10 +251,6 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
     
     @Override
 	public void cambiarJugador() throws RemoteException {
-    	if (ganador()) {
-			notificar(CambiosJuego.HAY_GANADOR);
-			notificar(CambiosJuego.CAMBIO_ESTADO);
-		} else {
 			if (jugadorEnTurno == jugadores.size()-1) {
 				jugadorEnTurno = 0;
 				sospechado = 1;	
@@ -260,20 +263,15 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 			}
 		if(! eEJ.equals(E_EN_JUEGO.ARRIESGA)) {
 			eEJ = E_EN_JUEGO.SOSPECHA;
-			notificar(CambiosJuego.CAMBIO_ESTADO);
+			notificar(CambiosJuego.CAMBIO_ESTADO);	
 		}
-			
-		}
-    			
-		
 	}
 
     
 	@Override
 	public void pasar() throws RemoteException {
 		this.cambiarJugador();
-		if(eEJ.equals(E_EN_JUEGO.SOSPECHA))
-		this.resetSospecha();
+		if(eEJ.equals(E_EN_JUEGO.SOSPECHA)) this.resetSospecha();
 	}
 
 	
@@ -354,8 +352,9 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 			this.estado = ESTADOS.FINALIZADO;
 			notificar(CambiosJuego.CAMBIO_ESTADO);
 			this.addUltimosGanadores(ganador);
-			
-			
+			this.finalizar();
+			estado = ESTADOS.FINALIZADO;
+			notificar(CambiosJuego.CAMBIO_ESTADO);
 		}else {
 			notificar(CambiosJuego.JUGADOR_PERDIO);
 			
@@ -375,85 +374,6 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 		
 	}
 	
-	
-	
-	// TODO PERSISTENCIA OBJETO JUGADOR -- REGISTRO DE GANADORES --
-	private ArrayList<IJugador> getjugadoresEnElRanking() {
-		ObjectInputStream ois = null;
-		FileInputStream fis = null;
-	
-		ArrayList<IJugador> jugadoresRanking = new ArrayList<IJugador>();
-		
-		try {
-			fis = new FileInputStream("ultimosGanadores.txt");
-			ois = new ObjectInputStream(fis);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Jugador jugador;
-		try {	
-			
-			while( fis.available() > 0) { // metodo available() devuleve el numero de bytes restantes que se pueden leer. 
-				jugadoresRanking = (ArrayList<IJugador>) ois.readObject(); //TODO HAY UN PROBLEMA ACA
-				//jugadoresRanking.add(jugador);
-			}
-				
-		} catch (ClassNotFoundException | IOException e) {
-			e.printStackTrace();
-		}
-		return jugadoresRanking;
-	}
-
-	@Override
-	public ArrayList<String> getGanadores() throws RemoteException{
-		ArrayList<String> ganadores = new ArrayList<String>();
-		for(int i=0; i<= this.getjugadoresEnElRanking().size() -1; i++) {
-			ganadores.add(this.getjugadoresEnElRanking().get(i).getNombre());
-		}
-		return ganadores;
-	} 
-	
-	private void addUltimosGanadores(IJugador ganador2)  {
-		FileOutputStream fos;
-		ObjectOutputStream oos = null;
-		try {
-			 fos = new FileOutputStream("ultimosGanadores.txt");
-			 oos = new ObjectOutputStream(fos);
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		ArrayList<IJugador> jugadoresEnElRanking = getjugadoresEnElRanking();
-		
-		if(jugadoresEnElRanking != null) {
-			jugadoresEnElRanking = getjugadoresEnElRanking();
-			
-		}
-		if(jugadoresEnElRanking.size() <= 10) {
-				jugadoresEnElRanking.add( ganador);
-		}else {
-			jugadoresEnElRanking.remove(0);
-			jugadoresEnElRanking.add( ganador);
-		}
-				
-		try {
-			oos.writeObject(jugadoresEnElRanking);
-			oos.flush();
-			oos.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-		
 	private int buscarJugador(String s) {
 		int nJugador = -1;
 		for(int i=0; i<= jugadores.size()-1; i++) {
@@ -464,6 +384,95 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 		return nJugador;
 	}
 
+	
+	
+	// TODO PERSISTENCIA OBJETO JUGADOR -- REGISTRO DE GANADORES --
+	private ArrayList<IJugador> getHistorialGanadores() {
+
+		File ganadores = new File("historialGanadores.txt");
+		  if (!ganadores.exists()) {
+			  try {
+				ganadores.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		  }
+		  	
+		  if (0 == ganadores.length() ) {
+			try {  
+				ArrayList<IJugador> topsHistoricos = new ArrayList<>();
+			  ObjectOutputStream oos;
+		
+				oos = new ObjectOutputStream(new FileOutputStream("historialGanadores.txt"));
+				oos.writeObject(topsHistoricos);
+		        oos.close();
+		     } catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();   
+		        
+		  }
+		  	}else
+		try {
+			 ObjectInputStream ois = new ObjectInputStream( 
+			         new FileInputStream("historialGanadores.txt") );
+			 Object jugadores = ois.readObject();
+			 if (jugadores instanceof ArrayList<?> ) {
+			  ArrayList<IJugador> historialGanadores = ( ArrayList<IJugador> ) jugadores;
+			        ois.close();
+			        
+			   return historialGanadores;     
+			 }
+			}
+			catch ( Exception e ) {
+			 e.printStackTrace();
+			}
+			return new ArrayList<IJugador>();
+	}
+
+	@Override
+	public ArrayList<String> getGanadores() throws RemoteException{
+		ArrayList<String> ganadores = new ArrayList<String>();
+		for(int i=0; i<= this.getHistorialGanadores().size() -1; i++) {
+			ganadores.add(this.getHistorialGanadores().get(i).getNombre());
+//			System.out.println(this.getHistorialGanadores().get(i).getNombre());
+		}
+	
+		return ganadores;
+	} 
+	
+	private void addUltimosGanadores(IJugador ganador)  {
+		try {
+		  File archivoHistorial = new File("historialGanadores.txt");
+		  ArrayList<IJugador> historialGanadores;
+		  if (archivoHistorial.exists()) {
+		   ObjectInputStream ois = new ObjectInputStream( new FileInputStream ("historialGanadores.txt") );
+		   historialGanadores = ( ArrayList <IJugador> ) ois.readObject();
+		         ois.close();
+		         historialGanadores.add(ganador);
+		         archivoHistorial.delete();
+		  }
+		  else {
+		   historialGanadores = new ArrayList<IJugador>();
+		   historialGanadores.add(ganador);
+		  }
+		  
+		  File file = new File ( "historialGanadores.txt");
+		  file.delete();
+		  ObjectOutputStream  a = new ObjectOutputStream(new FileOutputStream("historialGanadores.txt"));
+		  a.writeObject(historialGanadores);
+		        a.close();
+		        
+		 } catch (Exception e) {
+		  e.printStackTrace();
+		 }
+		
+	}
+		
+	
 	
 
 	

@@ -23,7 +23,8 @@ public class MenuConfig extends Menu {
 		System.out.println("-----------------------------------------");
 		System.out.println();
 		System.out.println("1. Iniciar juego");
-		System.out.println("2. Listar jugadores");
+		System.out.println("2. Ayuda");
+		System.out.println("3. Historial de Ganadores");
 		System.out.println("0. Salir");
 		System.out.println();
 		System.out.println("Ingrese opcion");
@@ -32,11 +33,12 @@ public class MenuConfig extends Menu {
 		switch(opcion) {
 		case "0": miControlador.finalizarPartida();
 				  break;
-		case "1": miControlador.iniciarPartida();      
+		case "2": miVista.mostrarAyuda();      
 				  break;
-		case "2": miVista.mostraJugadores();
-				  mostrarMenu();
-				  break;
+		case "3": miVista.mostrarGanadores();      
+		  break;
+		case "4": miControlador.iniciarPartida();      
+		  break; 
 		default: miVista.mostrarError(opcion);		  
 		}
 	}

@@ -6,7 +6,7 @@ import java.util.Random;
 
 import ar.edu.unlu.juego.espionaje.modelo.Mazo;;
 
-public class Jugador implements IJugador{
+public class Jugador implements IJugador,Serializable{
 	
 	private String Nombre;
 	private Mazo agendaPersonal;

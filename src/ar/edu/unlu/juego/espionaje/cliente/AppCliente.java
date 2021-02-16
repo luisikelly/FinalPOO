@@ -68,15 +68,17 @@ public class AppCliente {
 				null
 		);
 	
-		
+		boolean mostrarConfig=false; 
 		IVista vista = null;
 		if(v.equals("Grafica")) {vista = new VistaGrafica(); }
-		else { vista = new VistaConsola(); }
+		else { vista = new VistaConsola();  
+		mostrarConfig = true;}
 		Controlador controlador = new Controlador(vista);	
 		vista.setControlador(controlador);
 		Cliente c = new Cliente(ip, Integer.parseInt(port), ipServidor, Integer.parseInt(portServidor));			
 		try {
 			c.iniciar(controlador);
+			if(mostrarConfig) {vista.mostrarConfiguracion();}
 		} catch (RMIMVCException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
