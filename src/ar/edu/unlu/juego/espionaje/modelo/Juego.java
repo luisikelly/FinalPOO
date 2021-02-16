@@ -112,7 +112,12 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 	}
 	
 	
-//PROCEDIMIENTOS PARA EL DESARROLLO DEL JUEGO
+
+	private void notificar(CambiosJuego cambio) throws RemoteException {
+		notificarObservadores(cambio);
+	}
+	
+//TODO PROCEDIMIENTOS PARA EL DESARROLLO DEL JUEGO
 
 	public void resetSospecha() {
 		this.respuesta = "";
@@ -274,8 +279,18 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 		if(eEJ.equals(E_EN_JUEGO.SOSPECHA)) this.resetSospecha();
 	}
 
+	private int buscarJugador(String s) {
+		int nJugador = -1;
+		for(int i=0; i<= jugadores.size()-1; i++) {
+			if(jugadores.get(i).getNombre().equals(s)) {
+				nJugador = i;
+			}
+		}
+		return nJugador;
+	}
 	
-// GETTERS
+	
+// TODO GETTERS
 	
 	
 	@Override
@@ -314,9 +329,6 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 		return this.eEJ;
 	}
     
-	private void notificar(CambiosJuego cambio) throws RemoteException {
-		notificarObservadores(cambio);
-	}
 		
 	@Override
 	public Carta[] getInfoSecreta() throws RemoteException {
@@ -327,6 +339,7 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 	public ArrayList<String> getSospecha() throws RemoteException {
 		return sospecha;
 	}
+	
 	@Override
 	public String getRespuesta() throws RemoteException {
 		return respuesta;
@@ -374,27 +387,16 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 		
 	}
 	
-	private int buscarJugador(String s) {
-		int nJugador = -1;
-		for(int i=0; i<= jugadores.size()-1; i++) {
-			if(jugadores.get(i).getNombre().equals(s)) {
-				nJugador = i;
-			}
-		}
-		return nJugador;
-	}
 
 	
-	
 	// TODO PERSISTENCIA OBJETO JUGADOR -- REGISTRO DE GANADORES --
-	private ArrayList<IJugador> getHistorialGanadores() {
+	private ArrayList<IJugador> getHistorialGanadores() { // RECUPERO GANADORES
 
 		File ganadores = new File("historialGanadores.txt");
 		  if (!ganadores.exists()) {
 			  try {
 				ganadores.createNewFile();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		  }
@@ -434,7 +436,7 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 	}
 
 	@Override
-	public ArrayList<String> getGanadores() throws RemoteException{
+	public ArrayList<String> getGanadores() throws RemoteException{ // DEVUELVE AL CONTROLADOR LISTA CON LOS NOMBRES DE LOS GANADORES  
 		ArrayList<String> ganadores = new ArrayList<String>();
 		for(int i=0; i<= this.getHistorialGanadores().size() -1; i++) {
 			ganadores.add(this.getHistorialGanadores().get(i).getNombre());
@@ -444,7 +446,7 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 		return ganadores;
 	} 
 	
-	private void addUltimosGanadores(IJugador ganador)  {
+	private void addUltimosGanadores(IJugador ganador)  { //AGREGAR GANADOR AL HISTORIAL
 		try {
 		  File archivoHistorial = new File("historialGanadores.txt");
 		  ArrayList<IJugador> historialGanadores;

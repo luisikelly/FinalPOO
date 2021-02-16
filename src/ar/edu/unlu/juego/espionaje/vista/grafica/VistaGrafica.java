@@ -451,6 +451,36 @@ public class VistaGrafica implements Serializable,IVista{
 					cardLayout.show(this.frmEspionaje.getContentPane(), GANADOR);		
 	}
 
+//TODO MOSTRAR GANADORES
+	@Override
+	public void mostrarGanadores() {
+		String s = "";
+		Font sFont = normalFont.deriveFont(18f);
+		text.setFont(sFont);
+		try {
+			if(controlador.getGanadores().isEmpty()) {
+				s = "¡No se han registrado ganadores todavia!";
+			}else {
+				text.append("     HISTORIAL DE GANADORES \n");
+				text.append("\n");
+				for (String ganador : controlador.getGanadores()) {
+					text.append(ganador+"\n"); 
+				}
+			}
+			
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+
+	cardLayout.show(frmEspionaje.getContentPane(), "GANADORES");
+
+	}
+	
+// TODO MOSTRAR AYUDA	
+	@Override
+	public void mostrarAyuda() {
+		cardLayout.show(frmEspionaje.getContentPane(), AYUDA);
+	}
 
 	
 	
@@ -1096,78 +1126,5 @@ public class VistaGrafica implements Serializable,IVista{
 
 		return pantallaMostrar;
 	}
-	
-
-	@Override
-	public void mostrarGanadores() {
-		String s = "";
-		Font sFont = normalFont.deriveFont(18f);
-		text.setFont(sFont);
-		try {
-			if(controlador.getGanadores().isEmpty()) {
-				s = "¡No se han registrado ganadores todavia!";
-			}else {
-				text.append("     HISTORIAL DE GANADORES \n");
-				text.append("\n");
-				for (String ganador : controlador.getGanadores()) {
-					text.append(ganador+"\n"); 
-				}
-			}
-			
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-
-	cardLayout.show(frmEspionaje.getContentPane(), "GANADORES");
-
-
-	}
-	
-	
-	@Override
-	public void mostrarAyuda() {
-		Font sFont = normalFont.deriveFont(13f);
-		text.setFont(sFont);
-		text.append("                               |  REGLAS DE JUEGO  |\r\n" + 
-				"\r\n" +"2 a 4 JUGADORES +10 AÑOS\r\n" + "____________________________________________________________________\r\n" + 
-				"\r\n" + "OBJETIVO\r\n" + 
-				"\r\n" + "Descubrir las tres cartas de INFORMACIÓN SECRETA: Agente, Ciudad y Dispositivo.\r\n" + 
-				"____________________________________________________________________\r\n" + 
-				"\r\n" + "~ PREPARATIVOS ~\r\n" + 
-				"\r\n" + "Cada jugador tendrá un mazo de AGENDA PERSONAL cada mazo tiene 15 cartas de color negro.\r\n" + 
-				"\r\n" + "El juego toma 3 cartas del ARCHIVO CONFIDENCIAL de color amarillo, que tiene 15 cartas y se tendrán como INFORMACIÓN SECRETA. Las 12 cartas restantes serán repartidas entre los jugadores.\r\n" + 
-				"____________________________________________________________________\r\n" + 
-				"\r\n" + "¡A JUGAR!\r\n" + 
-				"\r\n" + "~ Descartaremos las cartas del ARCHIVO PERSONAL de cada jugador que coincidan con las cartas amarillas del ARCHIVO CONFIDENCIAL que le tocó a cada uno de los jugadores.\r\n" + 
-				"\r\n" + "~ Un jugador comienza a jugar realizando una sospecha al jugador de su izquierda. Debe seleccionar el jugador e incluir dos elementos de las variables de ciudad, agente y dispositivo. Pueden incluir dos elementos iguales, por ejemplo dos ciudades, dos dispositivos o dos agentes.\r\n" + 
-				"\r\n" + "~Una vez realizada la sospecha el jugador situado a la izquierda examina sus carta de archivo confidencial, si tiene una o las dos debe -obligatoriamente- mostrar una sola de ellas al jugador que formulo la sospecha, sin que los demás lo vean. \r\n" + 
-				"¡el jugador que responde no puede mentir!\r\n" + 
-				"\r\n" + "Entonces, el jugador que hizo la sospecha descartará dicha carta de su agenda personal. De esta forma podrá deducir que cartas \"no están\" en la pila de información secreta.\r\n" + 
-				"\r\n" + "~ Si el jugador sospechado no tiene ninguna de esas cartas dice envia el mensaje \"PASO\" y la misma sospecha pasa al proximo jugador de la izquierda ** y así continua hasta que se haya mostrado alguna carta de archivo confidencial o hasta que haya \"pasado\" por todos los jugadores.\r\n" + 
-				"\r\n" + "Finaliza el turno del jugador y comienza el turno del siguiente jugador quien realiza una sospecha.\r\n" + 
-				"\r\n" + "--------------------------------------------------------------------\r\n" + 
-				"El juego continua de esta manera hasta que un  jugador cree saber cuales son las cartas secretas. Entonces puede realizar una acusación para ganar el juego.                    		\r\n" + 
-				"--------------------------------------------------------------------\r\n" + 
-				"\r\n" + "~ REALIZAR UNA ACUSACIÓN ~\r\n" + 
-				"\r\n" + "~ Si un jugador cree saber cuales son las 3 cartas de información secreta, durante su turno puede hacer una acusación (arriesgar cuales son las 3 cartas de cartas secretas).\r\n" + 
-				"\r\n" + "En este caso el jugador selecciona que desea realizar la acusación y el juego se detiene.  \r\n" + 
-				"Si el jugador arriesga para intentar ganar el juego en ese turno ya no podrá preguntar emitiendo una sospecha. Entonces:\r\n" + 
-				"\r\n" + "	- Todos los jugadores seleccionan las tres cartas de sus agendas personales que creen 	que son las cartas ocultas.\r\n" + 
-				"	- El jugador que realizó la acusación podrá ver cuales son las cartas secretas.\r\n" + 
-				"		\r\n" + 
-				"A: Si la acusación es correcta el jugador gana el juego!\r\n" + 
-				"B: Si la acusación es incorrecta (las tres cartas no coinciden), el siguiente jugador podrá ver si sus tres cartas coinciden con la información confidencial, en ese caso será el ganador, sino el siguiente jugador tendrá oportunidad y así hasta que cada jugador pueda arriesgar su acusación. \r\n" + 
-				"____________________________________________________________________\r\n" + 
-				"\r\n" + "Trabajo Final de la asignatura Programaciòn Orientada a Objetos - Universidad Nacional de Lujàn-\r\n" + 
-				"Juego Espionaje de la Marca YETEM - EL uso del mismo es unicamnete pata fines academicos.  \r\n" + " ");
 		
-		cardLayout.show(frmEspionaje.getContentPane(), AYUDA);
-	}
-
-
-	
-
-
-	
-	
 }
