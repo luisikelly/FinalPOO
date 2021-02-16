@@ -17,8 +17,8 @@ public class VistaConsola implements IVista, Serializable {
 	private static final long serialVersionUID = 1L;
 	private Controlador controlador;
 	private Menu menu;
-	private String nombre;
-	private Scanner entrada = new Scanner(System.in);
+	private String nombre = "";
+	private Scanner entrada;
 	private final String ErrorCantidadMinimaJugadores = "MenosJugadores";
 	private final String ErrorCantidadMaximaJugadores = "MasJugadores";
 	
@@ -37,7 +37,7 @@ public class VistaConsola implements IVista, Serializable {
 	
 	@Override
 	public void iniciarJuego() {
-		controlador.iniciarPartida();
+		this.mostrarConfiguracion();
 		
 	}
 	
@@ -45,7 +45,7 @@ public class VistaConsola implements IVista, Serializable {
 	
 	@Override
 	public void mostrarArriesgar() {
-		entrada.nextLine();
+		entrada = new Scanner(System.in);
 	System.out.println("~ SOSPECHA FINAL ~");
 		
 		System.out.println("Ingrese la opcion de DISPOSITIVO");
@@ -101,7 +101,6 @@ public class VistaConsola implements IVista, Serializable {
 			break;	
 		
 		}
-		
 		System.out.println();
 		System.out.println(ciudades);
 		System.out.println();
@@ -129,7 +128,6 @@ public class VistaConsola implements IVista, Serializable {
 		
 		System.out.println();
 		System.out.println();
-		
 		controlador.rtaSospechaFinal(agentes, dispositivo, ciudades);
 	}
 
@@ -153,19 +151,72 @@ public class VistaConsola implements IVista, Serializable {
 			System.out.println(jugador.getNombre()+" Ingresó a la partida");
 		}
 		System.out.println();
-		//if(nombre.isEmpty()) {this.agregarJugador();}
+		this.mostrarConfiguracion();
 	}
 
 
 
 	@Override
 	public void mostrarConfiguracion() {
-		menu.mostrarMenu();
+		entrada = new Scanner(System.in);
+		if(!nombre.equals("")) {
+			System.out.println("-----------------------------------------");
+			System.out.println();
+			System.out.println("1. Iniciar juego");
+			System.out.println("2. Ayuda");
+			System.out.println("3. Historial de Ganadores");
+			System.out.println("0. Salir");
+			System.out.println();
+			System.out.println("Ingrese opcion");
+			String opcion= entrada.nextLine();
+			
+			switch(opcion) {
+			case "0": controlador.finalizarPartida();
+					break;
+			case "1": controlador.iniciarPartida();      
+			  		break; 
+			case "2": mostrarAyuda();
+					  mostrarConfiguracion();				
+					break;
+			case "3": mostrarGanadores(); 
+					mostrarConfiguracion();
+			  		break;
+			}
+
+		}else {
+			System.out.println("-----------------------------------------");
+			System.out.println();
+			System.out.println("1. Registrarse");
+			System.out.println("2. Iniciar juego");
+			System.out.println("3. Ayuda");
+			System.out.println("4. Historial de Ganadores");
+			System.out.println("0. Salir");
+			System.out.println();
+			System.out.println("Ingrese opcion");
+			String opcion= entrada.nextLine();
+			
+			switch(opcion) {
+			case "0": controlador.finalizarPartida();
+					break;
+			case "1": this.agregarJugador();      
+	  				break; 		
+			case "2": controlador.iniciarPartida();      
+			  		break; 
+			case "3": mostrarAyuda();
+					  mostrarConfiguracion();				
+					break;
+			case "4": mostrarGanadores(); 
+					mostrarConfiguracion();
+			  		break;
+			}
+
+		}
+			
 	}
 
 	@Override
 	public void mostrarResponder() {
-		entrada.nextLine();
+		entrada = new Scanner(System.in);
 		System.out.println();
 		System.out.println("Responder Sospecha de: "+ controlador.getJugadorEnTurno().getNombre());
 		System.out.println();
@@ -189,8 +240,9 @@ public class VistaConsola implements IVista, Serializable {
 						System.out.println("2- "+controlador.verificarRespuesta().get(1));
 					}
 					System.out.println(".............................................................");
-					System.out.println("             ELEGÍ UN ELEMENTO TU RESPUESTA   ");
+					System.out.println(" ELEGÍ TU RESPUESTA   ");
 					String resp = entrada.nextLine();
+					System.out.println();
 					switch(resp) {
 					case "1" : controlador.setRespuesta(controlador.verificarRespuesta().get(0));
 						break;
@@ -208,9 +260,6 @@ public class VistaConsola implements IVista, Serializable {
 					System.out.println("    ");
 					controlador.setRespuesta("");
 				}
-
-		
-			
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}			
@@ -258,7 +307,7 @@ public class VistaConsola implements IVista, Serializable {
 			System.out.println();
 			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 			System.out.println();
-
+			this.mostrarConfiguracion();
 			break;
 		case "NombreRepetido":
 			System.out.println("~~~~~~~~~~~~~~~~~~~~~ ¡ERROR! ~~~~~~~~~~~~~~~~~~~~~");
@@ -267,6 +316,7 @@ public class VistaConsola implements IVista, Serializable {
 			System.out.println();
 			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 			System.out.println();
+			this.mostrarConfiguracion();
 			break;
 		}
 		
@@ -274,7 +324,7 @@ public class VistaConsola implements IVista, Serializable {
 
 	@Override
 	public void mostrarSospechar() {
-		entrada.nextLine();
+		entrada = new Scanner(System.in);
 		System.out.println("-----------------------------------------");
 		System.out.println("--------        ESPIONAJE     -----------");
 		System.out.println("-----------------------------------------");
@@ -300,7 +350,7 @@ public class VistaConsola implements IVista, Serializable {
 			System.out.println();
 			System.out.println("1- Realizar Sospecha");
 			System.out.println("2- Realizar Acusación");
-			entrada.reset();
+			
 			String opcion = entrada.nextLine();
 			switch (opcion) {
 				case "1" :
@@ -373,17 +423,16 @@ public class VistaConsola implements IVista, Serializable {
 	}
 
 	protected void agregarJugador() {
-		entrada.nextLine();
 		System.out.println("-----------------------------------------");
 		System.out.println();
 		System.out.println("Ingresa tu nombre:");
 		
 		nombre = entrada.next();
-		if(!nombre.isEmpty() && !nombre.equals("")) {
+		if(!nombre.equals("")) {
 			controlador.agregarJugador(nombre.toUpperCase());
 		}
 			
-		
+		mostrarConfiguracion();
 			System.out.println();
 	}
 
@@ -391,7 +440,7 @@ public class VistaConsola implements IVista, Serializable {
 	public void mostrarGanadores() {
 		try {
 			System.out.println();
-			System.out.println(" __________________________________ ");
+			System.out.println(" ____________________________");
 			System.out.println("| ______   GANADORES _______ |");
 			for (String ganador : controlador.getGanadores()) {
 				System.out.println("   " +ganador);
@@ -441,7 +490,7 @@ public class VistaConsola implements IVista, Serializable {
 	}
 
 	private ArrayList<String> elegirOpcion(int cantidadOpcionesAElegir, String s1, String s2) {
-		entrada.nextLine();
+		entrada = new Scanner(System.in);
 		int opcionElegida = 0;
 		ArrayList<String> elegidas = new ArrayList<String>();
 		for(int i=0; i< cantidadOpcionesAElegir ; i++) {

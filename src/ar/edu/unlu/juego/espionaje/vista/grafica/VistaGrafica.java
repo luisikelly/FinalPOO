@@ -82,6 +82,7 @@ public class VistaGrafica implements Serializable,IVista{
 	private JLabel lblCartaciudad;
 	private JLabel lblCartadisp;
 	private JLabel lblCartaagente;
+	JLabel lblResponde;
 	
 	private JTextArea textJugadores;
 	private JTextArea textArea;
@@ -284,8 +285,8 @@ public class VistaGrafica implements Serializable,IVista{
 		if(!btnArriesgar.isEnabled()) {btnArriesgar.setEnabled(true);}
 		s1.removeAllItems();
 		s2.removeAllItems();
-		String nro = controlador.getNroJugador() + "";
-		lblnro.setText(nro);	
+		System.out.println(controlador.getJugadorEnTurno().getNroJugador());	
+		System.out.println(controlador.getSospechado());
 		this.lblNombrejugadorPSospecha.setText(controlador.listaJugadores().get(controlador.getSospechado()).getNombre().toUpperCase());
 		String s = "";
 		for(int i=0;i<= controlador.getJugadorEnTurno().getAgendaPersonal().cantCartas()-1; i++) {
@@ -329,9 +330,16 @@ public class VistaGrafica implements Serializable,IVista{
 	//TODO MOSTRAR RESPUESTA
 	@Override
 	public void mostrarRespuesta(String r) {
-		lblNombrejugadorPRespuesta.setText(controlador.listaJugadores().get(controlador.getSospechado()).getNombre());
-		this.lblCarta.setText(r);
-		this.setIcon(r, lblCarta);
+		if(r.equals("")) {
+			this.lblNombrejugadorPRespuesta.setText("NINGUNO DE LOS JUGADORES");
+			this.lblResponde.setText("TIENE");
+			this.lblCarta.setText("LAS CARTAS DE TU SOSPECHA");
+		}else {
+			lblNombrejugadorPRespuesta.setText(controlador.listaJugadores().get(controlador.getSospechado()).getNombre());
+			this.lblCarta.setText(r);
+			this.setIcon(r, lblCarta);
+		}
+		
 		cardLayout.show(this.frmEspionaje.getContentPane(), RESPUESTA);
 		
 	}
@@ -1099,7 +1107,7 @@ public class VistaGrafica implements Serializable,IVista{
 		lblNombrejugadorPRespuesta.setBounds(10, 113, 194, 36);
 		pantallaMostrar.add(lblNombrejugadorPRespuesta);
 		
-		JLabel lblResponde = new JLabel("RESPONDE:");
+		lblResponde = new JLabel("RESPONDE:");
 		lblResponde.setFont(normalFont.deriveFont(24f));
 		lblResponde.setForeground(Color.WHITE);
 		lblResponde.setBounds(214, 113, 206, 36);

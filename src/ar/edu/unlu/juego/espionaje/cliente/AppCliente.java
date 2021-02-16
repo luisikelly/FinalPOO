@@ -78,7 +78,7 @@ public class AppCliente {
 		Cliente c = new Cliente(ip, Integer.parseInt(port), ipServidor, Integer.parseInt(portServidor));			
 		try {
 			c.iniciar(controlador);
-			if(mostrarConfig) {vista.mostrarConfiguracion();}
+			if(mostrarConfig) {vista.iniciarJuego();}
 		} catch (RMIMVCException e) {
 			e.printStackTrace();
 		} catch (Exception e) {

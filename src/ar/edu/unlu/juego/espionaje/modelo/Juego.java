@@ -37,6 +37,7 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 	private boolean enJuego = true;
 	private IJugador ganador = null;
 	private boolean gano = false;
+	private int sospechas=0;
 	private int jugadorEnTurno = 0;
 	private int sospechado;
 	private ArrayList<String> sospecha;
@@ -197,18 +198,17 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 			}
 		}else {
 				if(jugadores.size() > 2 ) {
-					if(sospechado == jugadores.size()-1){ sospechado = 0;}
-			    	else {sospechado++;}
-					if((sospechado != jugadorEnTurno)) {
-						this.eEJ = E_EN_JUEGO.RESPONDER;
-						notificar(CambiosJuego.CAMBIO_ESTADO);
-					}
-					else {this.pasar();}
-				}else {
-					this.pasar();
-					
-				}
-			}
+						if(sospechado == jugadores.size()-1){ sospechado = 0;}
+				    	else {sospechado++;}
+						if((sospechado != jugadorEnTurno)) {
+								this.eEJ = E_EN_JUEGO.RESPONDER;
+								notificar(CambiosJuego.CAMBIO_ESTADO);							
+						}else {
+							this.eEJ = E_EN_JUEGO.RESPUESTA;
+							notificar(CambiosJuego.CAMBIO_ESTADO); 
+						}
+				}else { pasar();}
+		}
 	}
 	
 	
@@ -262,8 +262,12 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 			}else {
 				jugadorEnTurno ++;
 				int j = jugadorEnTurno;
-		    	if(sospechado == jugadores.size()-1){ sospechado = 0;}
+				int jug = jugadores.size() -1;
+				if(sospechado == jugadores.size()-1){ sospechado = 0;}
 		    	else {sospechado = ++j;}
+				System.out.println(jugadorEnTurno);
+				System.out.println(sospechado);
+				if(sospechado == jugadores.size()) sospechado = 0;
 
 			}
 		if(! eEJ.equals(E_EN_JUEGO.ARRIESGA)) {

@@ -72,7 +72,11 @@ public class Controlador implements IControladorRemoto {
 						if(nroJugador == juego.getJugadorEnTurno().getNroJugador()) { 
 							if(juego.getEstadoEnJuego().name() == "ARRIESGA")  {vista.mostrarArriesgar();}
 							if(juego.getEstadoEnJuego().name() == "SOSPECHA")  {vista.mostrarSospechar();}
-							if(juego.getEstadoEnJuego().name() == "RESPUESTA") {vista.mostrarRespuesta(juego.getRespuesta());}
+							if(juego.getEstadoEnJuego().name() == "RESPUESTA") {
+								if(juego.getRespuesta().equals("")) {vista.mostrarRespuesta("");}
+								else {vista.mostrarRespuesta(juego.getRespuesta());}
+							
+								}
 							if(juego.getEstadoEnJuego().name() == "RESPONDER") {vista.mostrarTurno("RESPONDER_JET");}
 						} else { 
 
@@ -157,9 +161,7 @@ public class Controlador implements IControladorRemoto {
 
 	public void agregarJugador(String nombre)   {
 		try {
-			System.out.println(nombre);
 			nroJugador = juego.agregarJugador(nombre);
-			System.out.println(nroJugador);
 			if(nroJugador == -1) {
 				vista.mostrarError(ErrorCantidadMaximaJugadores);
 			}
@@ -170,7 +172,6 @@ public class Controlador implements IControladorRemoto {
 			e.printStackTrace();
 		} catch (ValidationException e) {
 			vista.mostrarError("NombreRepetido");
-			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
@@ -240,7 +241,6 @@ public class Controlador implements IControladorRemoto {
 		try {
 			juego.setSospecha(lista);
 			int jugador = juego.getSospechado();
-			System.out.println(jugador);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
