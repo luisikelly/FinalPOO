@@ -64,6 +64,11 @@ public class Controlador implements IControladorRemoto {
 						vista.quienGano();					
 						}
 					break;
+				case JUGADOR_SALIO:
+				//		if((juego.getSalio() < this.listaJugadores().size()-1) && (this.nroJugador > juego.getSalio()) && (juego.getSalio() != -1))  
+					//		this.nroJugador --;
+					
+					break;
 				case CAMBIO_ESTADO:
 					ESTADOS e = juego.getEstado();
 					String estado = juego.getEstado().name();
@@ -286,8 +291,12 @@ public class Controlador implements IControladorRemoto {
 	}
 
 	public void salir() {
-		
-		//juego.salir(this.nroJugador);
+		try {
+			juego.salir(this.nroJugador);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 

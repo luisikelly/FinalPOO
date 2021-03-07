@@ -6,5 +6,6 @@ public enum CambiosJuego {
 	CAMBIO_ESTADO,
 	HAY_GANADOR, 
 	CAMBIO_JUGADOR,
+	JUGADOR_SALIO
 
 }

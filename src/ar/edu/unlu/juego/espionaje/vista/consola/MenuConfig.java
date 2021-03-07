@@ -5,42 +5,73 @@ import java.util.Scanner;
 import ar.edu.unlu.juego.espionaje.controlador.Controlador;
 
 public class MenuConfig extends Menu {
-	private Controlador miControlador;
-	private VistaConsola miVista;
-	
-	public MenuConfig(Controlador miControlador, VistaConsola vistaConsola) {
-		super();
-		this.miControlador = miControlador;
-		this.miVista = vistaConsola;
+	boolean registrado;
+
+
+	public MenuConfig(Controlador controlador, VistaConsola vista) {
+		this.miControlador = controlador;
+		this.miVista = vista;
+		registrado = false;
 	}
 
 
 	@Override
 	public void mostrarMenu() {
-		Scanner s = new Scanner(System.in);
-
-		miVista.agregarJugador();		
-		System.out.println("-----------------------------------------");
-		System.out.println();
-		System.out.println("1. Iniciar juego");
-		System.out.println("2. Ayuda");
-		System.out.println("3. Historial de Ganadores");
-		System.out.println("0. Salir");
-		System.out.println();
-		System.out.println("Ingrese opcion");
-		String opcion= s.nextLine();
+		Scanner entrada = new Scanner(System.in);	
 		
-		switch(opcion) {
-		case "0": miControlador.finalizarPartida();
-				  break;
-		case "2": miVista.mostrarAyuda();      
-				  break;
-		case "3": miVista.mostrarGanadores();      
-		  break;
-		case "4": miControlador.iniciarPartida();      
-		  break; 
-		default: miVista.mostrarError(opcion);		  
+		if(this.registrado) {
+			System.out.println("-----------------------------------------");
+			System.out.println();
+			System.out.println("1. Iniciar juego");
+			System.out.println("2. Ayuda");
+			System.out.println("3. Historial de Ganadores");
+			System.out.println("0. Salir");
+			System.out.println();
+			System.out.println("Ingrese opcion");
+			String opcion= entrada.nextLine();
+			
+			switch(opcion) {
+			case "0": miControlador.finalizarPartida();
+					break;
+			case "1": miControlador.iniciarPartida();      
+			  		break; 
+			case "2": miVista.mostrarAyuda();
+					  this.mostrarMenu();				
+					break;
+			case "3": miVista.mostrarGanadores(); 
+					  this.mostrarMenu();
+			  		break;
+			}
+
+		}else {
+			System.out.println("-----------------------------------------");
+			System.out.println();
+			System.out.println("1. Registrarse");
+			System.out.println("2. Ayuda");
+			System.out.println("3. Historial de Ganadores");
+			System.out.println("0. Salir");
+			System.out.println();
+			System.out.println("Ingrese opcion");
+			String opcion= entrada.nextLine();
+			
+			switch(opcion) {
+			case "0": miControlador.finalizarPartida();
+					break;
+					
+			case "1": registrado = true;	
+				miVista.agregarJugador();	
+					this.mostrarMenu();
+	  				break; 		
+			case "2": miVista.mostrarAyuda();
+					  this.mostrarMenu();				
+					break;
+			case "3": miVista.mostrarGanadores(); 
+						this.mostrarMenu();
+			  		break;
+			}
+
 		}
+		
 	}
 
 }

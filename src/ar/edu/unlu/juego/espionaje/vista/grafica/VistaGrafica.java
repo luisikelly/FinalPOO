@@ -95,7 +95,7 @@ public class VistaGrafica implements Serializable,IVista{
 	private JComboBox cbAgente;
 	private JComboBox cbDispositivo;
 	
-	private PanelMostrar pantallaRespuesta;
+
 	private CardLayout cardLayout;
 	
 	//FUENTES PARA LA VISTA
@@ -113,7 +113,7 @@ public class VistaGrafica implements Serializable,IVista{
 	private Icon iconLondres= new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconLondres.png"));
 	private Icon iconAtenas = new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconAtenas.png"));
 	private Icon iconTokio= new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconTokio.png"));
-	private Icon iconAutopropulsor;//= new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconAutopropulsor.png"));
+	private Icon iconAutopropulsor = new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconAutopropulsor.png"));
 	private Icon iconHelicoptero= new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconHelicoptero.png"));
 	private Icon iconGasLetal= new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconGasLetal.png"));
 	private Icon iconSatelite= new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconSatelite.png"));
@@ -122,7 +122,7 @@ public class VistaGrafica implements Serializable,IVista{
 	private Icon iconAVerde= new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconAVerde.png"));
 	private Icon iconAAzul= new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconAAzul.png"));
 	private Icon iconABlanco= new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconABlanco.png"));
-	private Icon iconANaranja= new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconAAmarillo.png"));
+	private Icon iconANaranja= new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconANaranja.png"));
 	private Icon iconGanador = new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/trofeo.png"));
 	private Icon iconEspia = new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconEspia.png"));
 	private Icon iconGO = new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/go.png"));
@@ -891,10 +891,11 @@ public class VistaGrafica implements Serializable,IVista{
 		JButton btnSalir = new JButton("SALIR");
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controlador.finalizarPartida();
+				controlador.salir();
 				frmEspionaje.setVisible(false);
 				frmEspionaje.dispose();
 				System.exit(0);
+				System.out.println();
 			}
 		});
 		btnSalir.setFont(sizedFontBotones);
@@ -914,7 +915,7 @@ public class VistaGrafica implements Serializable,IVista{
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.GRAY);
-		panel.setBounds(49, 62, 368, 184);
+		panel.setBounds(49, 62, 368, 198);
 		pantallaGanador.add(panel);
 		panel.setLayout(null);
 		

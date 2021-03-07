@@ -40,6 +40,7 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 	private int sospechas=0;
 	private int jugadorEnTurno = 0;
 	private int sospechado;
+	private int salioJug = -1;
 	private ArrayList<String> sospecha;
 	private String respuesta;
 	
@@ -265,8 +266,6 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 				int jug = jugadores.size() -1;
 				if(sospechado == jugadores.size()-1){ sospechado = 0;}
 		    	else {sospechado = ++j;}
-				System.out.println(jugadorEnTurno);
-				System.out.println(sospechado);
 				if(sospechado == jugadores.size()) sospechado = 0;
 
 			}
@@ -444,7 +443,6 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 		ArrayList<String> ganadores = new ArrayList<String>();
 		for(int i=0; i<= this.getHistorialGanadores().size() -1; i++) {
 			ganadores.add(this.getHistorialGanadores().get(i).getNombre());
-//			System.out.println(this.getHistorialGanadores().get(i).getNombre());
 		}
 	
 		return ganadores;
@@ -477,7 +475,21 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 		 }
 		
 	}
+
+	@Override
+	public void salir(int nroJugador) throws RemoteException {
+		/*	salioJug = nroJugador;
+		this.jugadores.remove(nroJugador);
+		notificar(CambiosJuego.JUGADOR_SALIO);
+		*/
+	}
+
+/*	@Override
+	public int getSalio() {
+		return this.salioJug;
+	} */
 		
+	
 	
 	
 

@@ -20,7 +20,7 @@ public interface IJuego extends IObservableRemoto, Serializable{
 
 	void iniciarAplicacion() throws RemoteException;
 
-	void finalizar() throws RemoteException;
+	// void finalizar() throws RemoteException;
 
 	Carta[] getInfoSecreta() throws RemoteException;
 
@@ -71,6 +71,12 @@ public interface IJuego extends IObservableRemoto, Serializable{
 	void arriesgar() throws RemoteException;
 
 	ArrayList<String> getGanadores() throws RemoteException;
+
+	void finalizar() throws RemoteException;
+
+	void salir(int nroJugador) throws RemoteException;
+
+	// int getSalio();
 
 
 
