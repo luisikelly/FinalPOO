@@ -20,6 +20,7 @@ public class MenuConfig extends Menu {
 		Scanner entrada = new Scanner(System.in);	
 		
 		if(this.registrado) {
+			System.out.println("~ "+ miControlador.getNroJugador() + " ~");
 			System.out.println("-----------------------------------------");
 			System.out.println();
 			System.out.println("1. Iniciar juego");

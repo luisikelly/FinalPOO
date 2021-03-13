@@ -10,8 +10,7 @@ import ar.edu.unlu.juego.espionaje.modelo.IJugador;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 
-public class VistaConsola implements IVista, Serializable {
-	private static final long serialVersionUID = 1L;
+public class VistaConsola implements IVista{
 	private Controlador controlador;
 	private Menu menu;
 	private String nombre = "";
@@ -232,12 +231,11 @@ public class VistaConsola implements IVista, Serializable {
 				"Juego Espionaje de la Marca YETEM - EL uso del mismo es unicamnete pata fines academicos.  \r\n" + " ");
 	}
 	
-	protected void agregarJugador() {
+	public void agregarJugador() {
+		Scanner sc = new Scanner(System.in);
 		System.out.println("-----------------------------------------");
 		System.out.println();
 		System.out.println("Ingresa tu nombre:");
-		
-		Scanner sc = new Scanner(System.in);
 		nombre = sc.nextLine();
 			controlador.agregarJugador(nombre.toUpperCase());
 			System.out.println();
