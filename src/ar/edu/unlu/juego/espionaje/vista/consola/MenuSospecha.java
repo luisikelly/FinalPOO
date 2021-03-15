@@ -88,6 +88,10 @@ public class MenuSospecha extends Menu{
 			sospecha.add(miControlador.getJugadorEnTurno().getAgendaPersonal().getCarta(opcion).getFigura());
 		}
 		miControlador.setSospecha(sospecha);
+		System.out.println("-----------------------------------------");
+		System.out.println( " Enviaste tu sospecha a " + miControlador.listaJugadores().get(miControlador.getSospechado()).getNombre());
+		System.out.println("-----------------------------------------");
+		
 	}
 
 }

@@ -12,7 +12,6 @@ import ar.edu.unlu.juego.espionaje.controlador.Controlador;
 import ar.edu.unlu.juego.espionaje.controlador.IVista;
 import ar.edu.unlu.juego.espionaje.modelo.IJuego;
 import ar.edu.unlu.juego.espionaje.modelo.Juego;
-import ar.edu.unlu.juego.espionaje.vista.consola.TestConsola;
 import ar.edu.unlu.juego.espionaje.vista.consola.VistaConsola;
 import ar.edu.unlu.juego.espionaje.vista.grafica.VistaGrafica;
 import ar.edu.unlu.rmimvc.RMIMVCException;

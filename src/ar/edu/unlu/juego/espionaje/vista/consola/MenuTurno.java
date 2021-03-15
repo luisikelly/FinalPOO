@@ -27,7 +27,8 @@ public class MenuTurno extends Menu{
 			break;
 		case "RESPONDER_JET":
 			System.out.println("-----------------------------------------");
-			System.out.println("Esperando respuesta de " + miControlador.listaJugadores().get(miControlador.getSospechado()).getNombre());			System.out.println("-----------------------------------------");
+			System.out.println("Esperando respuesta de " + miControlador.listaJugadores().get(miControlador.getSospechado()).getNombre());			
+			System.out.println("-----------------------------------------");
 			break;
 		case "ARRIESGAR":
 			System.out.println("-----------------------------------------");
