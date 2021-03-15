@@ -12,6 +12,7 @@ import ar.edu.unlu.juego.espionaje.controlador.Controlador;
 import ar.edu.unlu.juego.espionaje.controlador.IVista;
 import ar.edu.unlu.juego.espionaje.modelo.IJuego;
 import ar.edu.unlu.juego.espionaje.modelo.Juego;
+import ar.edu.unlu.juego.espionaje.vista.consola.TestConsola;
 import ar.edu.unlu.juego.espionaje.vista.consola.VistaConsola;
 import ar.edu.unlu.juego.espionaje.vista.grafica.VistaGrafica;
 import ar.edu.unlu.rmimvc.RMIMVCException;
@@ -44,8 +45,8 @@ public class AppCliente {
 				"Seleccione la IP en la corre el servidor", "IP del servidor", 
 				JOptionPane.QUESTION_MESSAGE, 
 				null,
-				ips.toArray(),
-				null
+				null,
+				"127.0.0.1"
 		);
 		String portServidor = (String) JOptionPane.showInputDialog(
 				null, 
@@ -68,6 +69,7 @@ public class AppCliente {
 				null
 		);
 	
+		
 		boolean mostrarConfig=false; 
 		IVista vista = null;
 		if(v.equals("Grafica")) {vista = new VistaGrafica(); }
@@ -84,7 +86,6 @@ public class AppCliente {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-			
 		
 	}
 }

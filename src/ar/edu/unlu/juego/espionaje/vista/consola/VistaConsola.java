@@ -32,7 +32,8 @@ public class VistaConsola implements IVista{
 	
 	@Override
 	public void iniciarJuego() {
-		this.mostrarConfiguracion();
+		menu = new MenuConfig(controlador, this,false);
+		menu.mostrarMenu();
 		
 	}
 
@@ -53,22 +54,39 @@ public class VistaConsola implements IVista{
 
 	@Override
 	public void mostraJugadores() {
+		/*System.out.println(" --------- SE AGREGÓ UN NUEVO JUGADOR ---------");
 		System.out.println();
-		System.out.println("--------------- ¡Se agregó un jugador! --------------");
+		System.out.println();
+		System.out.println("--------- JUGADORES ---------");
 		System.out.println();
 		ArrayList<IJugador> j = controlador.listaJugadores();
 		System.out.println("Jugadores");
 		for (IJugador jugador : j) {
 			System.out.println(jugador.getNombre());
 		}
+		System.out.println("-----------------------------");
+      */
+	
+	}
+	
+	public void listarJugadores() {
 		System.out.println();
-		menu.mostrarMenu();
+		System.out.println("--------- JUGADORES ---------");
+		System.out.println();
+		ArrayList<IJugador> j = controlador.listaJugadores();
+		System.out.println("Jugadores");
+		for (IJugador jugador : j) {
+			System.out.println(jugador.getNombre());
+		}
+		System.out.println("-----------------------------");
 	}
 
-
+	
 	@Override
 	public void mostrarConfiguracion() {
-		menu = new MenuConfig(controlador, this);
+		if(controlador.getNroJugador() >= 0) {
+			menu = new MenuConfig(controlador, this,true);
+		}
 		menu.mostrarMenu();
 	}
 
@@ -104,7 +122,6 @@ public class VistaConsola implements IVista{
 
 	@Override
 	public void avisoPerdio() {
-		if(controlador.getGanador().getNroJugador() == controlador.getNroJugador()) {
 			System.out.println("------ " + controlador.getJugadorEnTurno().getNombre() + " ------"  );
 			System.out.println("                          ------ PERDISTE ------");
 			System.out.println("               ------ TU SOSPECHA FINAL FUE INCORRECTA ------");
@@ -118,7 +135,6 @@ public class VistaConsola implements IVista{
 			System.out.println("DISPOSITIVO: " + controlador.informacionConfidencial()[2].getFigura());
 			System.out.println();
 		}
-	}
 
 
 	@Override

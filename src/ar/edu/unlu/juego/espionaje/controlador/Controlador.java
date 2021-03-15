@@ -49,7 +49,8 @@ public class Controlador implements IControladorRemoto {
 			switch(cambio) {
 				case CAMBIO_JUGADOR: //vista.mostrarJugando(); // Chequear si es necesario
 					break;
-				case CAMBIO_LISTA_JUGADORES: vista.mostraJugadores();
+				case CAMBIO_LISTA_JUGADORES: 
+					vista.mostraJugadores();
 					break;
 				case JUGADOR_PERDIO: 
 					if(!juego.getJugadores().get(nroJugador).estadoJugador()) {
@@ -166,6 +167,9 @@ public class Controlador implements IControladorRemoto {
 
 	public void agregarJugador(String nombre)   {
 		try {
+
+			
+			
 			nroJugador = juego.agregarJugador(nombre);
 			if(nroJugador == -1) {
 				vista.mostrarError(ErrorCantidadMaximaJugadores);

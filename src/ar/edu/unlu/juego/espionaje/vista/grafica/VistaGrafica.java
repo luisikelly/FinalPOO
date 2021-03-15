@@ -558,6 +558,7 @@ public class VistaGrafica implements Serializable,IVista{
 				controlador.agregarJugador(nombre);
 				textField.setEnabled(false);
 				btnAgregarJugador.setEnabled(false);
+				System.out.println(controlador.getNroJugador());
 				} else {
 			    	JOptionPane.showMessageDialog(null,"Debe ingresar el nombre del jugador");
 				}
