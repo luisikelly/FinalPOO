@@ -1,6 +1,5 @@
 package ar.edu.unlu.juego.espionaje.cliente;
 
-import java.awt.EventQueue;
 import java.awt.FontFormatException;
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -21,7 +20,6 @@ import ar.edu.unlu.rmimvc.cliente.Cliente;
 public class AppCliente {
 
 	public static void main(String[] args) throws FontFormatException, IOException {
-		// TODO Auto-generated method stub
 		ArrayList<String> ips = Util.getIpDisponibles();
 		String ip = (String) JOptionPane.showInputDialog(
 				null, 

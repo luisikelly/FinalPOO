@@ -6,14 +6,14 @@ import java.util.Scanner;
 import ar.edu.unlu.juego.espionaje.controlador.Controlador;
 
 public class MenuResponder extends Menu {
-
+	Scanner entrada;
 	public MenuResponder(Controlador c) {
 		this.miControlador = c;
 	}
 	
 	@Override
 	public void mostrarMenu() {
-		Scanner entrada = new Scanner(System.in);
+		entrada = new Scanner(System.in);
 		System.out.println();
 		System.out.println("Responder Sospecha de: "+ miControlador.getJugadorEnTurno().getNombre());
 		System.out.println();
@@ -38,12 +38,12 @@ public class MenuResponder extends Menu {
 					}
 					System.out.println(".............................................................");
 					System.out.println(" ELEGÍ TU RESPUESTA   ");
-					String resp = entrada.nextLine();
+					int resp = entrada.nextInt();
 					System.out.println();
 					switch(resp) {
-					case "1" : miControlador.setRespuesta(miControlador.verificarRespuesta().get(0));
+					case 1 : miControlador.setRespuesta(miControlador.verificarRespuesta().get(0));
 						break;
-					case "2" : miControlador.setRespuesta(miControlador.verificarRespuesta().get(1));
+					case 2 : miControlador.setRespuesta(miControlador.verificarRespuesta().get(1));
 						break;
 					}
 					System.out.println();

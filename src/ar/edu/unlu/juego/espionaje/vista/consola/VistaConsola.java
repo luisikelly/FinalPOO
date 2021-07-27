@@ -17,6 +17,7 @@ public class VistaConsola implements IVista{
 	private final String ErrorCantidadMinimaJugadores = "MenosJugadores";
 	private final String ErrorCantidadMaximaJugadores = "MasJugadores";
 	
+
 	public VistaConsola() {
 		System.out.println("-----------------------------------------");
 		System.out.println("--------        ESPIONAJE     -----------");
@@ -37,6 +38,7 @@ public class VistaConsola implements IVista{
 		
 	}
 
+	
 
 	@Override
 	public void mostrarArriesgar() {
@@ -47,48 +49,51 @@ public class VistaConsola implements IVista{
 
 	@Override
 	public void avisoGanador() {
-		menu = new MenuGanador(controlador);
-		menu.mostrarMenu();
+//	menu = new MenuGanador(controlador);
+//		menu.mostrarMenu();
+		System.out.println("-----------------------------------------");
+		System.out.println("--------        ESPIONAJE     -----------");
+		System.out.println("-----------------------------------------");
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println("--------       FIN DEL JUEGO     -----------");
+		System.out.println();
+		System.out.println();
+		System.out.println(controlador.getGanador().getNombre() + " GANÓ EL JUEGO");
+		System.out.println();
+		System.out.println();
+		System.out.println("||||||||||||||||||||||||||||||");
+		System.out.println("     INFORMACION CONFIDENCIAL ");
+		System.out.println("||||||||||||||||||||||||||||||");
+		System.out.println();
+		System.out.println();
+		System.out.println("CIUDAD: " + controlador.informacionConfidencial()[0].getFigura());
+		System.out.println();
+		System.out.println("AGENTE: " +controlador.informacionConfidencial()[1].getFigura());
+		System.out.println();
+		System.out.println("DISPOSITIVO: " + controlador.informacionConfidencial()[2].getFigura());
+		System.out.println();
+		System.out.println();
+		this.menuFinPartida();
 	}
 
 
 	@Override
 	public void mostraJugadores() {
-		/*System.out.println(" --------- SE AGREGÓ UN NUEVO JUGADOR ---------");
-		System.out.println();
-		System.out.println();
-		System.out.println("--------- JUGADORES ---------");
-		System.out.println();
-		ArrayList<IJugador> j = controlador.listaJugadores();
-		System.out.println("Jugadores");
-		for (IJugador jugador : j) {
-			System.out.println(jugador.getNombre());
-		}
-		System.out.println("-----------------------------");
-      */
-	
+		// No se utiliza en esta vista
 	}
 	
-	public void listarJugadores() {
-		System.out.println();
-		System.out.println("--------- JUGADORES ---------");
-		System.out.println();
-		ArrayList<IJugador> j = controlador.listaJugadores();
-		System.out.println("Jugadores");
-		for (IJugador jugador : j) {
-			System.out.println(jugador.getNombre());
-		}
-		System.out.println("-----------------------------");
-	}
-
 	
 	@Override
-	public void mostrarConfiguracion() {
+	public void mostrarConfiguracion() {                                                                                                                                                              
 		if(controlador.getNroJugador() >= 0) {
 			menu = new MenuConfig(controlador, this,true);
 		}
 		menu.mostrarMenu();
 	}
+	
+	
 
 
 	@Override
@@ -109,12 +114,12 @@ public class VistaConsola implements IVista{
 					System.out.println(controlador.listaJugadores().get(controlador.getSospechado()) + " NO TIENE NINGUNA DE LAS CARTAS DE LA SOSPECHA");
 				}
 				controlador.paso();
+//				this.mostrarTurno("SOSPECHAR");
 				System.out.println();
 				System.out.println();
 				System.out.println();
 				System.out.println();
 			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}	
 	}
@@ -122,8 +127,8 @@ public class VistaConsola implements IVista{
 
 	@Override
 	public void avisoPerdio() {
-			System.out.println("------ " + controlador.getJugadorEnTurno().getNombre() + " ------"  );
-			System.out.println("                          ------ PERDISTE ------");
+			System.out.println("------ " + controlador.listaJugadores().get(controlador.getNroJugador()) + " ------"  );
+			System.out.println("                       ------ PERDISTE ------");
 			System.out.println("               ------ TU SOSPECHA FINAL FUE INCORRECTA ------");
 			System.out.println("");
 			System.out.println("LA INFORMACION CONFIDENCIAL ES:");
@@ -134,7 +139,8 @@ public class VistaConsola implements IVista{
 			System.out.println();
 			System.out.println("DISPOSITIVO: " + controlador.informacionConfidencial()[2].getFigura());
 			System.out.println();
-		}
+			this.menuFinPartida();
+	}
 
 
 	@Override
@@ -177,6 +183,7 @@ public class VistaConsola implements IVista{
 		menu = new MenuSospecha(controlador,this);
 		menu.mostrarMenu();
 	}
+	
 
 
 	@Override
@@ -188,11 +195,8 @@ public class VistaConsola implements IVista{
 
 	@Override
 	public void quienGano() {
-		System.out.println("------ " + controlador.getJugadorEnTurno().getNombre() + " ------"  );
-		System.out.println("                          ------ PERDISTE ------");
 		System.out.println(controlador.getGanador().getNombre()+ "  GANÓ LA PARTIDA");
 	}
-
 
 	@Override
 	public void mostrarGanadores() {
@@ -204,12 +208,10 @@ public class VistaConsola implements IVista{
 				System.out.println("   " +ganador);
 			}
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
-
 
 	@Override
 	public void mostrarAyuda() {
@@ -257,4 +259,38 @@ public class VistaConsola implements IVista{
 			System.out.println();
 	}
 	
+	public void listarJugadores() {
+		System.out.println();
+		System.out.println("--------- JUGADORES ---------");
+		System.out.println();
+		ArrayList<IJugador> j = controlador.listaJugadores();
+		System.out.println("Jugadores");
+		for (IJugador jugador : j) {
+			System.out.println(jugador.getNombre());
+		}
+		System.out.println("-----------------------------");
 	}
+	
+	public void menuFinPartida() {
+		System.out.println("¿Qué queres hacer? ");
+		System.out.println("1- Volver al menú principal");
+		System.out.println("2 - Salir ");
+		Scanner miScanner = new Scanner(System.in);
+		String opcion = miScanner.nextLine();
+		switch (opcion) {
+		case "1" :controlador.reiniciar();
+				break;
+		case "2" : controlador.finalizarPartida(); 
+					break;
+	    }
+	}
+
+
+	@Override
+	public void notificarSalio() {
+		//System.out.println("______ "+ controlador.getSalio().getNombre() + " SALIÓ DE LA PARTIDA _____");
+		
+	}
+
+}
+

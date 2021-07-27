@@ -35,8 +35,15 @@ public class MenuTurno extends Menu{
 			System.out.println( miControlador.getJugadorEnTurno().getNombre()+" está realizando su acusación ");
 			System.out.println("-----------------------------------------");
 			break;
+		case "SIN-RESPUESTA":
+			System.out.println("-----------------------------------------");
+			System.out.println( miControlador.listaJugadores().get(miControlador.getSospechado()).getNombre()+" no tiene ninguna de las cartas de tu sospecha");
+			System.out.println("-----------------------------------------");
+			break;
+
 		}
 	}
+	
 	
 	
 

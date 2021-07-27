@@ -34,7 +34,7 @@ public class MenuConfig extends Menu {
 			switch(opcion) {
 			case "0": miControlador.finalizarPartida();
 				break;
-			case "1": miControlador.iniciarPartida();      
+			case "1": miControlador.iniciarPartida(); 
 			  	break; 
 			case "2": miVista.listarJugadores();
 					this.mostrarMenu();				
@@ -46,7 +46,6 @@ public class MenuConfig extends Menu {
 					this.mostrarMenu();
 				break;
 			}
-
 		}else {
 			System.out.println("-----------------------------------------");
 			System.out.println();

@@ -68,7 +68,6 @@ public class VistaGrafica implements Serializable,IVista{
 
 	private JLabel lblNombrejugadorPSospecha;
 	private JLabel lblNombrejugadorPRespuesta;
-	private JLabel lblnro;
 	private JLabel lblTURNOJugador;
 	private JLabel lblTURNOText;
 	private JLabel lblTURNOSospechado;
@@ -231,31 +230,6 @@ public class VistaGrafica implements Serializable,IVista{
 		}
 	}
 	
-	/* private void setFigura(String s, JLabel lbl) {
-		if(lbl != null) {
-				lbl.setText(s);
-				switch (s) {
-				case "AGENTE_BLANCO": 
-					lbl.setText("AGENTE BLANCO");
-					break;
-				case "AGENTE_AZUL": 
-					lbl.setText("AGENTE AZUL");
-					break;
-				case "AGENTE_VERDE": 
-					lbl.setText("AGENTE VERDE");
-					break;
-				case "AGENTE_ROJO": 
-					lbl.setText("AGENTE ROJO");
-					break;
-				case "AGENTE_NARANJA": 
-					lbl.setText("AGENTE NARANJA");
-					break;
-				case "GAS_LETAL": 
-					lbl.setText("GAS LETAL");
-					break;
-			}
-		}
-	} */
 	
 	//TODO ----- MÉTODOS MOSTRAR -----
 	
@@ -285,8 +259,6 @@ public class VistaGrafica implements Serializable,IVista{
 		if(!btnArriesgar.isEnabled()) {btnArriesgar.setEnabled(true);}
 		s1.removeAllItems();
 		s2.removeAllItems();
-		System.out.println(controlador.getJugadorEnTurno().getNroJugador());	
-		System.out.println(controlador.getSospechado());
 		this.lblNombrejugadorPSospecha.setText(controlador.listaJugadores().get(controlador.getSospechado()).getNombre().toUpperCase());
 		String s = "";
 		for(int i=0;i<= controlador.getJugadorEnTurno().getAgendaPersonal().cantCartas()-1; i++) {
@@ -307,7 +279,7 @@ public class VistaGrafica implements Serializable,IVista{
 //TODO AVISO QUIEN GANO
 	@Override
 	public void quienGano() {
-		JOptionPane.showMessageDialog(null, controlador.getGanador().getNombre()+"GANÓ LA PARTIDA");
+		JOptionPane.showMessageDialog(null, controlador.getGanador().getNombre()+" GANÓ LA PARTIDA");
 	}
 
 	//TODO MOSTRAR JUGADORES
@@ -416,7 +388,12 @@ public class VistaGrafica implements Serializable,IVista{
 			this.lblTURNOSospechado.setText("");
 			this.lblTURNOJugador.setText(controlador.getJugadorEnTurno().getNombre());
 			this.lblTURNOText.setText("ESTÁ REALIZANDO SU ACUSACIÓN");
-		}			
+		}
+		if(string.equals(RESPUESTA)) {
+			this.lblTURNOJugador.setText(controlador.listaJugadores().get(controlador.getSospechado()).getNombre());
+			this.lblTURNOText.setText(" RESPONDE  A ");
+			this.lblTURNOSospechado.setText(controlador.getJugadorEnTurno().getNombre());
+		}						
 		cardLayout.show(this.frmEspionaje.getContentPane(), TURNO);	
 	}
 
@@ -534,6 +511,7 @@ public class VistaGrafica implements Serializable,IVista{
 		btnIniciarJuego.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controlador.iniciarPartida();
+				System.out.println("__inicio partida__");
 			}
 		});
 		btnIniciarJuego.setBounds(287, 239, 142, 34);
@@ -558,7 +536,6 @@ public class VistaGrafica implements Serializable,IVista{
 				controlador.agregarJugador(nombre);
 				textField.setEnabled(false);
 				btnAgregarJugador.setEnabled(false);
-				System.out.println(controlador.getNroJugador());
 				} else {
 			    	JOptionPane.showMessageDialog(null,"Debe ingresar el nombre del jugador");
 				}
@@ -589,8 +566,7 @@ public class VistaGrafica implements Serializable,IVista{
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(38, 179, 212, 94);
 		pantallaConfiguracion.add(scrollPane);
-		textJugadores = 
-				new JTextArea();
+		textJugadores = new JTextArea();
 		scrollPane.setViewportView(textJugadores);
 		textJugadores.setForeground(Color.WHITE);
 		textJugadores.setBackground(Color.GRAY);
@@ -672,12 +648,6 @@ public class VistaGrafica implements Serializable,IVista{
 		btnEnviar.setBounds(320, 260, 115, 23);
 		btnEnviar.setFont(sizedFont);
 		pantallaEntrada.add(btnEnviar);
-		
-		lblnro = new JLabel("-");
-		lblnro.setForeground(Color.LIGHT_GRAY);
-		lblnro.setBounds(409, 11, 46, 14);
-		lblnro.setFont(sizedFont);
-		pantallaEntrada.add(lblnro);
 		
 		s1 = new JComboBox();
 		s1.setFont(sizedFont);
@@ -801,11 +771,11 @@ public class VistaGrafica implements Serializable,IVista{
 		pantallaArriesgar.setBackground(Color.DARK_GRAY);
 		pantallaArriesgar.setLayout(null);
 		
+		Font sizedFontTitulo = boldFont.deriveFont(40f);
 		JLabel label_1 = new JLabel("ESPIONAJE");
-		label_1.setFont(boldFont.deriveFont(40f));
+		label_1.setFont(sizedFontTitulo);
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
 		label_1.setForeground(Color.WHITE);
-		label_1.setFont(new Font("Dialog", Font.PLAIN, 40));
 		label_1.setBounds(0, 11, 465, 55);
 		pantallaArriesgar.add(label_1);
 		this.setIcon("TITULO", label_1);
@@ -896,7 +866,6 @@ public class VistaGrafica implements Serializable,IVista{
 				frmEspionaje.setVisible(false);
 				frmEspionaje.dispose();
 				System.exit(0);
-				System.out.println();
 			}
 		});
 		btnSalir.setFont(sizedFontBotones);
@@ -967,7 +936,6 @@ public class VistaGrafica implements Serializable,IVista{
 		
 		Font sizedFontTitulo = boldFont.deriveFont(48f);
 		Font sizedFont= normalFont.deriveFont(24f);
-		this.setIcon("ESPIA", lblnro);
 		
 		JLabel label = new JLabel("ESPIONAJE");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -1135,6 +1103,14 @@ public class VistaGrafica implements Serializable,IVista{
 		pantallaMostrar.add(lblCarta);
 
 		return pantallaMostrar;
+	}
+
+
+
+	@Override
+	public void notificarSalio() {
+		JOptionPane.showMessageDialog(null, " SALIÓ DE LA PARTIDA");
+
 	}
 		
 }

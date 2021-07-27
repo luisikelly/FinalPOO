@@ -40,17 +40,6 @@ public class MenuGanador extends Menu {
 		System.out.println("DISPOSITIVO: " + miControlador.informacionConfidencial()[2].getFigura());
 		System.out.println();
 		System.out.println();
-		System.out.println("¿Qué queres hacer? ");
-		System.out.println("1- Volver al menú principal");
-		System.out.println("2 - Salir ");
-		Scanner miScanner = new Scanner(System.in);
-		String opcion = miScanner.nextLine();
-		switch (opcion) {
-		case "1" :
-				miControlador.reiniciar();
-				break;
-		case "2" : miControlador.finalizarPartida(); 
-					break;
-	    }
+		
 	}
 }

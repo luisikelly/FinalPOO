@@ -5,16 +5,17 @@ import java.util.Scanner;
 import ar.edu.unlu.juego.espionaje.controlador.Controlador;
 
 public class MenuAcusacion extends Menu {
-
+	Scanner entrada;
 	
 
 	public MenuAcusacion(Controlador controlador) {
 		miControlador = controlador;
+		entrada = new Scanner(System.in);
+
 	}
 
-	@Override
+@Override
 	public void mostrarMenu() {
-		Scanner entrada = new Scanner(System.in);
 		System.out.println();
 		System.out.println();
 		System.out.println("-------- REALIZAR ACUSACIÓN --------------");
@@ -104,6 +105,7 @@ public class MenuAcusacion extends Menu {
 			}
 			
 			System.out.println();
+			System.out.println(agentes);
 			System.out.println();
 			
 			miControlador.rtaSospechaFinal(agentes, dispositivo, ciudades);

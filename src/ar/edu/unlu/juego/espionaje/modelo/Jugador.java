@@ -60,6 +60,7 @@ public class Jugador implements IJugador,Serializable{
 	//}
 
 	public void reiniciar() {
+		juega = true;
 		for(int i=0; i<= this.agendaPersonal.cantCartas()-1;i++) {
 			this.agendaPersonal.getCarta(i).descartar(false);
 		}

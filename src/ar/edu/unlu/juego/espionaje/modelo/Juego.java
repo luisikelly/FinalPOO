@@ -38,9 +38,10 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 	private IJugador ganador = null;
 	private boolean gano = false;
 	private int sospechas=0;
+	private int chancesGanador= 0;
 	private int jugadorEnTurno = 0;
 	private int sospechado;
-	private int salioJug = -1;
+	private Jugador salioJug;
 	private ArrayList<String> sospecha;
 	private String respuesta;
 	
@@ -59,6 +60,8 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 		this.estado = ESTADOS.CONFIGURANDO;
 		notificar(CambiosJuego.CAMBIO_LISTA_JUGADORES);
 		notificar(CambiosJuego.CAMBIO_ESTADO);
+		
+
 	}
 	
 	@Override
@@ -74,16 +77,13 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 	
 	  @Override
 	public void reiniciar() throws RemoteException {
-		//miMenu = new MenuConfiguracion(this);
 		estado = ESTADOS.CONFIGURANDO;
-		jugadorEnTurno = 0;
 		for(Jugador j : jugadores) 
 			j.reiniciar();
 		notificar(CambiosJuego.CAMBIO_ESTADO);
-		notificar(CambiosJuego.CAMBIO_JUGADOR);
-		notificar(CambiosJuego.CAMBIO_LISTA_JUGADORES);
+		notificar(CambiosJuego.CAMBIO_LISTA_JUGADORES); 
 	}
-	  
+	
 	
 	@Override
 	public void iniciarJuego() throws IndexOutOfBoundsException, RemoteException {
@@ -95,11 +95,16 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
             this.descartarArchivoConfidencial_AgendaPersonal();
             this.jugadorEnTurno = 0;
             this.sospechado = 1;
- 			notificar(CambiosJuego.CAMBIO_JUGADOR);
-			notificar(CambiosJuego.CAMBIO_ESTADO);
-			System.out.println(this.getInfoSecreta()[0].getFigura());
+            chancesGanador = this.getJugadores().size();
+ 			//notificar(CambiosJuego.CAMBIO_JUGADOR);
+ 			notificar(CambiosJuego.CAMBIO_ESTADO);
+			
+ 			System.out.println(this.getInfoSecreta()[0].getFigura());
 			System.out.println(this.getInfoSecreta()[1].getFigura());
 			System.out.println(this.getInfoSecreta()[2].getFigura());
+			System.out.println("chanceGanarInicio: "+ this.chancesGanador);
+			
+			
 		} else {
 			IndexOutOfBoundsException ex;
 			if(jugadores.size() < 2) {
@@ -362,23 +367,33 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 		if((infoSecreta[0].getFigura().equals(ciudad)) && (infoSecreta[1].getFigura().equals(agente)) && (infoSecreta[2].getFigura().equals(dispositivo))) {
 			resultado = true; 
 		}
-	if(resultado) {
-			ganador = this.getJugadorEnTurno();
-			gano = true;
-			notificar(CambiosJuego.HAY_GANADOR);
-			this.estado = ESTADOS.FINALIZADO;
-			notificar(CambiosJuego.CAMBIO_ESTADO);
-			this.addUltimosGanadores(ganador);
-			this.finalizar();
-			estado = ESTADOS.FINALIZADO;
-			notificar(CambiosJuego.CAMBIO_ESTADO);
-		}else {
-			notificar(CambiosJuego.JUGADOR_PERDIO);
-			
-				this.getJugadorEnTurno().sacarjuego();
-				this.pasar();
-				eEJ = E_EN_JUEGO.ARRIESGA;
+		if(chancesGanador > 0) {
+			if(resultado) {
+				ganador = this.getJugadorEnTurno();
+				gano = true;
+				notificar(CambiosJuego.HAY_GANADOR);
+				this.estado = ESTADOS.FINALIZADO;
 				notificar(CambiosJuego.CAMBIO_ESTADO);
+				this.addUltimosGanadores(ganador);
+				this.finalizar();
+				estado = ESTADOS.FINALIZADO;
+				notificar(CambiosJuego.CAMBIO_ESTADO);
+			}else {
+					this.getJugadorEnTurno().sacarjuego();
+					notificar(CambiosJuego.JUGADOR_PERDIO);
+					this.pasar();
+					chancesGanador --;
+					System.out.println("chanceGanar: "+ this.chancesGanador);
+					eEJ = E_EN_JUEGO.ARRIESGA;
+					if(chancesGanador == 0) {
+						this.estado = ESTADOS.FINALIZADO;
+						this.finalizar();
+						System.out.println("chanceGanarFIN: "+ this.chancesGanador);
+					}
+					notificar(CambiosJuego.CAMBIO_ESTADO);
+			}
+			
+		
 		}
 	
 	return resultado;
@@ -479,14 +494,21 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 
 	@Override
 	public void salir(int nroJugador) throws RemoteException {
-		/*	salioJug = nroJugador;
-		this.jugadores.remove(nroJugador);
-		notificar(CambiosJuego.JUGADOR_SALIO);
-		*/
-	}
+		/*if(! this.jugadores.isEmpty()) {
+			salioJug = new Jugador(jugadores.get(nroJugador).getNombre());
+			salioJug.setNroJugador(nroJugador);
+			//this.jugadores.get(nroJugador);
+			this.estado = ESTADOS.SALIO;
+			notificar(CambiosJuego.JUGADOR_SALIO);
+			if(jugadores.size() == 1) {
+				estado = ESTADOS.CONFIGURANDO;
+			}	
+		}
+		notificar(CambiosJuego.CAMBIO_ESTADO);
+	*/}
 
-/*	@Override
-	public int getSalio() {
+	/*@Override
+	public Jugador getSalio() {
 		return this.salioJug;
 	} */
 		

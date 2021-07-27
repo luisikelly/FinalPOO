@@ -22,20 +22,27 @@ import ar.edu.unlu.rmimvc.observer.IObservableRemoto;
 import ar.edu.unlu.juego.espionaje.modelo.ESTADOS;
 
 public class Controlador implements IControladorRemoto {
+	
 	private IJuego juego;
 	private IVista vista;
 	private ArrayList<String> sospecha;
-	private final String ErrorCantidadMinimaJugadores = "MenosJugadores";
-	private final String ErrorCantidadMaximaJugadores = "MasJugadores";
 	private int nroJugador;
 	//private String sospechado;
-
-
+	
+	
+	
+	private static final String ErrorCantidadMinimaJugadores = "MenosJugadores";
+	private static final String ErrorCantidadMaximaJugadores = "MasJugadores";
+	private static final String SOSPECHA = "SOSPECHA";
+	private static final String ARRIESGA = "ARRIESGA";
+	private static final String RESPUESTA = "RESPUESTA";
+	private static final String RESPONDER = "RESPONDER";
+	private static final String RESPONDER_JET = "RESPONDER_JET";
+	private static final String SOSPECHAR = "SOSPECHAR";
+	private static final String ARRIESGAR = "ARRIESGAR";
 
 	public Controlador(IVista vista) {
 		this.vista = vista;
-		//vista.setControlador(this);
-
 	}
 	
 	public void setVista(IVista vista) {
@@ -47,65 +54,91 @@ public class Controlador implements IControladorRemoto {
 		if(arg1 instanceof CambiosJuego) {
 			CambiosJuego cambio = (CambiosJuego) arg1;
 			switch(cambio) {
-				case CAMBIO_JUGADOR: //vista.mostrarJugando(); // Chequear si es necesario
-					break;
+				/*case CAMBIO_JUGADOR: //vista.mostrarJugando(); // Chequear si es necesario
+					break;*/
 				case CAMBIO_LISTA_JUGADORES: 
 					vista.mostraJugadores();
 					break;
 				case JUGADOR_PERDIO: 
-					if(!juego.getJugadores().get(nroJugador).estadoJugador()) {
+					if ( ! juego.getJugadores().get(nroJugador).estadoJugador()) {
 						vista.avisoPerdio();
 					}
 					break;
 				case HAY_GANADOR:
 					if(nroJugador == juego.getGanador().getNroJugador()) {
 						vista.avisoGanador();						
-					} else {
+					} else { 
 						vista.avisoPerdio();
-						vista.quienGano();					
-						}
+						vista.quienGano();
+					}
 					break;
 				case JUGADOR_SALIO:
-				//		if((juego.getSalio() < this.listaJugadores().size()-1) && (this.nroJugador > juego.getSalio()) && (juego.getSalio() != -1))  
-					//		this.nroJugador --;
-					
+				//		if((juego.getSalio().getNroJugador() < this.listaJugadores().size()-1) && (this.nroJugador > juego.getSalio().getNroJugador()) && (juego.getSalio().getNroJugador() != -1))  
+				//		this.nroJugador --;
+				//		System.out.println(this.nroJugador);
+				//		if(juego.getSalio().getNroJugador() != this.nroJugador) vista.notificarSalio();
 					break;
 				case CAMBIO_ESTADO:
 					ESTADOS e = juego.getEstado();
 					String estado = juego.getEstado().name();
 					if(e == ESTADOS.EN_JUEGO) {
+						
 // --------------------Si es jugador en turno ----------------------------------------------
-						if(nroJugador == juego.getJugadorEnTurno().getNroJugador()) { 
-							if(juego.getEstadoEnJuego().name() == "ARRIESGA")  {vista.mostrarArriesgar();}
-							if(juego.getEstadoEnJuego().name() == "SOSPECHA")  {vista.mostrarSospechar();}
-							if(juego.getEstadoEnJuego().name() == "RESPUESTA") {
-								if(juego.getRespuesta().equals("")) {vista.mostrarRespuesta("");}
-								else {vista.mostrarRespuesta(juego.getRespuesta());}
+						if((nroJugador == juego.getJugadorEnTurno().getNroJugador()) && (juego.getJugadorEnTurno().estadoJugador())) { 
+							switch(juego.getEstadoEnJuego().name()) {
+								case ARRIESGA: vista.mostrarArriesgar();
+								break;
+								case SOSPECHA: vista.mostrarSospechar();
+									break;
+								case RESPUESTA: 
+									if(juego.getRespuesta().equals("")) {vista.mostrarRespuesta("");}
+									else {vista.mostrarRespuesta(juego.getRespuesta());}
+									break;
+								case RESPONDER: vista.mostrarTurno(RESPONDER_JET);
+									break;	
+							}
 							
-								}
-							if(juego.getEstadoEnJuego().name() == "RESPONDER") {vista.mostrarTurno("RESPONDER_JET");}
 						} else { 
 
 // ------------------- Resto de los jugadores ----------------------------------------------
-							if(juego.getEstadoEnJuego().name() == "SOSPECHA"  ) {vista.mostrarTurno("SOSPECHAR");}
-							if(juego.getJugadores().get(nroJugador).estadoJugador()) {
-								if(juego.getEstadoEnJuego().name() == "ARRIESGA"  ) { vista.mostrarTurno("ARRIESGAR"); }
+							switch(juego.getEstadoEnJuego().name()) {
+								case ARRIESGA:
+									if(juego.getJugadores().get(nroJugador).estadoJugador()) {
+										 vista.mostrarTurno(ARRIESGAR);
+									}	
+								break;
+								case SOSPECHA: vista.mostrarTurno(SOSPECHAR);
+									break;
+								case RESPUESTA:
+									if(juego.getRespuesta().equals("")) {vista.mostrarTurno("SIN-RESPUESTA");}
+									else {vista.mostrarTurno(RESPUESTA);}
+									break;
+								case RESPONDER: vista.mostrarTurno(RESPONDER);
+									break;	
 							}
-							if(juego.getEstadoEnJuego().name() == "RESPONDER") {vista.mostrarTurno("RESPONDER");}
-							if(juego.getEstadoEnJuego().name() == "RESPUESTA"  ) {	vista.mostrarTurno("RESPUESTA");}
-							
+								
 // --------------------Si es jugador sospechado ----------------------------------------------
 							if(nroJugador == juego.getSospechado()) { 
-								if(juego.getEstadoEnJuego().name() == "RESPONDER"){vista.mostrarResponder();}
+								switch(juego.getEstadoEnJuego().name()) {
+								case RESPONDER: vista.mostrarResponder();
+									break;	
+								}
 							} 
 						}			
 					}
 					else if (e == ESTADOS.CONFIGURANDO) {
-						vista.mostrarConfiguracion();
-					} else if (e == ESTADOS.FINALIZADO) {}
-					break;
+						System.out.println(this.nroJugador);
+							vista.mostrarConfiguracion();
+					}
+					/* else if (e == ESTADOS.FINALIZADO) {
+						//if( nroJugador == juego.getGanador().getNroJugador()){ vista.avisoGanador();}
+						//else { vista.avisoPerdio();}
+					}*/
+					
+				break;
 			}
 		}
+
 	}
 	
 	
@@ -120,7 +153,10 @@ public class Controlador implements IControladorRemoto {
 		try {
 			if(nroJugador == -1) {vista.mostrarError(ErrorCantidadMaximaJugadores);
 			}else {
-				juego.iniciarJuego();	
+				juego.iniciarJuego();
+				for(int i=1; i<= juego.getJugadores().get(nroJugador).getCartasSecretas().cantCartas();i++) {
+					System.out.println(juego.getJugadores().get(nroJugador).getCartasSecretas().getCarta(i).getFigura());
+				}
 			}
 		} catch (IndexOutOfBoundsException e) {
 			if(e.getMessage().equals("CantidadMinima")) {
@@ -158,7 +194,7 @@ public class Controlador implements IControladorRemoto {
 
 	public void reiniciar() {
 		try {
-			juego.reiniciar();
+			juego.reiniciar(); 
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -166,10 +202,7 @@ public class Controlador implements IControladorRemoto {
 	}
 
 	public void agregarJugador(String nombre)   {
-		try {
-
-			
-			
+		try {	
 			nroJugador = juego.agregarJugador(nombre);
 			if(nroJugador == -1) {
 				vista.mostrarError(ErrorCantidadMaximaJugadores);
@@ -313,6 +346,11 @@ public class Controlador implements IControladorRemoto {
 		ArrayList<String> ganadores = juego.getGanadores();
 		return ganadores;
 	}
+
+	/*public IJugador getSalio() {
+		// TODO Auto-generated method stub
+		return juego.getSalio();
+	}*/
 
 	
 				
