@@ -76,14 +76,23 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 	
 	
 	  @Override
-	public void reiniciar() throws RemoteException {
+	public void reiniciar(int n) throws RemoteException {
 		estado = ESTADOS.CONFIGURANDO;
-		for(Jugador j : jugadores) 
+		//this.jugadores.get(n).reiniciar();
+		for(Jugador j : jugadores) {
 			j.reiniciar();
+			System.out.println("* "+j.getCartasSecretas().cantCartas());
+		}
+		archivoConfidencial = new Mazo(true);
 		notificar(CambiosJuego.CAMBIO_ESTADO);
 		notificar(CambiosJuego.CAMBIO_LISTA_JUGADORES); 
 	}
 	
+	  @Override
+	  public void inicio() throws RemoteException {
+		  estado = ESTADOS.INICIAR;
+		  notificar(CambiosJuego.INICIO);
+	  }
 	
 	@Override
 	public void iniciarJuego() throws IndexOutOfBoundsException, RemoteException {
@@ -91,7 +100,7 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 			estado = ESTADOS.EN_JUEGO;
 			eEJ = E_EN_JUEGO.SOSPECHA;
 			this.setInfoSecreta();
-            this.repartirAC();
+			this.repartirAC();
             this.descartarArchivoConfidencial_AgendaPersonal();
             this.jugadorEnTurno = 0;
             this.sospechado = 1;
@@ -102,7 +111,6 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
  			System.out.println(this.getInfoSecreta()[0].getFigura());
 			System.out.println(this.getInfoSecreta()[1].getFigura());
 			System.out.println(this.getInfoSecreta()[2].getFigura());
-			System.out.println("chanceGanarInicio: "+ this.chancesGanador);
 			
 			
 		} else {
@@ -506,6 +514,13 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 		}
 		notificar(CambiosJuego.CAMBIO_ESTADO);
 	*/}
+
+	@Override
+	public void estadoReinicio() throws RemoteException {
+		// TODO Auto-generated method stub
+		this.estado = ESTADOS.REINICIAR;
+		notificar(CambiosJuego.CAMBIO_ESTADO);
+	}
 
 	/*@Override
 	public Jugador getSalio() {

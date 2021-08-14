@@ -53,9 +53,11 @@ public class Controlador implements IControladorRemoto {
 	public void actualizar(IObservableRemoto arg0, Object arg1) throws RemoteException {
 		if(arg1 instanceof CambiosJuego) {
 			CambiosJuego cambio = (CambiosJuego) arg1;
+			System.out.println(juego.getEstado());
+			System.out.println(juego.getEstadoEnJuego());
 			switch(cambio) {
-				/*case CAMBIO_JUGADOR: //vista.mostrarJugando(); // Chequear si es necesario
-					break;*/
+				case INICIO: juego.iniciarJuego();
+					break;
 				case CAMBIO_LISTA_JUGADORES: 
 					vista.mostraJugadores();
 					break;
@@ -82,7 +84,8 @@ public class Controlador implements IControladorRemoto {
 					ESTADOS e = juego.getEstado();
 					String estado = juego.getEstado().name();
 					if(e == ESTADOS.EN_JUEGO) {
-						
+						System.out.println(this.getJugadorEnTurno().getNombre());
+						System.out.println(this.getJugadorEnTurno().getNroJugador());
 // --------------------Si es jugador en turno ----------------------------------------------
 						if((nroJugador == juego.getJugadorEnTurno().getNroJugador()) && (juego.getJugadorEnTurno().estadoJugador())) { 
 							switch(juego.getEstadoEnJuego().name()) {
@@ -99,7 +102,6 @@ public class Controlador implements IControladorRemoto {
 							}
 							
 						} else { 
-
 // ------------------- Resto de los jugadores ----------------------------------------------
 							switch(juego.getEstadoEnJuego().name()) {
 								case ARRIESGA:
@@ -127,8 +129,12 @@ public class Controlador implements IControladorRemoto {
 						}			
 					}
 					else if (e == ESTADOS.CONFIGURANDO) {
+						System.out.println("CONFIG");
 						System.out.println(this.nroJugador);
 							vista.mostrarConfiguracion();
+					}
+					else if (e == ESTADOS.REINICIAR) {
+						juego.reiniciar(this.nroJugador);
 					}
 					/* else if (e == ESTADOS.FINALIZADO) {
 						//if( nroJugador == juego.getGanador().getNroJugador()){ vista.avisoGanador();}
@@ -153,10 +159,8 @@ public class Controlador implements IControladorRemoto {
 		try {
 			if(nroJugador == -1) {vista.mostrarError(ErrorCantidadMaximaJugadores);
 			}else {
+				juego.inicio();
 				juego.iniciarJuego();
-				for(int i=1; i<= juego.getJugadores().get(nroJugador).getCartasSecretas().cantCartas();i++) {
-					System.out.println(juego.getJugadores().get(nroJugador).getCartasSecretas().getCarta(i).getFigura());
-				}
 			}
 		} catch (IndexOutOfBoundsException e) {
 			if(e.getMessage().equals("CantidadMinima")) {
@@ -194,7 +198,7 @@ public class Controlador implements IControladorRemoto {
 
 	public void reiniciar() {
 		try {
-			juego.reiniciar(); 
+			juego.estadoReinicio(); 
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

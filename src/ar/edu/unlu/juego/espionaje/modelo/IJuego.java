@@ -48,7 +48,7 @@ public interface IJuego extends IObservableRemoto, Serializable{
 
 	void cambiarJugador() throws RemoteException;
 
-	void reiniciar() throws RemoteException;
+	void reiniciar(int nroJugador) throws RemoteException;
 
 	void pasar() throws RemoteException;
 
@@ -69,6 +69,10 @@ public interface IJuego extends IObservableRemoto, Serializable{
 	void finalizar() throws RemoteException;
 
 	void salir(int nroJugador) throws RemoteException;
+
+	void estadoReinicio() throws RemoteException;
+
+	void inicio() throws RemoteException;
 
 //	IJugador getSalio();
 	

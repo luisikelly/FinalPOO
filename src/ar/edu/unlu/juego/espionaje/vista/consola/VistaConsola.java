@@ -100,11 +100,14 @@ public class VistaConsola implements IVista{
 	public void mostrarResponder() {
 		menu = new MenuResponder(controlador);
 		menu.mostrarMenu();
+					
 	}
+
 
 
 	@Override
 	public void mostrarRespuesta(String string) {
+		System.out.println(".............................................................");
 		System.out.println(controlador.listaJugadores().get(controlador.getSospechado()).getNombre()+ " responde:");
 		System.out.println();
 			try {
@@ -113,6 +116,7 @@ public class VistaConsola implements IVista{
 				}else {
 					System.out.println(controlador.listaJugadores().get(controlador.getSospechado()) + " NO TIENE NINGUNA DE LAS CARTAS DE LA SOSPECHA");
 				}
+				System.out.println(".............................................................");
 				controlador.paso();
 //				this.mostrarTurno("SOSPECHAR");
 				System.out.println();
@@ -184,8 +188,8 @@ public class VistaConsola implements IVista{
 		menu.mostrarMenu();
 	}
 	
-
-
+	
+	
 	@Override
 	public void mostrarTurno(String string) {
 		menu = new MenuTurno(controlador,string);

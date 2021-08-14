@@ -54,6 +54,7 @@ public class Mazo implements Serializable {
 				this.agregarCarta(m.getCarta(i));			
 			}
 	}
+
 	
 	
 }

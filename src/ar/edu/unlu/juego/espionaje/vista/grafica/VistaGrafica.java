@@ -199,7 +199,7 @@ public class VistaGrafica implements Serializable,IVista{
 	
 	@Override
 	public void iniciarJuego() {
-		this.mostrarConfiguracion();
+		//this.mostrarConfiguracion();
 		
 	}
 
@@ -516,6 +516,7 @@ public class VistaGrafica implements Serializable,IVista{
 		});
 		btnIniciarJuego.setBounds(287, 239, 142, 34);
 		pantallaConfiguracion.add(btnIniciarJuego);
+		btnIniciarJuego.setVisible(false);
 		
 		JButton btnReglasDelJuego = new JButton("AYUDA");
 		btnReglasDelJuego.setFont(sizedFont2);
@@ -536,6 +537,7 @@ public class VistaGrafica implements Serializable,IVista{
 				controlador.agregarJugador(nombre);
 				textField.setEnabled(false);
 				btnAgregarJugador.setEnabled(false);
+				if(controlador.getNroJugador() == 0) btnIniciarJuego.setVisible(true);
 				} else {
 			    	JOptionPane.showMessageDialog(null,"Debe ingresar el nombre del jugador");
 				}

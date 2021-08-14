@@ -61,13 +61,12 @@ public class Jugador implements IJugador,Serializable{
 
 	public void reiniciar() {
 		juega = true;
-		for(int i=0; i<= this.agendaPersonal.cantCartas()-1;i++) {
+		/*for(int i=0; i<= this.agendaPersonal.cantCartas()-1;i++) {
 			this.agendaPersonal.getCarta(i).descartar(false);
-		}
-		cartasSecretas = new Mazo(false);
-		for(int i=0; i<= this.cartasSecretas.cantCartas()-1;i++) {
-			this.agendaPersonal.getCarta(i).reiniciar();
-		}
+		}*/
+		this.agendaPersonal = new Mazo(true);
+		this.cartasSecretas = new Mazo(false);
+
 	}
 
 	public void sacarjuego() {

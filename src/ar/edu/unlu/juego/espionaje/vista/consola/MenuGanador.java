@@ -7,7 +7,6 @@ import ar.edu.unlu.juego.espionaje.controlador.Controlador;
 public class MenuGanador extends Menu {
 	private  Controlador miControlador;
 	
-	
 	public MenuGanador(Controlador miControlador) {
 		super();
 		this.miControlador = miControlador;
