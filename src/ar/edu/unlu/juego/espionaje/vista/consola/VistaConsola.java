@@ -64,7 +64,7 @@ public class VistaConsola implements IVista{
 		System.out.println();
 		System.out.println();
 		System.out.println("||||||||||||||||||||||||||||||");
-		System.out.println("     INFORMACION CONFIDENCIAL ");
+		System.out.println("   INFORMACION CONFIDENCIAL ");
 		System.out.println("||||||||||||||||||||||||||||||");
 		System.out.println();
 		System.out.println();
@@ -100,10 +100,11 @@ public class VistaConsola implements IVista{
 	public void mostrarResponder() {
 		menu = new MenuResponder(controlador);
 		menu.mostrarMenu();
-					
+		
+		
 	}
 
-
+	
 
 	@Override
 	public void mostrarRespuesta(String string) {
@@ -131,10 +132,11 @@ public class VistaConsola implements IVista{
 
 	@Override
 	public void avisoPerdio() {
-			System.out.println("------ " + controlador.listaJugadores().get(controlador.getNroJugador()) + " ------"  );
+			System.out.println("------ " + controlador.listaJugadores().get(controlador.getNroJugador()).getNombre() + " ------"  );
 			System.out.println("                       ------ PERDISTE ------");
 			System.out.println("               ------ TU SOSPECHA FINAL FUE INCORRECTA ------");
 			System.out.println("");
+			
 			System.out.println("LA INFORMACION CONFIDENCIAL ES:");
 			System.out.println();
 			System.out.println("CIUDAD: " + controlador.informacionConfidencial()[0].getFigura());
@@ -205,16 +207,68 @@ public class VistaConsola implements IVista{
 	@Override
 	public void mostrarGanadores() {
 		try {
-			System.out.println();
-			System.out.println(" ____________________________");
-			System.out.println("| ______   GANADORES _______ |");
-			for (String ganador : controlador.getGanadores()) {
-				System.out.println("   " +ganador);
+			if(!controlador.getGanadores().isEmpty()) {
+				System.out.println();
+				System.out.println(" ____________________________");
+				System.out.println("| ______   GANADORES _______ |");
+				for (String ganador : controlador.getGanadores()) {
+					System.out.println("   " +ganador);
+				}
+			} else {
+				System.out.println();
+				System.out.println(" ______________________________________________");
+				System.out.println("| ______  NO HAY GANADORES REGISTRADOS _______ |");
+				
 			}
+			
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
 
+	}
+	
+	public void agregarJugador() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("-----------------------------------------");
+		System.out.println();
+		System.out.println("Ingresa tu nombre:");
+		nombre = sc.nextLine();
+			controlador.agregarJugador(nombre.toUpperCase());
+			System.out.println();
+	}
+	
+	public void listarJugadores() {
+		if(!controlador.listaJugadores().isEmpty()) {
+			System.out.println();
+			System.out.println("--------- JUGADORES ---------");
+			System.out.println();
+			ArrayList<IJugador> j = controlador.listaJugadores();
+			System.out.println("Jugadores");
+			for (IJugador jugador : j) {
+				System.out.println(jugador.getNombre());
+			}
+			System.out.println("-----------------------------");
+		} else {
+			System.out.println();
+			System.out.println("------------------------------");
+			System.out.println(" NO HAY JUGADORES REGISTRADOS           ");
+			System.out.println("-------------------------------");
+		}
+		
+	}
+	
+	public void menuFinPartida() {
+		System.out.println("¿Qué queres hacer? ");
+		System.out.println("1- Volver al menú principal");
+		System.out.println("2 - Salir ");
+		Scanner miScanner = new Scanner(System.in);
+		String opcion = miScanner.nextLine();
+		switch (opcion) {
+		case "1" :controlador.reiniciar();
+				break;
+		case "2" : controlador.finalizarPartida(); 
+					break;
+	    }
 	}
 
 	@Override
@@ -249,46 +303,9 @@ public class VistaConsola implements IVista{
 				"A: Si la acusación es correcta el jugador gana el juego!\r\n" + 
 				"B: Si la acusación es incorrecta (las tres cartas no coinciden), el siguiente jugador podrá ver si sus tres cartas coinciden con la información confidencial, en ese caso será el ganador, sino el siguiente jugador tendrá oportunidad y así hasta que cada jugador pueda arriesgar su acusación. \r\n" + 
 				"____________________________________________________________________\r\n" + 
-				"\r\n" + "Trabajo Final de la asignatura Programaciòn Orientada a Objetos - Universidad Nacional de Lujàn-\r\n" + 
-				"Juego Espionaje de la Marca YETEM - EL uso del mismo es unicamnete pata fines academicos.  \r\n" + " ");
+				"\r\n" + "Trabajo Final de la asignatura Programación Orientada a Objetos - Universidad Nacional de Luján-\r\n" + 
+				"Juego Espionaje de la Marca YETEM - El uso del mismo es unicamnete para fines academicos.  \r\n" + " ");
 	}
-	
-	public void agregarJugador() {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("-----------------------------------------");
-		System.out.println();
-		System.out.println("Ingresa tu nombre:");
-		nombre = sc.nextLine();
-			controlador.agregarJugador(nombre.toUpperCase());
-			System.out.println();
-	}
-	
-	public void listarJugadores() {
-		System.out.println();
-		System.out.println("--------- JUGADORES ---------");
-		System.out.println();
-		ArrayList<IJugador> j = controlador.listaJugadores();
-		System.out.println("Jugadores");
-		for (IJugador jugador : j) {
-			System.out.println(jugador.getNombre());
-		}
-		System.out.println("-----------------------------");
-	}
-	
-	public void menuFinPartida() {
-		System.out.println("¿Qué queres hacer? ");
-		System.out.println("1- Volver al menú principal");
-		System.out.println("2 - Salir ");
-		Scanner miScanner = new Scanner(System.in);
-		String opcion = miScanner.nextLine();
-		switch (opcion) {
-		case "1" :controlador.reiniciar();
-				break;
-		case "2" : controlador.finalizarPartida(); 
-					break;
-	    }
-	}
-
 
 	@Override
 	public void notificarSalio() {

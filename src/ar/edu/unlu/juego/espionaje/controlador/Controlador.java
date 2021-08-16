@@ -100,8 +100,7 @@ public class Controlador implements IControladorRemoto {
 								case RESPONDER: vista.mostrarTurno(RESPONDER_JET);
 									break;	
 							}
-							
-						} else { 
+						} else {
 // ------------------- Resto de los jugadores ----------------------------------------------
 							switch(juego.getEstadoEnJuego().name()) {
 								case ARRIESGA:
@@ -117,34 +116,31 @@ public class Controlador implements IControladorRemoto {
 									break;
 								case RESPONDER: vista.mostrarTurno(RESPONDER);
 									break;	
-							}
-								
+							}								
 // --------------------Si es jugador sospechado ----------------------------------------------
 							if(nroJugador == juego.getSospechado()) { 
 								switch(juego.getEstadoEnJuego().name()) {
 								case RESPONDER: vista.mostrarResponder();
 									break;	
 								}
-							} 
+							} 							
 						}			
 					}
 					else if (e == ESTADOS.CONFIGURANDO) {
-						System.out.println("CONFIG");
 						System.out.println(this.nroJugador);
 							vista.mostrarConfiguracion();
 					}
 					else if (e == ESTADOS.REINICIAR) {
 						juego.reiniciar(this.nroJugador);
 					}
-					/* else if (e == ESTADOS.FINALIZADO) {
+					 else if (e == ESTADOS.FINALIZADO) {
 						//if( nroJugador == juego.getGanador().getNroJugador()){ vista.avisoGanador();}
 						//else { vista.avisoPerdio();}
-					}*/
-					
+						 System.out.println("------------ JUEGO FINALIZADO ------------");
+					 }
 				break;
 			}
 		}
-
 	}
 	
 	

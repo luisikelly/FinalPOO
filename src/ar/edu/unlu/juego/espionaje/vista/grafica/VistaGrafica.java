@@ -319,7 +319,6 @@ public class VistaGrafica implements Serializable,IVista{
 	//TODO MOSTRAR RESPONDER
 	@Override
 	public void mostrarResponder() {
-		
 		try {
 			lblElemento1.setText(controlador.getSospecha().get(0));
 			this.setIcon(controlador.getSospecha().get(0), this.lblElemento1);
@@ -329,12 +328,10 @@ public class VistaGrafica implements Serializable,IVista{
 			if(!controlador.verificarRespuesta().isEmpty()) {
 				if(controlador.verificarRespuesta().size() == 1) {
 					cbRespuesta.addItem(controlador.verificarRespuesta().get(0));
-
 				}else {
 					cbRespuesta.addItem(controlador.verificarRespuesta().get(0));
 					cbRespuesta.addItem(controlador.verificarRespuesta().get(1));
-				}
-				
+				}		
 			} else {
 				cbRespuesta.setEnabled(false);;
 				cbRespuesta.setVisible(false);
@@ -344,9 +341,7 @@ public class VistaGrafica implements Serializable,IVista{
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
-		
 		cardLayout.show(this.frmEspionaje.getContentPane(), RESPONDER);
-		
 	}
 
 	//TODO MOSTRAR ERROR

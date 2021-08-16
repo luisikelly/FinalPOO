@@ -251,6 +251,7 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 			jugadores.add(j);
 			j.setNroJugador(jugadores.size()-1);
 			nroJugador = j.getNroJugador();
+			System.out.println(jugadores.get(nroJugador).getNombre());
 			notificar(CambiosJuego.CAMBIO_LISTA_JUGADORES);
 
     	} else {
