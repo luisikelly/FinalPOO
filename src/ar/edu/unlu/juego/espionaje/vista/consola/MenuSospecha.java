@@ -8,7 +8,7 @@ import ar.edu.unlu.juego.espionaje.controlador.Controlador;
 
 public class MenuSospecha extends Menu{
 	Scanner entrada;
-	private String opcion;
+
 	
 	
 	public MenuSospecha(Controlador controlador, VistaConsola vista) {
@@ -29,15 +29,14 @@ public class MenuSospecha extends Menu{
 	@Override
 	public void mostrarMenu() {
 		entrada = new Scanner(System.in);
-		
+		entrada.reset();
 			System.out.println("Elija una opción");
 			System.out.println();
 			System.out.println("1- Ver Agenda Personal");
 			System.out.println("2- Ver Archivo Confidencial");
 			System.out.println("3- Realizar Sospecha");
 			System.out.println("4- Realizar Acusación");
-			entrada.reset();
-		    opcion = entrada.nextLine();
+		    String opcion = entrada.nextLine();
 			System.out.println(opcion);			
 			switch (opcion) {
 				case "1" : 

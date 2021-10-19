@@ -93,9 +93,7 @@ public class Controlador implements IControladorRemoto {
 								break;
 								case SOSPECHA: vista.mostrarSospechar();
 									break;
-								case RESPUESTA: 
-									if(juego.getRespuesta().equals("")) {vista.mostrarRespuesta("");}
-									else {vista.mostrarRespuesta(juego.getRespuesta());}
+								case RESPUESTA: vista.mostrarRespuesta(juego.getRespuesta());
 									break;
 								case RESPONDER: vista.mostrarTurno(RESPONDER_JET);
 									break;	
@@ -169,8 +167,6 @@ public class Controlador implements IControladorRemoto {
 			System.out.println("REMOTE EX");
 			e.printStackTrace();
 		}
-		
-		
 	}
 	
 	public void finalizarPartida() {

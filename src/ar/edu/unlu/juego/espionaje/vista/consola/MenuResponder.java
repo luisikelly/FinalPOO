@@ -27,11 +27,9 @@ public void mostrarMenu() {
 		System.out.println();
 			
 		if(!miControlador.verificarRespuesta().isEmpty()) { 
-	//			System.out.println("1- "+ miControlador.verificarRespuesta().get(0));
-	//			System.out.println("2- "+ miControlador.verificarRespuesta().get(1));
+				System.out.println("1- "+ miControlador.verificarRespuesta().get(0));
+				System.out.println("2- "+ miControlador.verificarRespuesta().get(1));
 				System.out.println();
-				System.out.println("................PRESIONE ENTER PARA CONTINUAR................ ");
-				entrada.nextLine();
 				this.elegirRespuesta();
 				System.out.println();
 				System.out.println();

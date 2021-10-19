@@ -32,12 +32,11 @@ public class MenuConfig extends Menu {
 				System.out.println();
 				System.out.println("Ingrese opcion");
 				String opcion= entrada.nextLine();
-				
+				//entrada.close();
 				switch(opcion) {
 				case "0": miControlador.finalizarPartida();
 					break;
 				case "1": miControlador.iniciarPartida();
-				
 				  	break; 
 				case "2": miVista.listarJugadores();
 						this.mostrarMenu();				
@@ -62,7 +61,8 @@ public class MenuConfig extends Menu {
 					System.out.println();
 					System.out.println("Ingrese opcion");
 					String opcion= entrada.nextLine();
-					
+					//entrada.close();
+
 					switch(opcion) {
 					case "0": miControlador.finalizarPartida();
 						break; 
