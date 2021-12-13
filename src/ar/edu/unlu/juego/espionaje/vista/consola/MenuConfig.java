@@ -51,7 +51,8 @@ public class MenuConfig extends Menu {
 
 				} 
 			}else {
-					entrada.nextLine();
+
+					Scanner e = new Scanner(System.in);
 					System.out.println("-----------------------------------------");
 					System.out.println();
 					System.out.println("1. Jugadores");
@@ -60,9 +61,8 @@ public class MenuConfig extends Menu {
 					System.out.println("0. Salir");
 					System.out.println();
 					System.out.println("Ingrese opcion");
-					String opcion= entrada.nextLine();
-					//entrada.close();
-
+					String opcion= e.nextLine();
+					e.nextLine();
 					switch(opcion) {
 					case "0": miControlador.finalizarPartida();
 						break; 

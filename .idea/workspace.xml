@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="117ebdd5-9933-460d-960e-fae6d4260c90" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/$PRODUCT_WORKSPACE_FILE$" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EspionajeFinal.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/ar/edu/unlu/juego/espionaje/cliente/AppCliente.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/ar/edu/unlu/juego/espionaje/controlador/Controlador.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/ar/edu/unlu/juego/espionaje/controlador/IVista.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/ar/edu/unlu/juego/espionaje/modelo/AGENTES.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/ar/edu/unlu/juego/espionaje/modelo/CIUDADES.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/ar/edu/unlu/juego/espionaje/modelo/CambiosJuego.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/ar/edu/unlu/juego/espionaje/modelo/Carta.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/ar/edu/unlu/juego/espionaje/modelo/DISPOSITIVOS.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/ar/edu/unlu/juego/espionaje/modelo/ESTADOS.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/ar/edu/unlu/juego/espionaje/modelo/IJuego.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/ar/edu/unlu/juego/espionaje/modelo/IJugador.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/ar/edu/unlu/juego/espionaje/modelo/Juego$E_EN_JUEGO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/ar/edu/unlu/juego/espionaje/modelo/Juego.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/ar/edu/unlu/juego/espionaje/modelo/Jugador.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/ar/edu/unlu/juego/espionaje/modelo/Mazo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/ar/edu/unlu/juego/espionaje/servidor/AppServidor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/ar/edu/unlu/juego/espionaje/vista/consola/Menu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/ar/edu/unlu/juego/espionaje/vista/consola/MenuConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/ar/edu/unlu/juego/espionaje/vista/consola/MenuGanador.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/ar/edu/unlu/juego/espionaje/vista/consola/VistaConsola.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/ar/edu/unlu/juego/espionaje/vista/grafica/VistaGrafica.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ar/edu/unlu/juego/espionaje/vista/consola/test/VistaConsolaTest.java" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="C:\Users\Luisi\Documents\GitHub\JuegoPOO\.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1zj9UoEILWO0BE8fF5fe3KVwtaD" />
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.AppCliente">
+    <configuration name="AppCliente" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ar.edu.unlu.juego.espionaje.cliente.AppCliente" />
+      <module name="EspionajeFinal" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ar.edu.unlu.juego.espionaje.cliente.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AppServidor" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ar.edu.unlu.juego.espionaje.servidor.AppServidor" />
+      <module name="EspionajeFinal" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ar.edu.unlu.juego.espionaje.servidor.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.AppServidor" />
+      <item itemvalue="Application.AppCliente" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.AppCliente" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="117ebdd5-9933-460d-960e-fae6d4260c90" name="Default Changelist" comment="" />
+      <created>1634650650260</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1634650650260</updated>
+      <workItem from="1634650674138" duration="2470000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

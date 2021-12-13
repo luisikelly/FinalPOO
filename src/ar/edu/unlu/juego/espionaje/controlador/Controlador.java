@@ -84,8 +84,9 @@ public class Controlador implements IControladorRemoto {
 					ESTADOS e = juego.getEstado();
 					String estado = juego.getEstado().name();
 					if(e == ESTADOS.EN_JUEGO) {
-						System.out.println(this.getJugadorEnTurno().getNombre());
-						System.out.println(this.getJugadorEnTurno().getNroJugador());
+						vista.mostrarTurno(SOSPECHAR);
+						//System.out.println(this.getJugadorEnTurno().getNombre());
+						//(System.out.println(this.getJugadorEnTurno().getNroJugador());
 // --------------------Si es jugador en turno ----------------------------------------------
 						if((nroJugador == juego.getJugadorEnTurno().getNroJugador()) && (juego.getJugadorEnTurno().estadoJugador())) { 
 							switch(juego.getEstadoEnJuego().name()) {
@@ -98,7 +99,8 @@ public class Controlador implements IControladorRemoto {
 								case RESPONDER: vista.mostrarTurno(RESPONDER_JET);
 									break;	
 							}
-						} else {
+						} 
+						if((nroJugador != juego.getJugadorEnTurno().getNroJugador()) && (juego.getJugadorEnTurno().estadoJugador())) {
 // ------------------- Resto de los jugadores ----------------------------------------------
 							switch(juego.getEstadoEnJuego().name()) {
 								case ARRIESGA:
