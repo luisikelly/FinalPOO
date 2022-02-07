@@ -6,16 +6,18 @@ import ar.edu.unlu.juego.espionaje.controlador.Controlador;
 
 public class MenuAcusacion extends Menu {
 	Scanner entrada;
-	
+	private int jugTurno, jug;
 
 	public MenuAcusacion(Controlador controlador) {
 		miControlador = controlador;
 		entrada = new Scanner(System.in);
-
+		jugTurno = miControlador.getJugadorEnTurno().getNroJugador();
+		jug = miControlador.getNroJugador();
 	}
 
 @Override
 	public void mostrarMenu() {
+	if(jug == jugTurno) {
 		System.out.println();
 		System.out.println();
 		System.out.println("-------- REALIZAR ACUSACIÓN --------------");
@@ -43,7 +45,11 @@ public class MenuAcusacion extends Menu {
 			System.out.println();
 			
 			miControlador.rtaSospechaFinal(agentes, dispositivo, ciudades);
-		
+
+	}else {
+		miVista.mostrarTurno(ARRIESGAR);
+	}
+				
 		}
 
 	private String mostrarDispositivos() {
@@ -67,9 +73,7 @@ public class MenuAcusacion extends Menu {
 			break;
 		case "5" : dispositivo = "HELICOPTERO";
 			break;
-		default: System.out.println("Elemento incorrecto! Ingresa nuevamente tu sospecha");
-			this.mostrarDispositivos();
-		break;
+		
 		}
 		return dispositivo;		
 	}
@@ -98,9 +102,7 @@ public class MenuAcusacion extends Menu {
 			break;
 		case "5" : ciudades =  "ATENAS";
 			break;	
-		default: System.out.println("Elemento incorrecto! Ingresa nuevamente tu sospecha");
-			this.mostrarCiudades();
-		break;
+		
 		
 		}
 		return ciudades;
@@ -127,9 +129,7 @@ public class MenuAcusacion extends Menu {
 			break;
 		case "5" : agentes = "AGENTE_BLANCO";
 			break;	
-		default: System.out.println("Elemento incorrecto! Ingresa nuevamente tu sospecha");
-			this.mostrarAgentes();
-		break;		
+		
 		}
 
 		return agentes;

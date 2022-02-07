@@ -20,12 +20,15 @@ public class VistaConsola implements IVista{
 	
 
 	public VistaConsola() {
+		
+	}
+	
+	private void mostrarTituloEspionaje() {
 		System.out.println("-----------------------------------------");
 		System.out.println("--------        ESPIONAJE     -----------");
 		System.out.println("-----------------------------------------");
 		System.out.println();
 	}
-	
 	
 	@Override
 	public void setControlador(Controlador c) {
@@ -34,27 +37,166 @@ public class VistaConsola implements IVista{
 	
 	@Override
 	public void iniciarJuego() {
-		menu = new MenuConfig(controlador, this,false);
-		menu.mostrarMenu();
+		//menu = new MenuConfig(controlador, this,false);
+		//menu.mostrarMenu();
+		Scanner entrada = new Scanner(System.in);	
+		this.mostrarTituloEspionaje();
+		System.out.println("-----------------------------------------");
+		System.out.println();
+		System.out.println("1. Registrarse");
+		System.out.println("2. Jugadores");	
+		System.out.println("3. Ayuda");
+		System.out.println("4. Historial de Ganadores");
+		System.out.println("0. Salir");
+		System.out.println();
+		System.out.println("Ingrese opcion");
+		String opcion= entrada.nextLine();
 		
+		switch(opcion) {
+		case "0": controlador.finalizarPartida();
+			break;	
+		case "1": 
+				this.agregarJugador();	
+				this.mostrarConfiguracion();;
+  			break; 		
+		case "2": this.listarJugadores();
+				this.mostrarConfiguracion();
+			break;
+		case "3": this.mostrarAyuda();
+				this.mostrarConfiguracion();
+			break;
+		case "4": this.mostrarGanadores(); 
+				this.mostrarConfiguracion();
+		  	break;
+		//default: this.iniciarJuego();break;  		
+		}			
 	}
 
 	
 
 	@Override
 	public void mostrarArriesgar() {
-		menu = new MenuAcusacion(controlador);
-		menu.mostrarMenu();
+		Scanner entrada = new Scanner(System.in);
+		this.mostrarTituloEspionaje();
+		int jug = controlador.getNroJugador();
+		if(jug == controlador.getJugadorEnTurno().getNroJugador()) {
+			System.out.println();
+			System.out.println();
+			System.out.println("-------- REALIZAR ACUSACIÓN --------------");
+			System.out.println();
+			System.out.println("");
+			System.out.println("Elegí TRES elementos para realizar tu acusación:");
+			System.out.println();
+			System.out.println("................PRESIONE ENTER PARA CONTINUAR................ ");
+			entrada.nextLine();
+			
+			System.out.println("~ SOSPECHA FINAL ~");
+			String dispositivo = this.mostrarDispositivos();
+				System.out.println();
+				System.out.println(dispositivo);
+				System.out.println();
+
+				String ciudades = this.mostrarCiudades();
+				System.out.println();
+				System.out.println(ciudades);
+				System.out.println();
+		
+				String agentes = this.mostrarAgentes();		
+				System.out.println();
+				System.out.println(agentes);
+				System.out.println();
+				
+				controlador.rtaSospechaFinal(agentes, dispositivo, ciudades);
+
+		}else {
+				System.out.println("-----------------------------------------");
+				System.out.println( controlador.getJugadorEnTurno().getNombre()+" está realizando su acusación ");
+				System.out.println("-----------------------------------------");	
+		}
+	}
+	
+	
+	private String mostrarDispositivos() {
+		String dispositivo = null;
+		System.out.println("Ingrese la opcion de DISPOSITIVO");
+		System.out.println("1- SATELITE");
+		System.out.println("2- AUTOPROPULSOR");
+		System.out.println("3- GAS LETAL");
+		System.out.println("4- AVION");
+		System.out.println("5- HELICOPTERO");
+		Scanner eDispositivo = new Scanner(System.in);	
+		String disp = eDispositivo.nextLine();
+		switch(disp) {
+		case "1" : dispositivo = "SATELITE";
+			break;		
+		case "2" : dispositivo = "AUTOPROPULSOR";
+			break;
+		case "3" : dispositivo = "GAS_LETAL";
+			break;
+		case "4" : dispositivo = "AVION";
+			break;
+		case "5" : dispositivo = "HELICOPTERO";
+			break;
+		}
+		return dispositivo;		
 	}
 
+	private String mostrarCiudades() {
+		String ciudades = "";
+		System.out.println("Ingrese la opcion de CIUDAD");
+		System.out.println("1- PARIS");
+		System.out.println("2- LONDRES");
+		System.out.println("3- TOKIO");
+		System.out.println("4- PANAMA");
+		System.out.println("5- ATENAS");
+		Scanner eCiudad = new Scanner(System.in);	
+		String ciudad = eCiudad.nextLine();
+		switch(ciudad) {
+		case "1" : ciudades = "PARIS";
+			break;
+		case "2" : ciudades = "LONDRES";
+			break;
+		case "3" : ciudades = "TOKIO";
+			break;
+		case "4" : ciudades = "PANAMA";
+			break;
+		case "5" : ciudades =  "ATENAS";
+			break;	
+		}
+		return ciudades;
+	}
+	
+	private String mostrarAgentes() {
+		String agentes = "";
+		System.out.println("Ingrese la opcion de AGENTE");
+		System.out.println("1- AGENTE ROJO");
+		System.out.println("2- AGENTE VERDE");
+		System.out.println("3- AGENTE AZUL");
+		System.out.println("4- AGENTE NARANJA");
+		System.out.println("5- AGENTE BLANCO");
+		Scanner eAgente = new Scanner(System.in);	
+		String agente = eAgente.nextLine();
+		switch(agente) {
+		case "1" : agentes = "AGENTE_ROJO";
+			break;
+		case "2" : agentes = "AGENTE_VERDE";
+			break;
+		case "3" : agentes = "AGENTE_AZUL";
+			break;
+		case "4" : agentes = "AGENTE_NARANJA";
+			break;
+		case "5" : agentes = "AGENTE_BLANCO";
+			break;	
+		}
+		return agentes;
+	}
 
+	
 	@Override
 	public void avisoGanador() {
 //	menu = new MenuGanador(controlador);
 //		menu.mostrarMenu();
-		System.out.println("-----------------------------------------");
-		System.out.println("--------        ESPIONAJE     -----------");
-		System.out.println("-----------------------------------------");
+		this.mostrarTituloEspionaje();		
 		System.out.println();
 		System.out.println();
 		System.out.println();
@@ -88,10 +230,44 @@ public class VistaConsola implements IVista{
 	
 	@Override
 	public void mostrarConfiguracion() {                                                                                                                                                              
+		Scanner entrada = new Scanner(System.in);	
+		this.mostrarTituloEspionaje();
+		System.out.println("-----------------------------------------");
+		System.out.println();
+		System.out.println("1. Iniciar juego");
+		System.out.println("2. Jugadores");
+		System.out.println("3. Ayuda");
+		System.out.println("4. Historial de Ganadores");
+		System.out.println("0. Salir");
+		System.out.println();
+		System.out.println("Ingrese opcion");
+		String opcion= entrada.nextLine();
+		//entrada.close();
+		switch(opcion) {
+		case "0": controlador.finalizarPartida();
+			break;
+		case "1": controlador.iniciarPartida();
+		  	break; 
+		case "2": this.listarJugadores();
+				this.mostrarConfiguracion();				
+			break;
+		case "3": this.mostrarAyuda();
+				this.mostrarConfiguracion();				
+			break;
+		case "4": this.mostrarGanadores(); 
+				this.mostrarConfiguracion();
+			break;
+		//default: this.mostrarConfiguracion(); break;  		
+
+		} 
+
+		
+		
+		
 		if(controlador.getNroJugador() >= 0) {
-			menu = new MenuConfig(controlador, this,true);
+			//menu = new MenuConfig(controlador, this,true);
 		}
-		menu.mostrarMenu();
+		//menu.mostrarMenu();
 	}
 	
 	
@@ -99,34 +275,117 @@ public class VistaConsola implements IVista{
 
 	@Override
 	public void mostrarResponder() {
-		menu = new MenuResponder(controlador);
-		menu.mostrarMenu();
+		int nJug = controlador.getNroJugador();
+		if(nJug == controlador.getSospechado()) {
+			System.out.println();
+			System.out.println("Responder Sospecha de: "+ controlador.getJugadorEnTurno().getNombre());
+			System.out.println();
+			System.out.println("SOSPECHA: ");
+			try {
+				System.out.println(controlador.getSospecha().get(0));
+				System.out.println(controlador.getSospecha().get(1));
+				System.out.println();
+				System.out.println(".............................................................");
+				System.out.println();
+				System.out.println("LAS CARTAS DE ARCHIVO CONFIDENCIAL QUE TENES SON: ");
+				System.out.println();
+					
+				if(!controlador.verificarRespuesta().isEmpty()) { 
+					if(controlador.verificarRespuesta().size() == 2) {
+						System.out.println("1- "+ controlador.verificarRespuesta().get(0));
+						System.out.println("2- "+ controlador.verificarRespuesta().get(1));
+						System.out.println();
+					
+					}else {
+						System.out.println("1- "+ controlador.verificarRespuesta().get(0));
+						System.out.println();
+					
+					}	
+					Scanner entrada= new Scanner(System.in);
+					String resp;
+					System.out.println(".............................................................");
+					System.out.println(" ELEGÍ TU RESPUESTA   ");
+					resp = entrada.next(); 		
+					System.out.println();
+	
+					try {
+							switch (resp) {
+							case "1" : controlador.setRespuesta(controlador.verificarRespuesta().get(0));
+								break;
+							case "2" : controlador.setRespuesta(controlador.verificarRespuesta().get(1));
+								break;
+							}
+							
+					} catch (RemoteException e) {
+						e.printStackTrace();
+				   }	
+					
+				System.out.println();
+				System.out.println();
+				System.out.println();
+				System.out.println();
+				}else {
+					System.out.println(".............................................................");
+					System.out.println("         NO TENES NINGUNA CARTA DE LA SOSPECHA");
+					System.out.println(".............................................................");
+					System.out.println("    ");
+					controlador.setRespuesta("");
+					
+				}
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+			controlador.paso();
+
+		}else {
+			if(nJug == controlador.getJugadorEnTurno().getNroJugador()) {
+				System.out.println("-----------------------------------------");
+				System.out.println("Esperando respuesta de " + controlador.listaJugadores().get(controlador.getSospechado()).getNombre());			
+				System.out.println("-----------------------------------------");
+			}else {
+				System.out.println("-----------------------------------------");
+				System.out.println(controlador.getJugadorEnTurno().getNombre()+ "  envío sospecha a " + controlador.listaJugadores().get(controlador.getSospechado()).getNombre());
+				System.out.println("-----------------------------------------");
+				
+			}
+		}
+
 		
 		
 	}
 
+	private void elegirRespuesta() {	
+		
+	}	
 	
 
 	@Override
 	public void mostrarRespuesta(String string) {
-		System.out.println(".............................................................");
-		System.out.println(controlador.listaJugadores().get(controlador.getSospechado()).getNombre()+ " responde:");
-		System.out.println();
-			try {
-				if(!controlador.getRespuesta().equals("")) {
-					System.out.println(controlador.getRespuesta().toUpperCase());
-				}else {
-					System.out.println(controlador.listaJugadores().get(controlador.getSospechado()) + " NO TIENE NINGUNA DE LAS CARTAS DE LA SOSPECHA");
-				}
-				System.out.println(".............................................................");
-				controlador.paso();
-//				this.mostrarTurno("SOSPECHAR");
-				System.out.println();
-				System.out.println();
-				System.out.println();
-				System.out.println();
-			} catch (RemoteException e) {
-				e.printStackTrace();
+		if(controlador.getNroJugador() == controlador.getJugadorEnTurno().getNroJugador()) {
+			System.out.println(".............................................................");
+			System.out.println(controlador.listaJugadores().get(controlador.getSospechado()).getNombre()+ " responde:");
+			System.out.println();
+				try {
+					if(!controlador.getRespuesta().equals("")) {
+						System.out.println(controlador.getRespuesta().toUpperCase());
+					}else {
+						System.out.println(controlador.listaJugadores().get(controlador.getSospechado()) + " NO TIENE NINGUNA DE LAS CARTAS DE LA SOSPECHA");
+					}
+					System.out.println(".............................................................");
+					controlador.paso();
+//					this.mostrarTurno("SOSPECHAR");
+					System.out.println();
+					System.out.println();
+					System.out.println();
+					System.out.println();
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}	
+
+		}else {
+			System.out.println("-----------------------------------------");
+			System.out.println( controlador.listaJugadores().get(controlador.getSospechado()).getNombre()+" está respondiendo la sospecha de "+controlador.getJugadorEnTurno().getNombre());
+			System.out.println("-----------------------------------------");
 			}	
 	}
 
@@ -187,16 +446,142 @@ public class VistaConsola implements IVista{
 
 	@Override
 	public void mostrarSospechar() {
-		menu = new MenuSospecha(controlador,this);
-		menu.mostrarMenu();
+		int nJug = controlador.getNroJugador();
+		if(nJug == controlador.getJugadorEnTurno().getNroJugador()) {
+			Scanner entrada = new Scanner(System.in);
+			entrada.reset();
+			this.mostrarMenuSospecha();
+			/*	System.out.println("Elija una opción");
+				System.out.println();
+
+				System.out.println("1- Ver Agenda Personal");
+			    System.out.println("2- Ver Archivo Confidencial");
+				System.out.println("3- Realizar Sospecha");
+				System.out.println("4- Realizar Acusación");
+			    String opcion = entrada.nextLine();
+				System.out.println(opcion);			
+				switch (opcion) {
+					case "1" : 
+						this.mostrarAP();
+						this.mostrarSospechar();
+						break;
+					case "2" : 
+						this.mostrarAP();
+						this.mostrarSospechar();
+						break;
+					case "3" : this.mostrarMenuSospecha();
+					case "4":
+						try {this.controlador.arriesgar();	} 
+						catch (RemoteException e1) { e1.printStackTrace();} 
+						break;
+				}*/
+
+		}else {
+			System.out.println("-----------------------------------------");
+			System.out.println("Ahora es el turno de " + controlador.getJugadorEnTurno().getNombre());
+			System.out.println("-----------------------------------------");
+		}
 	}
 	
+	private void mostrarAC() {
+		System.out.println(" _____________________________________________________ ");
+		System.out.println("| ______  MIS CARTAS DEL ARCHIVO CONFIDENCIAL _______ |");
+		for(int i=0; i<= controlador.getJugadorEnTurno().getCartasSecretas().cantCartas() -1; i++) {
+			System.out.println("    "+ controlador.getJugadorEnTurno().getCartasSecretas().getCarta(i).getFigura());
+		}
+		System.out.println();
+		System.out.println();
+	}
+
+
+	private void mostrarAP() {
+		System.out.println(" __________________________________ ");
+		System.out.println("| ______   AGENDA PERSONAL _______ |");
+		for(int i=0; i<= controlador.getJugadorEnTurno().getAgendaPersonal().cantCartas()-1; i++) {
+			if(controlador.getJugadorEnTurno().getAgendaPersonal().getCarta(i).cartaValida())
+				System.out.println("    "+ controlador.getJugadorEnTurno().getAgendaPersonal().getCarta(i).getFigura() + "    ");
+		}
+		System.out.println();
+		System.out.println();
+	}
+
+
+	private void mostrarMenuSospecha() {
+		if(controlador.getNroJugador() == controlador.getJugadorEnTurno().getNroJugador()) {
+			System.out.println();
+			System.out.println();
+			System.out.println("-------- REALIZAR SOSPECHA --------------");
+			System.out.println();
+			System.out.println("");
+			System.out.println("Elegí dos elementos para realizar tu sospecha:");
+			System.out.println();
+			int nOpcion = 0;
+			ArrayList<String> disponibles = new ArrayList<String>();
+			for(int i=0; i<= controlador.getJugadorEnTurno().getAgendaPersonal().cantCartas() -1 ; i++) {
+				if(controlador.getJugadorEnTurno().getAgendaPersonal().getCarta(i).cartaValida()) {
+					System.out.println(nOpcion+"- " + controlador.getJugadorEnTurno().getAgendaPersonal().getCarta(i).getFigura());	
+					disponibles.add(controlador.getJugadorEnTurno().getAgendaPersonal().getCarta(i).getFigura());
+					nOpcion++;
+				}
+			}
+			
+		
+			System.out.println();
+			ArrayList<String> sospecha = new ArrayList<String>();
+			int s1 = this.seleccionarOpcionSospecha(disponibles.size());
+			int s2 = this.seleccionarOpcionSospecha(disponibles.size());
+			while(s1 == s2) {
+		    	System.out.println("LOS ELEMENTOS DE LAS SOSPECHAS ESTAN REPETIDAS");
+		    	System.out.println();
+		    	System.out.println("Ingresa nuevamente tu sospecha");
+		    	System.out.println();
+		    	s1 = this.seleccionarOpcionSospecha(disponibles.size());
+		    	s2 = this.seleccionarOpcionSospecha(disponibles.size());
+			}
+			sospecha.add(disponibles.get(s1));
+			sospecha.add(disponibles.get(s2));
+			
+				
+		System.out.println("------------------"
+				+ "-----------------------");
+		System.out.println( " Enviaste tu sospecha a " + controlador.listaJugadores().get(controlador.getSospechado()).getNombre());
+		System.out.println("-----------------------------------------");
+		
+		controlador.setSospecha(sospecha);
+			
+		}else {
+			System.out.println("-----------------------------------------");
+			System.out.println("Ahora es el turno de " + controlador.getJugadorEnTurno().getNombre());
+			System.out.println("-----------------------------------------");
+		}
+
+
+	}
+
+
 	
-	
+	private int seleccionarOpcionSospecha(int maxOpciones) {
+		Scanner entrada = new Scanner(System.in);	
+		int s;
+		System.out.println("................PRESIONE ENTER PARA CONTINUAR................ ");
+		entrada.nextLine();	
+		System.out.println("Selecciona elemento de la sospecha ");
+		s = entrada.nextInt();
+		while(s>=maxOpciones) {
+			System.out.println();
+			System.out.println("--- Elemento invalido ---");
+			System.out.println();
+			System.out.println("Selecciona elemento de la sospecha ");
+			s = entrada.nextInt();
+		}
+		return s;
+	}
+
+
 	@Override
 	public void mostrarTurno(String string) {
-		menu = new MenuTurno(controlador,string);
-		menu.mostrarMenu();
+	//	menu = new MenuTurno(controlador,string);
+	//	menu.mostrarMenu();
 	}
 
 

@@ -37,9 +37,7 @@ public class Controlador implements IControladorRemoto {
 	private static final String ARRIESGA = "ARRIESGA";
 	private static final String RESPUESTA = "RESPUESTA";
 	private static final String RESPONDER = "RESPONDER";
-	private static final String RESPONDER_JET = "RESPONDER_JET";
-	private static final String SOSPECHAR = "SOSPECHAR";
-	private static final String ARRIESGAR = "ARRIESGAR";
+	
 
 	public Controlador(IVista vista) {
 		this.vista = vista;
@@ -53,10 +51,9 @@ public class Controlador implements IControladorRemoto {
 	public void actualizar(IObservableRemoto arg0, Object arg1) throws RemoteException {
 		if(arg1 instanceof CambiosJuego) {
 			CambiosJuego cambio = (CambiosJuego) arg1;
-			System.out.println(juego.getEstado());
-			System.out.println(juego.getEstadoEnJuego());
+			System.out.println("* "+juego.getEstado());
 			switch(cambio) {
-				case INICIO: juego.iniciarJuego();
+				case INICIAR: juego.iniciarJuego();
 					break;
 				case CAMBIO_LISTA_JUGADORES: 
 					vista.mostraJugadores();
@@ -84,11 +81,7 @@ public class Controlador implements IControladorRemoto {
 					ESTADOS e = juego.getEstado();
 					String estado = juego.getEstado().name();
 					if(e == ESTADOS.EN_JUEGO) {
-						vista.mostrarTurno(SOSPECHAR);
-						//System.out.println(this.getJugadorEnTurno().getNombre());
-						//(System.out.println(this.getJugadorEnTurno().getNroJugador());
-// --------------------Si es jugador en turno ----------------------------------------------
-						if((nroJugador == juego.getJugadorEnTurno().getNroJugador()) && (juego.getJugadorEnTurno().estadoJugador())) { 
+						System.out.println("* "+juego.getEstadoEnJuego());
 							switch(juego.getEstadoEnJuego().name()) {
 								case ARRIESGA: vista.mostrarArriesgar();
 								break;
@@ -96,35 +89,9 @@ public class Controlador implements IControladorRemoto {
 									break;
 								case RESPUESTA: vista.mostrarRespuesta(juego.getRespuesta());
 									break;
-								case RESPONDER: vista.mostrarTurno(RESPONDER_JET);
+								case RESPONDER: vista.mostrarResponder(); 
 									break;	
 							}
-						} 
-						if((nroJugador != juego.getJugadorEnTurno().getNroJugador()) && (juego.getJugadorEnTurno().estadoJugador())) {
-// ------------------- Resto de los jugadores ----------------------------------------------
-							switch(juego.getEstadoEnJuego().name()) {
-								case ARRIESGA:
-									if(juego.getJugadores().get(nroJugador).estadoJugador()) {
-										 vista.mostrarTurno(ARRIESGAR);
-									}	
-								break;
-								case SOSPECHA: vista.mostrarTurno(SOSPECHAR);
-									break;
-								case RESPUESTA:
-									if(juego.getRespuesta().equals("")) {vista.mostrarTurno("SIN-RESPUESTA");}
-									else {vista.mostrarTurno(RESPUESTA);}
-									break;
-								case RESPONDER: vista.mostrarTurno(RESPONDER);
-									break;	
-							}								
-// --------------------Si es jugador sospechado ----------------------------------------------
-							if(nroJugador == juego.getSospechado()) { 
-								switch(juego.getEstadoEnJuego().name()) {
-								case RESPONDER: vista.mostrarResponder();
-									break;	
-								}
-							} 							
-						}			
 					}
 					else if (e == ESTADOS.CONFIGURANDO) {
 						System.out.println(this.nroJugador);
@@ -155,7 +122,6 @@ public class Controlador implements IControladorRemoto {
 		try {
 			if(nroJugador == -1) {vista.mostrarError(ErrorCantidadMaximaJugadores);
 			}else {
-				juego.inicio();
 				juego.iniciarJuego();
 			}
 		} catch (IndexOutOfBoundsException e) {

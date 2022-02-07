@@ -8,12 +8,15 @@ import ar.edu.unlu.juego.espionaje.controlador.Controlador;
 
 public class MenuSospecha extends Menu{
 	Scanner entrada;
-
+	Menu turno;
+	int jug,jugTurno;
 	
 	
-	public MenuSospecha(Controlador controlador, VistaConsola vista) {
+	public MenuSospecha(Controlador controlador, VistaConsola vista ) {
 		this.miControlador = controlador;
 		this.miVista = vista;
+		this.jug = miControlador.getNroJugador();
+		this.jugTurno = miControlador.getJugadorEnTurno().getNroJugador();
 		System.out.println("-----------------------------------------");
 		System.out.println("--------        ESPIONAJE     -----------");
 		System.out.println("-----------------------------------------");
@@ -28,38 +31,42 @@ public class MenuSospecha extends Menu{
 	
 	@Override
 	public void mostrarMenu() {
-		entrada = new Scanner(System.in);
-		entrada.reset();
-			System.out.println("Elija una opción");
-			System.out.println();
-			System.out.println("1- Ver Agenda Personal");
-			System.out.println("2- Ver Archivo Confidencial");
-			System.out.println("3- Realizar Sospecha");
-			System.out.println("4- Realizar Acusación");
-		    String opcion = entrada.nextLine();
-			System.out.println(opcion);			
-			switch (opcion) {
-				case "1" : 
-					this.mostrarAP();
-					this.mostrarMenu();
-					break;
-				case "2" : 
-					this.mostrarAC();
-				    this.mostrarMenu();
-					break;
-				case "3" : 
-					mostrarMenuSospecha();  //Menu para realizar sospecha 
-					break;
-				case "4" :
-					try {this.miControlador.arriesgar();	} 
-					catch (RemoteException e1) { e1.printStackTrace();} 
-					break;
-				default: 
-					System.out.println("Error! Ingrear nuevamnte la acción a realizar");
-					this.mostrarMenu();
-					break;
-			}
-	
+		if(jug == jugTurno) {
+			entrada = new Scanner(System.in);
+			entrada.reset();
+				System.out.println("Elija una opción");
+				System.out.println();
+				System.out.println("1- Ver Agenda Personal");
+				System.out.println("2- Ver Archivo Confidencial");
+				System.out.println("3- Realizar Sospecha");
+				System.out.println("4- Realizar Acusación");
+			    String opcion = entrada.nextLine();
+				System.out.println(opcion);			
+				switch (opcion) {
+					case "1" : 
+						this.mostrarAP();
+						this.mostrarMenu();
+						break;
+					case "2" : 
+						this.mostrarAC();
+					    this.mostrarMenu();
+						break;
+					case "3" : 
+						mostrarMenuSospecha();  //Menu para realizar sospecha 
+						break;
+					case "4" :
+						try {this.miControlador.arriesgar();	} 
+						catch (RemoteException e1) { e1.printStackTrace();} 
+						break;
+					default: 
+						System.out.println("Error! Ingrear nuevamnte la acción a realizar");
+						this.mostrarMenu();
+						break;
+				}
+
+		}else {
+		}
+			
 	}
 
 

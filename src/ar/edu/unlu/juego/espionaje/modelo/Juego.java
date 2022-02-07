@@ -91,7 +91,8 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 	  @Override
 	  public void inicio() throws RemoteException {
 		  estado = ESTADOS.INICIAR;
-		  notificar(CambiosJuego.INICIO);
+		  eEJ = E_EN_JUEGO.SOSPECHA;
+		 notificar(CambiosJuego.INICIAR);
 	  }
 	
 	@Override
@@ -106,13 +107,12 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
             this.sospechado = 1;
             chancesGanador = this.getJugadores().size();
  			//notificar(CambiosJuego.CAMBIO_JUGADOR);
- 			notificar(CambiosJuego.CAMBIO_ESTADO);
-			
+ 			
  			System.out.println(this.getInfoSecreta()[0].getFigura());
 			System.out.println(this.getInfoSecreta()[1].getFigura());
 			System.out.println(this.getInfoSecreta()[2].getFigura());
 			
-			
+			notificar(CambiosJuego.CAMBIO_ESTADO);
 		} else {
 			IndexOutOfBoundsException ex;
 			if(jugadores.size() < 2) {
@@ -192,7 +192,11 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 	@Override
 	public void setSospecha(ArrayList<String> s) throws RemoteException {
 		sospecha = s;
-		
+		System.out.println("----");
+		for(String e: sospecha) {
+			System.out.println(e);
+		}
+		System.out.println("----");
 		this.eEJ = E_EN_JUEGO.RESPONDER;
 		notificar(CambiosJuego.CAMBIO_ESTADO);
 	}
@@ -201,6 +205,7 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 	@Override
 	public void setRespuesta(String respuesta) throws RemoteException {
 		this.respuesta = respuesta;
+		System.out.println("Respuesta enviada: "+ this.respuesta);
 		if(!respuesta.equals("")){
 			for(int i = 0; i<= this.getJugadorEnTurno().getAgendaPersonal().cantCartas()-1; i++) {
 			Carta  carta = this.getJugadorEnTurno().getAgendaPersonal().getCarta(i);

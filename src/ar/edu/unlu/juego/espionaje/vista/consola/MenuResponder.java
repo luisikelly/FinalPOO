@@ -7,44 +7,60 @@ import ar.edu.unlu.juego.espionaje.controlador.Controlador;
 
 public class MenuResponder extends Menu {
 	Scanner entrada;
-	public MenuResponder(Controlador c) {
+	private int nJug, jugTurno, sospechado;
+	
+
+	public MenuResponder(Controlador c, VistaConsola vista) {
 		this.miControlador = c;
+		this.miVista = vista;
+		nJug = miControlador.getNroJugador();
+		jugTurno = miControlador.getJugadorEnTurno().getNroJugador();
+		sospechado = miControlador.getSospechado();
 	}
 	
 @Override
 public void mostrarMenu() {
-	System.out.println();
-	System.out.println("Responder Sospecha de: "+ miControlador.getJugadorEnTurno().getNombre());
-	System.out.println();
-	System.out.println("SOSPECHA: ");
-	try {
-			//System.out.println(miControlador.getSospecha().get(0));
-			//System.out.println(miControlador.getSospecha().get(1));
+	if(nJug == sospechado) {
 		System.out.println();
-		System.out.println(".............................................................");
+		System.out.println("Responder Sospecha de: "+ miControlador.getJugadorEnTurno().getNombre());
 		System.out.println();
-		System.out.println("LAS CARTAS DE ARCHIVO CONFIDENCIAL QUE TENES SON: ");
-		System.out.println();
-			
-		if(!miControlador.verificarRespuesta().isEmpty()) { 
-				System.out.println("1- "+ miControlador.verificarRespuesta().get(0));
-				System.out.println("2- "+ miControlador.verificarRespuesta().get(1));
-				System.out.println();
-				this.elegirRespuesta();
-				System.out.println();
-				System.out.println();
-				System.out.println();
-				System.out.println();
-		}else {
+		System.out.println("SOSPECHA: ");
+		try {
+				//System.out.println(miControlador.getSospecha().get(0));
+				//System.out.println(miControlador.getSospecha().get(1));
+			System.out.println();
 			System.out.println(".............................................................");
-			System.out.println("         NO TENES NINGUNA CARTA DE LA SOSPECHA");
-			System.out.println(".............................................................");
-			System.out.println("    ");
-			miControlador.setRespuesta("");
-			
+			System.out.println();
+			System.out.println("LAS CARTAS DE ARCHIVO CONFIDENCIAL QUE TENES SON: ");
+			System.out.println();
+				
+			if(!miControlador.verificarRespuesta().isEmpty()) { 
+					System.out.println("1- "+ miControlador.verificarRespuesta().get(0));
+					System.out.println("2- "+ miControlador.verificarRespuesta().get(1));
+					System.out.println();
+					this.elegirRespuesta();
+					System.out.println();
+					System.out.println();
+					System.out.println();
+					System.out.println();
+			}else {
+				System.out.println(".............................................................");
+				System.out.println("         NO TENES NINGUNA CARTA DE LA SOSPECHA");
+				System.out.println(".............................................................");
+				System.out.println("    ");
+				miControlador.setRespuesta("");
+				
+			}
+		} catch (RemoteException e) {
+			e.printStackTrace();
 		}
-	} catch (RemoteException e) {
-		e.printStackTrace();
+
+	}else {
+		if(nJug == jugTurno) {
+			miVista.mostrarTurno(RESPONDER_JET);
+		}else {
+			miVista.mostrarTurno(RESPONDER);
+		}
 	}
 
 }
