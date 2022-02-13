@@ -44,6 +44,7 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 	private Jugador salioJug;
 	private ArrayList<String> sospecha;
 	private String respuesta;
+	private int confirmados;
 	
 	
 	
@@ -58,6 +59,7 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 		jugadores = new ArrayList<Jugador>();
 		infoSecreta = new Carta[3];
 		this.estado = ESTADOS.CONFIGURANDO;
+		this.eEJ = E_EN_JUEGO.SOSPECHA;
 		notificar(CambiosJuego.CAMBIO_LISTA_JUGADORES);
 		notificar(CambiosJuego.CAMBIO_ESTADO);
 		
@@ -90,9 +92,7 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 	
 	  @Override
 	  public void inicio() throws RemoteException {
-		  estado = ESTADOS.INICIAR;
-		  eEJ = E_EN_JUEGO.SOSPECHA;
-		 notificar(CambiosJuego.INICIAR);
+		  //eEJ = E_EN_JUEGO.SOSPECHA;
 	  }
 	
 	@Override
@@ -106,8 +106,9 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
             this.jugadorEnTurno = 0;
             this.sospechado = 1;
             chancesGanador = this.getJugadores().size();
- 			//notificar(CambiosJuego.CAMBIO_JUGADOR);
- 			
+ 			notificar(CambiosJuego.CAMBIO_JUGADOR);
+ 			System.out.println("- CONFIRMA -");
+ 			System.out.println();
  			System.out.println(this.getInfoSecreta()[0].getFigura());
 			System.out.println(this.getInfoSecreta()[1].getFigura());
 			System.out.println(this.getInfoSecreta()[2].getFigura());
@@ -527,6 +528,7 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 		this.estado = ESTADOS.REINICIAR;
 		notificar(CambiosJuego.CAMBIO_ESTADO);
 	}
+
 
 	/*@Override
 	public Jugador getSalio() {

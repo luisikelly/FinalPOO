@@ -1148,5 +1148,13 @@ public class VistaGrafica implements Serializable,IVista{
 		JOptionPane.showMessageDialog(null, " SALIÓ DE LA PARTIDA");
 
 	}
+
+
+
+	@Override
+	public void inicio() {
+		// TODO Auto-generated method stub
+		
+	}
 		
 }

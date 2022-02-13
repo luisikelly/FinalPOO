@@ -12,6 +12,8 @@ import ar.edu.unlu.rmimvc.observer.IObservableRemoto;
 public interface IJuego extends IObservableRemoto, Serializable{
 
 	
+	
+
 	boolean ganador() throws RemoteException;
 
 	int getSospechado() throws RemoteException;

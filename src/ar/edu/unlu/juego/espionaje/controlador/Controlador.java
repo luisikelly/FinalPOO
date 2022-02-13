@@ -53,8 +53,10 @@ public class Controlador implements IControladorRemoto {
 			CambiosJuego cambio = (CambiosJuego) arg1;
 			System.out.println("* "+juego.getEstado());
 			switch(cambio) {
-				case INICIAR: juego.iniciarJuego();
-					break;
+			case CAMBIO_JUGADOR:
+				System.out.println("***");
+				vista.inicio();
+				break;
 				case CAMBIO_LISTA_JUGADORES: 
 					vista.mostraJugadores();
 					break;
@@ -101,9 +103,9 @@ public class Controlador implements IControladorRemoto {
 						juego.reiniciar(this.nroJugador);
 					}
 					 else if (e == ESTADOS.FINALIZADO) {
-						//if( nroJugador == juego.getGanador().getNroJugador()){ vista.avisoGanador();}
-						//else { vista.avisoPerdio();}
 						 System.out.println("------------ JUEGO FINALIZADO ------------");
+					 }else if(e== ESTADOS.INICIAR) {
+						 juego.iniciarJuego();
 					 }
 				break;
 			}
@@ -120,10 +122,10 @@ public class Controlador implements IControladorRemoto {
 	
 	public void iniciarPartida(){
 		try {
-			if(nroJugador == -1) {vista.mostrarError(ErrorCantidadMaximaJugadores);
-			}else {
-				juego.iniciarJuego();
-			}
+				if(this.nroJugador != -1) {
+					juego.iniciarJuego();
+				}
+			
 		} catch (IndexOutOfBoundsException e) {
 			if(e.getMessage().equals("CantidadMinima")) {
 				vista.mostrarError(ErrorCantidadMinimaJugadores);
@@ -309,6 +311,16 @@ public class Controlador implements IControladorRemoto {
 	public ArrayList<String> getGanadores() throws RemoteException {
 		ArrayList<String> ganadores = juego.getGanadores();
 		return ganadores;
+	}
+
+	public void iniciar() {
+		try {
+			juego.inicio();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	/*public IJugador getSalio() {

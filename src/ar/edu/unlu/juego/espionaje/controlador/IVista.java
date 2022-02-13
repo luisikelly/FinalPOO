@@ -7,6 +7,8 @@ import ar.edu.unlu.juego.espionaje.modelo.Jugador;
 
 public interface IVista {
 
+	
+
 	void mostrarArriesgar();
 
 	void avisoGanador();
@@ -38,6 +40,8 @@ public interface IVista {
 	void mostrarAyuda();
 
 	void notificarSalio();
+
+	void inicio();
 
 
 

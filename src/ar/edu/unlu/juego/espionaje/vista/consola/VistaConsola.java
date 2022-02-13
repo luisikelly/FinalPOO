@@ -232,42 +232,69 @@ public class VistaConsola implements IVista{
 	public void mostrarConfiguracion() {                                                                                                                                                              
 		Scanner entrada = new Scanner(System.in);	
 		this.mostrarTituloEspionaje();
-		System.out.println("-----------------------------------------");
-		System.out.println();
-		System.out.println("1. Iniciar juego");
-		System.out.println("2. Jugadores");
-		System.out.println("3. Ayuda");
-		System.out.println("4. Historial de Ganadores");
-		System.out.println("0. Salir");
-		System.out.println();
-		System.out.println("Ingrese opcion");
-		String opcion= entrada.nextLine();
-		//entrada.close();
-		switch(opcion) {
-		case "0": controlador.finalizarPartida();
-			break;
-		case "1": controlador.iniciarPartida();
-		  	break; 
-		case "2": this.listarJugadores();
-				this.mostrarConfiguracion();				
-			break;
-		case "3": this.mostrarAyuda();
-				this.mostrarConfiguracion();				
-			break;
-		case "4": this.mostrarGanadores(); 
+		
+	 
+		
+		
+		if(controlador.getNroJugador()== 0) {
+			System.out.println("-----------------------------------------");
+			System.out.println();
+			System.out.println("1. Iniciar juego");
+			System.out.println("2. Jugadores");
+			System.out.println("3. Ayuda");
+			System.out.println("4. Historial de Ganadores");
+			System.out.println("0. Salir");
+			System.out.println();
+			System.out.println("Ingrese opcion");
+			String opcion= entrada.nextLine();
+			//entrada.close();
+			switch(opcion) {
+			case "0": controlador.finalizarPartida();
+				break;
+			case "1": controlador.iniciarPartida();
+			  	break; 
+			case "2": this.listarJugadores();
+					this.mostrarConfiguracion();				
+				break;
+			case "3": this.mostrarAyuda();
+					this.mostrarConfiguracion();				
+				break;
+			case "4": this.mostrarGanadores(); 
+					this.mostrarConfiguracion();
+				break;
+			}
+			if((opcion != "1") && (opcion != "2") && (opcion != "3") && (opcion != "4")&& (opcion != "0") ) {
 				this.mostrarConfiguracion();
-			break;
-		//default: this.mostrarConfiguracion(); break;  		
+			}
+		}else {
 
-		} 
+				Scanner e = new Scanner(System.in);
+				System.out.println("-----------------------------------------");
+				System.out.println();
+				System.out.println("1. Jugadores");
+				System.out.println("2. Ayuda");
+				System.out.println("3. Historial de Ganadores");
+				System.out.println("0. Salir");
+				System.out.println();
+				System.out.println("Ingrese opcion");
+				String opcion= e.nextLine();
+				e.nextLine();
+				switch(opcion) {
+				case "0": controlador.finalizarPartida();
+					break; 
+				case "1": this.listarJugadores();
+				this.mostrarConfiguracion();				
+					break;
+				case "2": this.mostrarAyuda();
+				this.mostrarConfiguracion();				
+					break;
+				case "3": this.mostrarGanadores(); 
+				this.mostrarConfiguracion();	;
+					break;
+						
 
-		
-		
-		
-		if(controlador.getNroJugador() >= 0) {
-			//menu = new MenuConfig(controlador, this,true);
+				}
 		}
-		//menu.mostrarMenu();
 	}
 	
 	
@@ -305,7 +332,7 @@ public class VistaConsola implements IVista{
 					String resp;
 					System.out.println(".............................................................");
 					System.out.println(" ELEGÍ TU RESPUESTA   ");
-					resp = entrada.next(); 		
+					resp = entrada.nextLine();		
 					System.out.println();
 	
 					try {
@@ -449,9 +476,8 @@ public class VistaConsola implements IVista{
 		int nJug = controlador.getNroJugador();
 		if(nJug == controlador.getJugadorEnTurno().getNroJugador()) {
 			Scanner entrada = new Scanner(System.in);
-			entrada.reset();
-			this.mostrarMenuSospecha();
-			/*	System.out.println("Elija una opción");
+			
+				System.out.println("Elija una opción");
 				System.out.println();
 
 				System.out.println("1- Ver Agenda Personal");
@@ -474,7 +500,7 @@ public class VistaConsola implements IVista{
 						try {this.controlador.arriesgar();	} 
 						catch (RemoteException e1) { e1.printStackTrace();} 
 						break;
-				}*/
+				}
 
 		}else {
 			System.out.println("-----------------------------------------");
@@ -696,6 +722,15 @@ public class VistaConsola implements IVista{
 	@Override
 	public void notificarSalio() {
 		//System.out.println("______ "+ controlador.getSalio().getNombre() + " SALIÓ DE LA PARTIDA _____");
+		
+	}
+
+	@Override
+	public void inicio() {
+		Scanner entrada = new Scanner(System.in);
+		System.out.println("................PRESIONE ENTER PARA CONTINUAR................ ");
+		entrada.nextLine();
+		controlador.iniciar();
 		
 	}
 
