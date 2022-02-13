@@ -106,7 +106,6 @@ public class VistaGrafica implements Serializable,IVista{
 	private  Font lightFont = null;
 			
 	//ICONOS
-	/*
 	private Icon iconParis = new ImageIcon("grafica/componentes/iconParis.png");
 	private Icon iconPanama= new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconPanama.png"));
 	private Icon iconLondres= new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconLondres.png"));
@@ -126,7 +125,7 @@ public class VistaGrafica implements Serializable,IVista{
 	private Icon iconEspia = new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconEspia.png"));
 	private Icon iconGO = new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/go.png"));
 	private Icon iconTitulo = new ImageIcon(VistaGrafica.class.getResource("/ar/edu/unlu/juego/espionaje/vista/grafica/componentes/iconTitulo.png"));
-*/
+
 		
 	//CONSTANTES
 	private final String CONFIG = "CONFIG";
@@ -200,12 +199,12 @@ public class VistaGrafica implements Serializable,IVista{
 	
 	@Override
 	public void iniciarJuego() {
-		//this.mostrarConfiguracion();
+		//this.mostrarConfiguracion();                                           
 		
 	}
 
 	
-	/*
+	
 	private void setIcon(String s, JLabel lbl) {
 		switch (s) {
 		case "PARIS": lbl.setIcon(iconParis);break;
@@ -231,7 +230,7 @@ public class VistaGrafica implements Serializable,IVista{
 		}
 	}
 	
-	*/
+	
 	//TODO ----- MÉTODOS MOSTRAR -----
 	
 	
@@ -329,7 +328,7 @@ public class VistaGrafica implements Serializable,IVista{
 			}else {
 				lblNombrejugadorPRespuesta.setText(controlador.listaJugadores().get(controlador.getSospechado()).getNombre());
 				this.lblCarta.setText(r);
-			//	this.setIcon(r, lblCarta);
+				this.setIcon(r, lblCarta);
 			}
 			
 			cardLayout.show(this.frmEspionaje.getContentPane(), RESPUESTA);
@@ -351,9 +350,9 @@ public class VistaGrafica implements Serializable,IVista{
 			try {
 
 				lblElemento1.setText(controlador.getSospecha().get(0));
-			//	this.setIcon(controlador.getSospecha().get(0), this.lblElemento1);
+				this.setIcon(controlador.getSospecha().get(0), this.lblElemento1);
 				lblElemento2.setText(controlador.getSospecha().get(1));
-			//	this.setIcon(controlador.getSospecha().get(1), this.lblElemento2);
+				this.setIcon(controlador.getSospecha().get(1), this.lblElemento2);
 				lblNombrejugadorPResponder.setText(controlador.getJugadorEnTurno().getNombre());
 				if(!controlador.verificarRespuesta().isEmpty()) {
 					if(controlador.verificarRespuesta().size() == 1) {
@@ -435,7 +434,7 @@ public class VistaGrafica implements Serializable,IVista{
 	//TODO MOSTRAR GANADOR
 	@Override
 	public void avisoGanador()  {
-//		this.setIcon(GANADOR, lblIcono);
+		this.setIcon(GANADOR, lblIcono);
 		this.lblMensaje.setText("¡GANASTE!");
 		setTextLblInfoSecreta();
 		
@@ -447,9 +446,9 @@ public class VistaGrafica implements Serializable,IVista{
 			String ciudad = controlador.getInfoSecreta()[0].getFigura();
 			String disp = controlador.getInfoSecreta()[1].getFigura();
 			String agente = controlador.getInfoSecreta()[2].getFigura();
-//			this.setIcon(ciudad, this.lblCartaciudad);
-//			this.setIcon(disp, this.lblCartadisp);
-	//		this.setIcon(agente, this.lblCartaagente);
+			this.setIcon(ciudad, this.lblCartaciudad);
+			this.setIcon(disp, this.lblCartadisp);
+			this.setIcon(agente, this.lblCartaagente);
 			this.lblCartaciudad.setText(ciudad);
 			this.lblCartadisp.setText(disp);
 			this.lblCartaagente.setText(agente);
@@ -464,7 +463,7 @@ public class VistaGrafica implements Serializable,IVista{
 	//TODO MOSTRAR PERDIO
 	@Override
 	public void avisoPerdio() {
-	//		this.setIcon("PERDIO", this.lblIcono);
+			this.setIcon("PERDIO", this.lblIcono);
 			this.lblMensaje.setText("¡PERDISTE!");
 				setTextLblInfoSecreta();
 					cardLayout.show(this.frmEspionaje.getContentPane(), GANADOR);		
@@ -522,7 +521,7 @@ public class VistaGrafica implements Serializable,IVista{
 //		lblSimbolo.setFont(sizedFont);
 		lblSimbolo.setBounds(38, 5, 417, 70);
 		pantallaConfiguracion.add(lblSimbolo);
-	//	this.setIcon("TITULO", lblSimbolo);
+		this.setIcon("TITULO", lblSimbolo);
 		
 		JTextField textField = new JTextField();
 		textField.setForeground(Color.WHITE);
@@ -630,7 +629,7 @@ public class VistaGrafica implements Serializable,IVista{
 		lblEspionaje.setHorizontalAlignment(SwingConstants.CENTER);
 //		lblEspionaje.setFont(sizedFont);
 		pantallaEntrada.add(lblEspionaje);
-//		this.setIcon("TITULO", lblEspionaje);
+		this.setIcon("TITULO", lblEspionaje);
 	//	sizedFont = normalFont.deriveFont(18f);
 		
 		lblNombrejugadorPSospecha = new JLabel("NombreJugador");
@@ -736,7 +735,7 @@ public class VistaGrafica implements Serializable,IVista{
 		label.setBounds(0, 11, 465, 55);
 		pantallaResponder.setLayout(null);
 		pantallaResponder.add(label);
-//		this.setIcon("TITULO", label);
+		this.setIcon("TITULO", label);
 		
 //		sizedFont = normalFont.deriveFont(18f);
 		
@@ -814,7 +813,7 @@ public class VistaGrafica implements Serializable,IVista{
 		label_1.setForeground(Color.WHITE);
 		label_1.setBounds(0, 11, 465, 55);
 		pantallaArriesgar.add(label_1);
-//		this.setIcon("TITULO", label_1);
+		this.setIcon("TITULO", label_1);
 		
 
 		JLabel lblElegLasCartas = new JLabel("ELEG\u00CD LAS CARTAS DE TU ACUSACI\u00D3N:");
@@ -890,7 +889,7 @@ public class VistaGrafica implements Serializable,IVista{
 		label_2.setBounds(0, 11, 465, 55);
 		pantallaGanador.add(label_2);
 		
-//		this.setIcon("TITULO", label_2);
+		this.setIcon("TITULO", label_2);
 
 //		Font sizedFont = normalFont.deriveFont(20f);
 		
@@ -979,7 +978,7 @@ public class VistaGrafica implements Serializable,IVista{
 //		label.setFont(sizedFontTitulo);
 		label.setBounds(0, 11, 465, 55);
 		pantallaTurno.add(label);
-//		this.setIcon("TITULO", label);
+		this.setIcon("TITULO", label);
 		
 		 lblTURNOText = new JLabel("TEXT");
 		 lblTURNOText.setHorizontalAlignment(SwingConstants.CENTER);
@@ -1022,7 +1021,7 @@ public class VistaGrafica implements Serializable,IVista{
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setForeground(Color.WHITE);
 //		label.setFont(sFont);
-//		this.setIcon("ESPIA", label);
+		this.setIcon("ESPIA", label);
 		label.setBounds(0, 11, 465, 55);
 		panelText.add(label);
 		
@@ -1104,7 +1103,7 @@ public class VistaGrafica implements Serializable,IVista{
 //		label.setFont(normalFont.deriveFont(40f));
 		label.setBounds(0, 11, 465, 55);
 		pantallaMostrar.add(label);
-//		this.setIcon("TITULO", label);
+		this.setIcon("TITULO", label);
 		
 		lblNombrejugadorPRespuesta = new JLabel("JUGADOR");
 //		lblNombrejugadorPRespuesta.setFont(normalFont.deriveFont(24f));
