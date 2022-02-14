@@ -23,7 +23,7 @@ public class VistaConsola implements IVista{
 		
 	}
 	
-	private void mostrarTituloEspionaje() {
+	protected void mostrarTituloEspionaje() {
 		System.out.println("-----------------------------------------");
 		System.out.println("--------        ESPIONAJE     -----------");
 		System.out.println("-----------------------------------------");
@@ -37,41 +37,8 @@ public class VistaConsola implements IVista{
 	
 	@Override
 	public void iniciarJuego() {
-		//menu = new MenuConfig(controlador, this,false);
-		//menu.mostrarMenu();
-		Scanner entrada = new Scanner(System.in);	
-		this.mostrarTituloEspionaje();
-		System.out.println("-----------------------------------------");
-		System.out.println();
-		System.out.println("1. Registrarse");
-		System.out.println("2. Jugadores");	
-		System.out.println("3. Ayuda");
-		System.out.println("4. Historial de Ganadores");
-		System.out.println("0. Salir");
-		System.out.println();
-		System.out.println("Ingrese opcion");
-		String opcion= entrada.nextLine();
-		if(!opcion.equals("0") && !opcion.equals("1") && !opcion.equals("2") && !opcion.equals("3") && !opcion.equals("4")) {
-			this.iniciarJuego();
-		}else {
-			switch(opcion) {
-			case "0": controlador.finalizarPartida();
-				break;	
-			case "1": 
-					this.agregarJugador();	
-					this.mostrarConfiguracion();;
-	  			break; 		
-			case "2": this.listarJugadores();
-					this.mostrarConfiguracion();
-				break;
-			case "3": this.mostrarAyuda();
-					this.mostrarConfiguracion();
-				break;
-			case "4": this.mostrarGanadores(); 
-					this.mostrarConfiguracion();
-			  	break;
-			}
-		}			
+		menu = new MenuConfig(controlador, this,false);
+		menu.mostrarMenu();
 	}
 
 	
@@ -246,70 +213,9 @@ public class VistaConsola implements IVista{
 	
 	
 	@Override
-	public void mostrarConfiguracion() {                                                                                                                                                              
-		Scanner entrada = new Scanner(System.in);	
-		this.mostrarTituloEspionaje();
-		if(controlador.getNroJugador()== 0) {
-			System.out.println("-----------------------------------------");
-			System.out.println();
-			System.out.println("1. Iniciar juego");
-			System.out.println("2. Jugadores");
-			System.out.println("3. Ayuda");
-			System.out.println("4. Historial de Ganadores");
-			System.out.println("0. Salir");
-			System.out.println();
-			System.out.println("Ingrese opcion");
-			String opcion= entrada.nextLine();
-			if(!opcion.equals("0") && !opcion.equals("1") && !opcion.equals("2") && !opcion.equals("3") && !opcion.equals("4")) {
-				this.mostrarConfiguracion();
-			}else {
-				switch(opcion) {
-				case "0": controlador.finalizarPartida();
-					break;
-				case "1": controlador.iniciarPartida();
-				  	break; 
-				case "2": this.listarJugadores();
-						this.mostrarConfiguracion();				
-					break;
-				case "3": this.mostrarAyuda();
-						this.mostrarConfiguracion();				
-					break;
-				case "4": this.mostrarGanadores(); 
-						this.mostrarConfiguracion();
-					break;
-				}
-				
-			}
-		}else {
-
-				Scanner e = new Scanner(System.in);
-				System.out.println("-----------------------------------------");
-				System.out.println();
-				System.out.println("1. Jugadores");
-				System.out.println("2. Ayuda");
-				System.out.println("3. Historial de Ganadores");
-				System.out.println("0. Salir");
-				System.out.println();
-				System.out.println("Ingrese opcion");
-				String opcion= e.nextLine();
-			//	if(!opcion.equals("0") && !opcion.equals("1") && !opcion.equals("2") && !opcion.equals("3")) {
-			//		this.mostrarConfiguracion();
-			//	}else {
-					switch(opcion) {
-					case "0": controlador.finalizarPartida();
-						break; 
-					case "1": this.listarJugadores();
-					this.mostrarConfiguracion();				
-						break;
-					case "2": this.mostrarAyuda();
-					this.mostrarConfiguracion();				
-						break;
-					case "3": this.mostrarGanadores(); 
-					this.mostrarConfiguracion();	;
-						break;
-				}
-			//}
-		}
+	public void mostrarConfiguracion() {
+		menu = new MenuConfig(controlador, this,true);
+		menu.mostrarMenu();
 	}
 	
 	
@@ -500,7 +406,10 @@ public class VistaConsola implements IVista{
 
 	@Override
 	public void mostrarSospechar() {
-		int nJug = controlador.getNroJugador();
+		menu = new MenuSospecha(controlador, this);
+		menu.mostrarMenu();
+		
+		/*int nJug = controlador.getNroJugador();
 		if(nJug == controlador.getJugadorEnTurno().getNroJugador()) {
 			Scanner entrada = new Scanner(System.in);
 			
@@ -533,7 +442,7 @@ public class VistaConsola implements IVista{
 			System.out.println("-----------------------------------------");
 			System.out.println("Ahora es el turno de " + controlador.getJugadorEnTurno().getNombre());
 			System.out.println("-----------------------------------------");
-		}
+		} */
 	}
 	
 	private void mostrarAC() {
