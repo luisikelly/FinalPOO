@@ -109,6 +109,10 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
  			notificar(CambiosJuego.CAMBIO_JUGADOR);
  			System.out.println("- CONFIRMA -");
  			System.out.println();
+ 			System.out.println(this.estado);
+ 			System.out.println(this.eEJ);
+ 			System.out.println();
+ 			
  			System.out.println(this.getInfoSecreta()[0].getFigura());
 			System.out.println(this.getInfoSecreta()[1].getFigura());
 			System.out.println(this.getInfoSecreta()[2].getFigura());
@@ -376,6 +380,7 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 		return opcionesRespuesta = j.respuestaSospecha(sospecha);
 	}
 
+	
 	@Override
 	public boolean verificarSospechaFinal(String agente, String dispositivo, String ciudad) throws RemoteException {
 		boolean resultado = false;
@@ -396,20 +401,19 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 			}else {
 					this.getJugadorEnTurno().sacarjuego();
 					notificar(CambiosJuego.JUGADOR_PERDIO);
+					System.out.println("Perdio");
 					this.pasar();
 					chancesGanador --;
 					System.out.println("chanceGanar: "+ this.chancesGanador);
 					eEJ = E_EN_JUEGO.ARRIESGA;
-					if(chancesGanador == 0) {
-						this.estado = ESTADOS.FINALIZADO;
-						this.finalizar();
-						System.out.println("chanceGanarFIN: "+ this.chancesGanador);
 					}
+				if(chancesGanador == 0) {
+					this.estado = ESTADOS.FINALIZADO;
+					this.finalizar();
+					System.out.println("chanceGanarFIN: "+ this.chancesGanador);
+				}
 					notificar(CambiosJuego.CAMBIO_ESTADO);
-			}
-			
-		
-		}
+			}			
 	
 	return resultado;
 	}

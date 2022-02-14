@@ -51,24 +51,26 @@ public class VistaConsola implements IVista{
 		System.out.println();
 		System.out.println("Ingrese opcion");
 		String opcion= entrada.nextLine();
-		
-		switch(opcion) {
-		case "0": controlador.finalizarPartida();
-			break;	
-		case "1": 
-				this.agregarJugador();	
-				this.mostrarConfiguracion();;
-  			break; 		
-		case "2": this.listarJugadores();
-				this.mostrarConfiguracion();
-			break;
-		case "3": this.mostrarAyuda();
-				this.mostrarConfiguracion();
-			break;
-		case "4": this.mostrarGanadores(); 
-				this.mostrarConfiguracion();
-		  	break;
-		//default: this.iniciarJuego();break;  		
+		if(!opcion.equals("0") && !opcion.equals("1") && !opcion.equals("2") && !opcion.equals("3") && !opcion.equals("4")) {
+			this.iniciarJuego();
+		}else {
+			switch(opcion) {
+			case "0": controlador.finalizarPartida();
+				break;	
+			case "1": 
+					this.agregarJugador();	
+					this.mostrarConfiguracion();;
+	  			break; 		
+			case "2": this.listarJugadores();
+					this.mostrarConfiguracion();
+				break;
+			case "3": this.mostrarAyuda();
+					this.mostrarConfiguracion();
+				break;
+			case "4": this.mostrarGanadores(); 
+					this.mostrarConfiguracion();
+			  	break;
+			}
 		}			
 	}
 
@@ -126,18 +128,24 @@ public class VistaConsola implements IVista{
 		System.out.println("5- HELICOPTERO");
 		Scanner eDispositivo = new Scanner(System.in);	
 		String disp = eDispositivo.nextLine();
-		switch(disp) {
-		case "1" : dispositivo = "SATELITE";
-			break;		
-		case "2" : dispositivo = "AUTOPROPULSOR";
-			break;
-		case "3" : dispositivo = "GAS_LETAL";
-			break;
-		case "4" : dispositivo = "AVION";
-			break;
-		case "5" : dispositivo = "HELICOPTERO";
-			break;
+		if(!disp.equals("1") && !disp.equals("2") && !disp.equals("3") && !disp.equals("4") && !disp.equals("5")) {
+			this.mostrarDispositivos();
+		}else {
+			switch(disp) {
+			case "1" : dispositivo = "SATELITE";
+				break;		
+			case "2" : dispositivo = "AUTOPROPULSOR";
+				break;
+			case "3" : dispositivo = "GAS_LETAL";
+				break;
+			case "4" : dispositivo = "AVION";
+				break;
+			case "5" : dispositivo = "HELICOPTERO";
+				break;
+			}
+
 		}
+
 		return dispositivo;		
 	}
 
@@ -151,17 +159,22 @@ public class VistaConsola implements IVista{
 		System.out.println("5- ATENAS");
 		Scanner eCiudad = new Scanner(System.in);	
 		String ciudad = eCiudad.nextLine();
-		switch(ciudad) {
-		case "1" : ciudades = "PARIS";
-			break;
-		case "2" : ciudades = "LONDRES";
-			break;
-		case "3" : ciudades = "TOKIO";
-			break;
-		case "4" : ciudades = "PANAMA";
-			break;
-		case "5" : ciudades =  "ATENAS";
-			break;	
+		if(!ciudad.equals("1") && !ciudad.equals("2") && !ciudad.equals("3") && !ciudad.equals("4") && !ciudad.equals("5")) {
+			this.mostrarCiudades();
+		}else {
+			switch(ciudad) {
+			case "1" : ciudades = "PARIS";
+				break;
+			case "2" : ciudades = "LONDRES";
+				break;
+			case "3" : ciudades = "TOKIO";
+				break;
+			case "4" : ciudades = "PANAMA";
+				break;
+			case "5" : ciudades =  "ATENAS";
+				break;	
+			}
+
 		}
 		return ciudades;
 	}
@@ -176,17 +189,21 @@ public class VistaConsola implements IVista{
 		System.out.println("5- AGENTE BLANCO");
 		Scanner eAgente = new Scanner(System.in);	
 		String agente = eAgente.nextLine();
-		switch(agente) {
-		case "1" : agentes = "AGENTE_ROJO";
-			break;
-		case "2" : agentes = "AGENTE_VERDE";
-			break;
-		case "3" : agentes = "AGENTE_AZUL";
-			break;
-		case "4" : agentes = "AGENTE_NARANJA";
-			break;
-		case "5" : agentes = "AGENTE_BLANCO";
-			break;	
+		if(!agente.equals("1") && !agente.equals("2") && !agente.equals("3") && !agente.equals("4") && !agente.equals("5")) {
+			this.mostrarAgentes();
+		}else {
+			switch(agente) {
+			case "1" : agentes = "AGENTE_ROJO";
+				break;
+			case "2" : agentes = "AGENTE_VERDE";
+				break;
+			case "3" : agentes = "AGENTE_AZUL";
+				break;
+			case "4" : agentes = "AGENTE_NARANJA";
+				break;
+			case "5" : agentes = "AGENTE_BLANCO";
+				break;	
+			}
 		}
 		return agentes;
 	}
@@ -218,7 +235,7 @@ public class VistaConsola implements IVista{
 		System.out.println("DISPOSITIVO: " + controlador.informacionConfidencial()[2].getFigura());
 		System.out.println();
 		System.out.println();
-		this.menuFinPartida();
+		
 	}
 
 
@@ -232,10 +249,6 @@ public class VistaConsola implements IVista{
 	public void mostrarConfiguracion() {                                                                                                                                                              
 		Scanner entrada = new Scanner(System.in);	
 		this.mostrarTituloEspionaje();
-		
-	 
-		
-		
 		if(controlador.getNroJugador()== 0) {
 			System.out.println("-----------------------------------------");
 			System.out.println();
@@ -247,24 +260,25 @@ public class VistaConsola implements IVista{
 			System.out.println();
 			System.out.println("Ingrese opcion");
 			String opcion= entrada.nextLine();
-			//entrada.close();
-			switch(opcion) {
-			case "0": controlador.finalizarPartida();
-				break;
-			case "1": controlador.iniciarPartida();
-			  	break; 
-			case "2": this.listarJugadores();
-					this.mostrarConfiguracion();				
-				break;
-			case "3": this.mostrarAyuda();
-					this.mostrarConfiguracion();				
-				break;
-			case "4": this.mostrarGanadores(); 
-					this.mostrarConfiguracion();
-				break;
-			}
-			if((opcion != "1") && (opcion != "2") && (opcion != "3") && (opcion != "4")&& (opcion != "0") ) {
+			if(!opcion.equals("0") && !opcion.equals("1") && !opcion.equals("2") && !opcion.equals("3") && !opcion.equals("4")) {
 				this.mostrarConfiguracion();
+			}else {
+				switch(opcion) {
+				case "0": controlador.finalizarPartida();
+					break;
+				case "1": controlador.iniciarPartida();
+				  	break; 
+				case "2": this.listarJugadores();
+						this.mostrarConfiguracion();				
+					break;
+				case "3": this.mostrarAyuda();
+						this.mostrarConfiguracion();				
+					break;
+				case "4": this.mostrarGanadores(); 
+						this.mostrarConfiguracion();
+					break;
+				}
+				
 			}
 		}else {
 
@@ -278,22 +292,23 @@ public class VistaConsola implements IVista{
 				System.out.println();
 				System.out.println("Ingrese opcion");
 				String opcion= e.nextLine();
-				e.nextLine();
-				switch(opcion) {
-				case "0": controlador.finalizarPartida();
-					break; 
-				case "1": this.listarJugadores();
-				this.mostrarConfiguracion();				
-					break;
-				case "2": this.mostrarAyuda();
-				this.mostrarConfiguracion();				
-					break;
-				case "3": this.mostrarGanadores(); 
-				this.mostrarConfiguracion();	;
-					break;
-						
-
+			//	if(!opcion.equals("0") && !opcion.equals("1") && !opcion.equals("2") && !opcion.equals("3")) {
+			//		this.mostrarConfiguracion();
+			//	}else {
+					switch(opcion) {
+					case "0": controlador.finalizarPartida();
+						break; 
+					case "1": this.listarJugadores();
+					this.mostrarConfiguracion();				
+						break;
+					case "2": this.mostrarAyuda();
+					this.mostrarConfiguracion();				
+						break;
+					case "3": this.mostrarGanadores(); 
+					this.mostrarConfiguracion();	;
+						break;
 				}
+			//}
 		}
 	}
 	
@@ -328,24 +343,7 @@ public class VistaConsola implements IVista{
 						System.out.println();
 					
 					}	
-					Scanner entrada= new Scanner(System.in);
-					String resp;
-					System.out.println(".............................................................");
-					System.out.println(" ELEGÍ TU RESPUESTA   ");
-					resp = entrada.nextLine();		
-					System.out.println();
-	
-					try {
-							switch (resp) {
-							case "1" : controlador.setRespuesta(controlador.verificarRespuesta().get(0));
-								break;
-							case "2" : controlador.setRespuesta(controlador.verificarRespuesta().get(1));
-								break;
-							}
-							
-					} catch (RemoteException e) {
-						e.printStackTrace();
-				   }	
+					this.elegirRespuesta();
 					
 				System.out.println();
 				System.out.println();
@@ -382,6 +380,27 @@ public class VistaConsola implements IVista{
 	}
 
 	private void elegirRespuesta() {	
+		System.out.println(".............................................................");
+		System.out.println(" ELEGÍ TU RESPUESTA   ");
+		Scanner entrada= new Scanner(System.in);
+		String resp = entrada.nextLine();		
+		System.out.println();
+		
+		if(!resp.equals("1") && !resp.equals("2") ) {
+			this.elegirRespuesta();
+		}else {
+			try {
+				switch (resp) {
+				case "1" : controlador.setRespuesta(controlador.verificarRespuesta().get(0));
+					break;
+				case "2" : controlador.setRespuesta(controlador.verificarRespuesta().get(1));
+					break;
+				}
+				
+		} catch (RemoteException e) {
+			e.printStackTrace();
+	   }
+		}
 		
 	}	
 	
@@ -432,7 +451,15 @@ public class VistaConsola implements IVista{
 			System.out.println();
 			System.out.println("DISPOSITIVO: " + controlador.informacionConfidencial()[2].getFigura());
 			System.out.println();
-			this.menuFinPartida();
+			System.out.println("---------------------------------------------------------------------");
+			System.out.println("---------------------------------------------------------------------");
+			System.out.println("---------------------     FUERA DE JUEGO          -------------------");
+			System.out.println("---------------------------------------------------------------------");
+			System.out.println("---------------------------------------------------------------------");
+
+			
+			
+			//this.menuFinPartida();
 	}
 
 
@@ -465,7 +492,7 @@ public class VistaConsola implements IVista{
 			System.out.println();
 			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 			System.out.println();
-			this.mostrarConfiguracion();
+			this.agregarJugador();
 			break;
 		}
 	}
@@ -669,7 +696,7 @@ public class VistaConsola implements IVista{
 		
 	}
 	
-	public void menuFinPartida() {
+	public void mostrarMenuFinPartida() {
 		System.out.println("¿Qué queres hacer? ");
 		System.out.println("1- Volver al menú principal");
 		System.out.println("2 - Salir ");
@@ -728,7 +755,7 @@ public class VistaConsola implements IVista{
 	@Override
 	public void inicio() {
 		Scanner entrada = new Scanner(System.in);
-		System.out.println("................PRESIONE ENTER PARA CONTINUAR................ ");
+		System.out.println("................PRESIONE ENTER PARA COMENZAR................ ");
 		entrada.nextLine();
 		controlador.iniciar();
 		

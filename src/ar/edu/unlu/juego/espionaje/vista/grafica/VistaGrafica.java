@@ -168,11 +168,11 @@ public class VistaGrafica implements Serializable,IVista{
 		});
 	
 		//FUENTES
-		/*
+		
 		normalFont = Font.createFont(Font.TRUETYPE_FONT, isNormal);
 		boldFont = Font.createFont(Font.TRUETYPE_FONT, isBold);
 		lightFont = Font.createFont(Font.TRUETYPE_FONT, isLight);
-		*/
+		
 		// PANTALLAS
 		JPanel pantallaSospechar = this.crearPantallaEntrada();
 		contentPane.add(this.crearPantallaConfig(),CONFIG);	
@@ -511,21 +511,21 @@ public class VistaGrafica implements Serializable,IVista{
 		pantallaConfiguracion.setBackground(Color.DARK_GRAY);
 		pantallaConfiguracion.setLayout(null);
 
-	//	Font sizedFont = boldFont.deriveFont(48f);
-	//	Font sizedFont2 = normalFont.deriveFont(24f);
+		Font sizedFont = boldFont.deriveFont(48f);
+		Font sizedFont2 = normalFont.deriveFont(24f);
 		
 		JLabel lblSimbolo = 
 				new JLabel("ESPIONAJE");
 		lblSimbolo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSimbolo.setForeground(Color.WHITE);
-//		lblSimbolo.setFont(sizedFont);
+		lblSimbolo.setFont(sizedFont);
 		lblSimbolo.setBounds(38, 5, 417, 70);
 		pantallaConfiguracion.add(lblSimbolo);
 		this.setIcon("TITULO", lblSimbolo);
 		
 		JTextField textField = new JTextField();
 		textField.setForeground(Color.WHITE);
-//		textField.setFont(sizedFont2);
+		textField.setFont(sizedFont2);
 		textField.setBackground(Color.GRAY);
 		textField.setBounds(109, 86, 153, 30);
 		pantallaConfiguracion.add(textField);
@@ -535,12 +535,12 @@ public class VistaGrafica implements Serializable,IVista{
 		JLabel lblNombre = new JLabel("NOMBRE");
 		lblNombre.setForeground(Color.WHITE);
 		lblNombre.setBounds(21, 81, 87, 41);
-	//	lblNombre.setFont(sizedFont2);
+		lblNombre.setFont(sizedFont2);
 		pantallaConfiguracion.add(lblNombre);
 		
-//		sizedFont2 = normalFont.deriveFont(16f);
+		sizedFont2 = normalFont.deriveFont(16f);
 		JButton btnIniciarJuego = new JButton("JUGAR");
-//		btnIniciarJuego.setFont(sizedFont2);
+		btnIniciarJuego.setFont(sizedFont2);
 		btnIniciarJuego.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controlador.iniciarPartida();
@@ -552,7 +552,7 @@ public class VistaGrafica implements Serializable,IVista{
 		btnIniciarJuego.setVisible(false);
 		
 		JButton btnReglasDelJuego = new JButton("AYUDA");
-	//	btnReglasDelJuego.setFont(sizedFont2);
+		btnReglasDelJuego.setFont(sizedFont2);
 		btnReglasDelJuego.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mostrarAyuda();
@@ -562,7 +562,7 @@ public class VistaGrafica implements Serializable,IVista{
 		pantallaConfiguracion.add(btnReglasDelJuego);
 			
 		JButton btnAgregarJugador = new JButton("REGISTRARSE");
-//		btnAgregarJugador.setFont(sizedFont2);
+		btnAgregarJugador.setFont(sizedFont2);
 		btnAgregarJugador.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			if(!textField.getText().equals("")) {
@@ -585,19 +585,19 @@ public class VistaGrafica implements Serializable,IVista{
 				mostrarGanadores();
 			}
 		});
-//		btnGanadores.setFont(sizedFont2);
+		btnGanadores.setFont(sizedFont2);
 		btnGanadores.setBounds(287, 165, 142, 31);
 		
 		pantallaConfiguracion.add(btnGanadores);
 		
-//		sizedFont2 = normalFont.deriveFont(28f);
+		sizedFont2 = normalFont.deriveFont(28f);
 		JLabel lblJugadores = new JLabel("JUGADORES");
 		lblJugadores.setForeground(Color.WHITE);
-//		lblJugadores.setFont(sizedFont2);
+		lblJugadores.setFont(sizedFont2);
 		lblJugadores.setBounds(28, 136, 131, 41);
 		pantallaConfiguracion.add(lblJugadores);
 		
-//		Font sizedFont3 = normalFont.deriveFont(18f);
+		Font sizedFont3 = normalFont.deriveFont(18f);
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(38, 179, 212, 94);
 		pantallaConfiguracion.add(scrollPane);
@@ -605,7 +605,7 @@ public class VistaGrafica implements Serializable,IVista{
 		scrollPane.setViewportView(textJugadores);
 		textJugadores.setForeground(Color.WHITE);
 		textJugadores.setBackground(Color.GRAY);
-//		textJugadores.setFont(sizedFont3);
+		textJugadores.setFont(sizedFont3);
 		textJugadores.setEditable(false);
 	
 
@@ -621,32 +621,32 @@ public class VistaGrafica implements Serializable,IVista{
 		pantallaEntrada.setBackground(Color.DARK_GRAY);
 		pantallaEntrada.setLayout(null);
 		
-	//	Font sizedFont = boldFont.deriveFont(40f);
+		Font sizedFont = boldFont.deriveFont(40f);
 		
 		JLabel lblEspionaje = new JLabel("ESPIONAJE");
 		lblEspionaje.setBounds(0, 0, 465, 55);
 		lblEspionaje.setForeground(Color.WHITE);
 		lblEspionaje.setHorizontalAlignment(SwingConstants.CENTER);
-//		lblEspionaje.setFont(sizedFont);
+		lblEspionaje.setFont(sizedFont);
 		pantallaEntrada.add(lblEspionaje);
 		this.setIcon("TITULO", lblEspionaje);
-	//	sizedFont = normalFont.deriveFont(18f);
+		sizedFont = normalFont.deriveFont(18f);
 		
 		lblNombrejugadorPSospecha = new JLabel("NombreJugador");
 		lblNombrejugadorPSospecha.setBounds(256, 56, 179, 34);
 		lblNombrejugadorPSospecha.setForeground(Color.WHITE);
-//		lblNombrejugadorPSospecha.setFont(sizedFont);
+		lblNombrejugadorPSospecha.setFont(sizedFont);
 		pantallaEntrada.add(lblNombrejugadorPSospecha);
 		
 		JLabel lblTipo = new JLabel("SOPECHA A");
 		lblTipo.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTipo.setBounds(20, 56, 210, 34);
 		lblTipo.setForeground(Color.WHITE);
-//		lblTipo.setFont(sizedFont);
+		lblTipo.setFont(sizedFont);
 		
 		pantallaEntrada.add(lblTipo);
 		
-//		sizedFont = normalFont.deriveFont(15f);
+		sizedFont = normalFont.deriveFont(15f);
 		
 		btnArriesgar = new JButton("ARRIESGAR");
 		btnArriesgar.addActionListener(new ActionListener(){
@@ -660,7 +660,7 @@ public class VistaGrafica implements Serializable,IVista{
 		});
 		btnArriesgar.setBounds(20, 260, 115, 23);
 		pantallaEntrada.add(btnArriesgar);
-//		btnArriesgar.setFont(sizedFont);
+		btnArriesgar.setFont(sizedFont);
 		
 		btnEnviar = new JButton("ENVIAR");
 		btnEnviar.addActionListener(new ActionListener() {
@@ -681,16 +681,16 @@ public class VistaGrafica implements Serializable,IVista{
 		});
 		btnEnviar.setForeground(Color.RED);
 		btnEnviar.setBounds(320, 260, 115, 23);
-//		btnEnviar.setFont(sizedFont);
+		btnEnviar.setFont(sizedFont);
 		pantallaEntrada.add(btnEnviar);
 		
 		s1 = new JComboBox();
-//		s1.setFont(sizedFont);
+		s1.setFont(sizedFont);
 		s1.setBounds(293, 169, 144, 23);
 		pantallaEntrada.add(s1);
 		
 		s2 = new JComboBox();
-//		s2.setFont(sizedFont);
+		s2.setFont(sizedFont);
 		s2.setBounds(293, 203, 144, 23);
 		pantallaEntrada.add(s2);
 		
@@ -698,13 +698,13 @@ public class VistaGrafica implements Serializable,IVista{
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setForeground(Color.ORANGE);
 		lblNewLabel.setBounds(293, 116, 144, 42);
-//		lblNewLabel.setFont(sizedFont);
+		lblNewLabel.setFont(sizedFont);
 		pantallaEntrada.add(lblNewLabel);
 		
 		JLabel lblAgendaPersonal = new JLabel("AGENDA PERSONAL");
 		lblAgendaPersonal.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAgendaPersonal.setForeground(Color.RED);
-//		lblAgendaPersonal.setFont(sizedFont);
+		lblAgendaPersonal.setFont(sizedFont);
 		lblAgendaPersonal.setBounds(51, 89, 179, 34);
 		pantallaEntrada.add(lblAgendaPersonal);
 		
@@ -716,7 +716,7 @@ public class VistaGrafica implements Serializable,IVista{
 						textArea.setForeground(Color.WHITE);
 						scrollPane.setViewportView(textArea);
 						textArea.setBackground(Color.GRAY);
-//						textArea.setFont(sizedFont);
+						textArea.setFont(sizedFont);
 		
 		return pantallaEntrada;
 	}
@@ -724,12 +724,12 @@ public class VistaGrafica implements Serializable,IVista{
 	// TODO CREAR RESPONDER (Enviar Respuesta)
 	private JPanel crearPantallaResponder() {
 		
-//		Font sizedFont = boldFont.deriveFont(40f);
+		Font sizedFont = boldFont.deriveFont(40f);
 		
 		this.pantallaResponder = new JPanel();
 		pantallaResponder.setBackground(Color.DARK_GRAY);
 		JLabel label = new JLabel("ESPIONAJE");
-	//	label.setFont(sizedFont);
+		label.setFont(sizedFont);
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setForeground(Color.WHITE);
 		label.setBounds(0, 11, 465, 55);
@@ -737,24 +737,24 @@ public class VistaGrafica implements Serializable,IVista{
 		pantallaResponder.add(label);
 		this.setIcon("TITULO", label);
 		
-//		sizedFont = normalFont.deriveFont(18f);
+		sizedFont = normalFont.deriveFont(18f);
 		
 		lblNombrejugadorPResponder = new JLabel("NombreJugador");
 		lblNombrejugadorPResponder.setForeground(Color.RED);
-//		lblNombrejugadorPResponder.setFont(sizedFont);
+		lblNombrejugadorPResponder.setFont(sizedFont);
 		lblNombrejugadorPResponder.setBackground(Color.DARK_GRAY);
 		lblNombrejugadorPResponder.setBounds(38, 89, 139, 25);
 		pantallaResponder.add(lblNombrejugadorPResponder);
 		
 		JLabel lblTexto = new JLabel("SOSPECHA:");
-//		lblTexto.setFont(sizedFont);
+		lblTexto.setFont(sizedFont);
 		lblTexto.setForeground(Color.WHITE);
 		lblTexto.setBackground(Color.DARK_GRAY);
 		lblTexto.setBounds(187, 89, 215, 25);
 		pantallaResponder.add(lblTexto);
 		
 		lblElemento1 = new JLabel("E1");
-//		this.lblElemento1.setFont(sizedFont);
+		this.lblElemento1.setFont(sizedFont);
 		lblElemento1.setForeground(Color.ORANGE);
 		lblElemento1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblElemento1.setBounds(24, 144, 173, 33);
@@ -762,7 +762,7 @@ public class VistaGrafica implements Serializable,IVista{
 		
 		lblElemento2 = new JLabel("Elemento2");
 		lblElemento2.setForeground(Color.ORANGE);
-//		this.lblElemento2.setFont(sizedFont);
+		this.lblElemento2.setFont(sizedFont);
 		lblElemento2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblElemento2.setBounds(249, 144, 173, 33);
 		pantallaResponder.add(lblElemento2);
@@ -773,12 +773,12 @@ public class VistaGrafica implements Serializable,IVista{
 		
 		lblSeleccionTuRespuesta = new JLabel("SELECCION\u00C1 TU RESPUESTA");
 		lblSeleccionTuRespuesta.setForeground(Color.WHITE);
-//		this.lblSeleccionTuRespuesta.setFont(sizedFont);
+		this.lblSeleccionTuRespuesta.setFont(sizedFont);
 		lblSeleccionTuRespuesta.setBounds(10, 202, 412, 33);
 		pantallaResponder.add(lblSeleccionTuRespuesta);
 		
 		JButton btnOk = new JButton("OK");
-//		btnOk.setFont(sizedFont);
+		btnOk.setFont(sizedFont);
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -806,9 +806,9 @@ public class VistaGrafica implements Serializable,IVista{
 		pantallaArriesgar.setBackground(Color.DARK_GRAY);
 		pantallaArriesgar.setLayout(null);
 		
-//		Font sizedFontTitulo = boldFont.deriveFont(40f);
+		Font sizedFontTitulo = boldFont.deriveFont(40f);
 		JLabel label_1 = new JLabel("ESPIONAJE");
-	//	label_1.setFont(sizedFontTitulo);
+		label_1.setFont(sizedFontTitulo);
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
 		label_1.setForeground(Color.WHITE);
 		label_1.setBounds(0, 11, 465, 55);
@@ -818,43 +818,43 @@ public class VistaGrafica implements Serializable,IVista{
 
 		JLabel lblElegLasCartas = new JLabel("ELEG\u00CD LAS CARTAS DE TU ACUSACI\u00D3N:");
 		lblElegLasCartas.setForeground(Color.LIGHT_GRAY);
-//		lblElegLasCartas.setFont(normalFont.deriveFont(20f));
+		lblElegLasCartas.setFont(normalFont.deriveFont(20f));
 		lblElegLasCartas.setHorizontalAlignment(SwingConstants.CENTER);
 		lblElegLasCartas.setBounds(45, 77, 388, 36);
 		pantallaArriesgar.add(lblElegLasCartas);
 		
 		JLabel lblCiudad = new JLabel("CIUDAD:");
 		lblCiudad.setForeground(Color.LIGHT_GRAY);
-//		lblCiudad.setFont(normalFont.deriveFont(18f));
+		lblCiudad.setFont(normalFont.deriveFont(18f));
 		lblCiudad.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCiudad.setBounds(45, 124, 169, 34);
 		pantallaArriesgar.add(lblCiudad);
 		
 		cbCiudad = new JComboBox();
-//		cbCiudad.setFont(normalFont.deriveFont(18f));
+		cbCiudad.setFont(normalFont.deriveFont(18f));
 		cbCiudad.setBounds(224, 124, 156, 27);
 		pantallaArriesgar.add(cbCiudad);
 		
 		cbAgente = new JComboBox();
-//		cbAgente.setFont(normalFont.deriveFont(18f));
+		cbAgente.setFont(normalFont.deriveFont(18f));
 		cbAgente.setBounds(224, 153, 156, 27);
 		pantallaArriesgar.add(cbAgente);
 		
 		cbDispositivo = new JComboBox();
-//		cbDispositivo.setFont(normalFont.deriveFont(18f));
+		cbDispositivo.setFont(normalFont.deriveFont(18f));
 		cbDispositivo.setBounds(224, 184, 156, 27);
 		pantallaArriesgar.add(cbDispositivo);
 		
 		JLabel lblAgente = new JLabel("AGENTE:");
 		lblAgente.setForeground(Color.LIGHT_GRAY);
-//		lblAgente.setFont(normalFont.deriveFont(18f));
+		lblAgente.setFont(normalFont.deriveFont(18f));
 		lblAgente.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAgente.setBounds(45, 149, 169, 34);
 		pantallaArriesgar.add(lblAgente);
 		
 		JLabel lblDispositivo = new JLabel("DISPOSITIVO:");
 		lblDispositivo.setForeground(new Color(192, 192, 192));
-//		lblDispositivo.setFont(normalFont.deriveFont(18f));
+		lblDispositivo.setFont(normalFont.deriveFont(18f));
 		lblDispositivo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDispositivo.setBounds(45, 180, 169, 34);
 		pantallaArriesgar.add(lblDispositivo);
@@ -879,21 +879,21 @@ public class VistaGrafica implements Serializable,IVista{
 		pantallaGanador.setBackground(Color.DARK_GRAY);
 		pantallaGanador.setLayout(null);
 		
-//		Font sizedFontTitulo = boldFont.deriveFont(40f);
+		Font sizedFontTitulo = boldFont.deriveFont(40f);
 		
 		JLabel label_2 = new JLabel("ESPIONAJE");
-	//	label_2.setFont(boldFont.deriveFont(40f));
+		label_2.setFont(boldFont.deriveFont(40f));
 		label_2.setHorizontalAlignment(SwingConstants.CENTER);
 		label_2.setForeground(Color.WHITE);
-//		label_2.setFont(sizedFontTitulo);
+		label_2.setFont(sizedFontTitulo);
 		label_2.setBounds(0, 11, 465, 55);
 		pantallaGanador.add(label_2);
 		
 		this.setIcon("TITULO", label_2);
 
-//		Font sizedFont = normalFont.deriveFont(20f);
+		Font sizedFont = normalFont.deriveFont(20f);
 		
-//		Font sizedFontBotones = normalFont.deriveFont(13f);
+		Font sizedFontBotones = normalFont.deriveFont(13f);
 		JButton btnSalir = new JButton("SALIR");
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -903,7 +903,7 @@ public class VistaGrafica implements Serializable,IVista{
 				System.exit(0);
 			}
 		});
-//		btnSalir.setFont(sizedFontBotones);
+		btnSalir.setFont(sizedFontBotones);
 		btnSalir.setBounds(370, 271, 85, 29);
 		pantallaGanador.add(btnSalir);
 		
@@ -914,7 +914,7 @@ public class VistaGrafica implements Serializable,IVista{
 				controlador.reiniciar();
 			}
 		});
-//		btnVolverAJugar.setFont(sizedFontBotones);
+		btnVolverAJugar.setFont(sizedFontBotones);
 		btnVolverAJugar.setBounds(231, 271, 129, 29);
 		pantallaGanador.add(btnVolverAJugar);
 		
@@ -934,26 +934,26 @@ public class VistaGrafica implements Serializable,IVista{
 				panel.add(lblMensaje);
 				lblMensaje.setHorizontalAlignment(SwingConstants.CENTER);
 				lblMensaje.setForeground(Color.RED);
-//				lblMensaje.setFont(sizedFont);
+				lblMensaje.setFont(sizedFont);
 				
 				JLabel lblInformacinSecreta = new JLabel("INFORMACI\u00D3N SECRETA");
-//				lblInformacinSecreta.setFont(sizedFont);
+				lblInformacinSecreta.setFont(sizedFont);
 				lblInformacinSecreta.setForeground(Color.ORANGE);
 				lblInformacinSecreta.setBounds(147, 60, 211, 28);
 				panel.add(lblInformacinSecreta);
 				
 				lblCartaciudad = new JLabel("CartaCiudad");
-//				lblCartaciudad.setFont(sizedFont);
+				lblCartaciudad.setFont(sizedFont);
 				lblCartaciudad.setBounds(153, 90, 205, 28);
 				panel.add(lblCartaciudad);
 				
 				lblCartadisp = new JLabel("CartaDisp");
-//				lblCartadisp.setFont(sizedFont);
+				lblCartadisp.setFont(sizedFont);
 				lblCartadisp.setBounds(153, 120, 205, 28);
 				panel.add(lblCartadisp);
 				
 				lblCartaagente = new JLabel("CartaAgente");
-//				lblCartaagente.setFont(sizedFont);
+				lblCartaagente.setFont(sizedFont);
 				lblCartaagente.setBounds(153, 154, 205, 28);
 				panel.add(lblCartaagente);
 		
@@ -969,13 +969,13 @@ public class VistaGrafica implements Serializable,IVista{
 		pantallaTurno.setBackground(Color.DARK_GRAY);
 		pantallaTurno.setLayout(null);
 		
-//		Font sizedFontTitulo = boldFont.deriveFont(48f);
-//		Font sizedFont= normalFont.deriveFont(24f);
+		Font sizedFontTitulo = boldFont.deriveFont(48f);
+		Font sizedFont= normalFont.deriveFont(24f);
 		
 		JLabel label = new JLabel("ESPIONAJE");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setForeground(Color.WHITE);
-//		label.setFont(sizedFontTitulo);
+		label.setFont(sizedFontTitulo);
 		label.setBounds(0, 11, 465, 55);
 		pantallaTurno.add(label);
 		this.setIcon("TITULO", label);
@@ -983,20 +983,20 @@ public class VistaGrafica implements Serializable,IVista{
 		 lblTURNOText = new JLabel("TEXT");
 		 lblTURNOText.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTURNOText.setForeground(Color.WHITE);
-//		lblTURNOText.setFont(sizedFont);
+		lblTURNOText.setFont(sizedFont);
 		lblTURNOText.setBounds(10, 149, 445, 41);
 		pantallaTurno.add(lblTURNOText);
 		
 		lblTURNOJugador = new JLabel("Jugador");
 		lblTURNOJugador.setHorizontalAlignment(SwingConstants.CENTER);
-//		lblTURNOJugador.setFont(sizedFont);
+		lblTURNOJugador.setFont(sizedFont);
 		lblTURNOJugador.setForeground(Color.ORANGE);
 		lblTURNOJugador.setBounds(100, 91, 273, 35);
 		pantallaTurno.add(lblTURNOJugador);
 		
 		lblTURNOSospechado = new JLabel("Jugador");
 		lblTURNOSospechado.setHorizontalAlignment(SwingConstants.CENTER);
-//		lblTURNOSospechado.setFont(sizedFont);
+		lblTURNOSospechado.setFont(sizedFont);
 		lblTURNOSospechado.setForeground(Color.RED);
 		lblTURNOSospechado.setBounds(113, 202, 260, 41);
 		pantallaTurno.add(lblTURNOSospechado);
@@ -1005,7 +1005,7 @@ public class VistaGrafica implements Serializable,IVista{
 		lblnro.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblnro.setForeground(Color.LIGHT_GRAY);
 		lblnro.setBounds(20, 77, 195, 179);
-//		lblnro.setFont(sizedFont);
+		lblnro.setFont(sizedFont);
 	
 		pantallaTurno.add(lblnro);
 		return pantallaTurno;
@@ -1016,11 +1016,11 @@ public class VistaGrafica implements Serializable,IVista{
 		JPanel panelText = new JPanel();
 		panelText.setBackground(Color.DARK_GRAY);
 		panelText.setLayout(null);
-//		Font sFont = boldFont.deriveFont(32f); 
+		Font sFont = boldFont.deriveFont(32f); 
 		JLabel label = new JLabel("ESPIONAJE");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setForeground(Color.WHITE);
-//		label.setFont(sFont);
+		label.setFont(sFont);
 		this.setIcon("ESPIA", label);
 		label.setBounds(0, 11, 465, 55);
 		panelText.add(label);
@@ -1029,15 +1029,15 @@ public class VistaGrafica implements Serializable,IVista{
 		scrollPane.setBounds(49, 77, 368, 165);
 		panelText.add(scrollPane);
 		
-//		sFont = normalFont.deriveFont(14f);
+		sFont = normalFont.deriveFont(14f);
 		
 		text = new JTextArea();
 		text.setBackground(Color.LIGHT_GRAY);
-//		text.setFont(sFont);
+		text.setFont(sFont);
 		text.setEditable(false);
 		scrollPane.setViewportView(text);
 		
-//		Font = normalFont.deriveFont(15f);
+		sFont = normalFont.deriveFont(15f);
 		JButton btnVolver_1 = new JButton("VOLVER");
 		btnVolver_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -1045,13 +1045,13 @@ public class VistaGrafica implements Serializable,IVista{
 				text.setText("");
 			}
 		});
-//		btnVolver_1.setFont(sFont);
+		btnVolver_1.setFont(sFont);
 		btnVolver_1.setBounds(356, 266, 99, 34);
 		panelText.add(btnVolver_1);
 		
 		if(s.equals(AYUDA)) {
-//			sFont = normalFont.deriveFont(10f);
-//			text.setFont(sFont);
+			sFont = normalFont.deriveFont(10f);
+			text.setFont(sFont);
 			text.append("                               |  REGLAS DE JUEGO  |\r\n" + 
 					"\r\n" +"2 a 4 JUGADORES +10 AÑOS\r\n" + "____________________________________________________________________\r\n" + 
 					"\r\n" + "OBJETIVO\r\n" + 
@@ -1100,27 +1100,27 @@ public class VistaGrafica implements Serializable,IVista{
 		JLabel label = new JLabel("ESPIONAJE");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setForeground(Color.WHITE);
-//		label.setFont(normalFont.deriveFont(40f));
+		label.setFont(normalFont.deriveFont(40f));
 		label.setBounds(0, 11, 465, 55);
 		pantallaMostrar.add(label);
 		this.setIcon("TITULO", label);
 		
 		lblNombrejugadorPRespuesta = new JLabel("JUGADOR");
-//		lblNombrejugadorPRespuesta.setFont(normalFont.deriveFont(24f));
+		lblNombrejugadorPRespuesta.setFont(normalFont.deriveFont(24f));
 		lblNombrejugadorPRespuesta.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombrejugadorPRespuesta.setForeground(Color.RED);
 		lblNombrejugadorPRespuesta.setBounds(10, 113, 194, 36);
 		pantallaMostrar.add(lblNombrejugadorPRespuesta);
 		
 		lblResponde = new JLabel("RESPONDE:");
-//		lblResponde.setFont(normalFont.deriveFont(24f));
+		lblResponde.setFont(normalFont.deriveFont(24f));
 		lblResponde.setForeground(Color.WHITE);
 		lblResponde.setBounds(214, 113, 206, 36);
 		pantallaMostrar.add(lblResponde);
 		
 		
 		JButton btnOk = new JButton("OK");
-//		btnOk.setFont(normalFont.deriveFont(18f));
+		btnOk.setFont(normalFont.deriveFont(18f));
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					controlador.paso();
@@ -1131,7 +1131,7 @@ public class VistaGrafica implements Serializable,IVista{
 		pantallaMostrar.add(btnOk);
 		
 		lblCarta = new JLabel("CARTA");
-//		lblCarta.setFont(normalFont.deriveFont(24f));
+		lblCarta.setFont(normalFont.deriveFont(24f));
 		lblCarta.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCarta.setForeground(Color.ORANGE);
 		lblCarta.setBounds(121, 160, 206, 36);
@@ -1155,5 +1155,15 @@ public class VistaGrafica implements Serializable,IVista{
 		// TODO Auto-generated method stub
 		
 	}
+
+
+
+	@Override
+	public void mostrarMenuFinPartida() {
+		// TODO Auto-generated method stub
+		
+	}
 		
 }
+
+

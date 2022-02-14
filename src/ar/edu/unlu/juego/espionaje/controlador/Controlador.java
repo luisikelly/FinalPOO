@@ -51,7 +51,7 @@ public class Controlador implements IControladorRemoto {
 	public void actualizar(IObservableRemoto arg0, Object arg1) throws RemoteException {
 		if(arg1 instanceof CambiosJuego) {
 			CambiosJuego cambio = (CambiosJuego) arg1;
-			System.out.println("* "+juego.getEstado());
+			//System.out.println("* "+juego.getEstado());
 			switch(cambio) {
 			case CAMBIO_JUGADOR:
 				System.out.println("***");
@@ -83,7 +83,7 @@ public class Controlador implements IControladorRemoto {
 					ESTADOS e = juego.getEstado();
 					String estado = juego.getEstado().name();
 					if(e == ESTADOS.EN_JUEGO) {
-						System.out.println("* "+juego.getEstadoEnJuego());
+						//System.out.println("* "+juego.getEstadoEnJuego());
 							switch(juego.getEstadoEnJuego().name()) {
 								case ARRIESGA: vista.mostrarArriesgar();
 								break;
@@ -101,9 +101,11 @@ public class Controlador implements IControladorRemoto {
 					}
 					else if (e == ESTADOS.REINICIAR) {
 						juego.reiniciar(this.nroJugador);
+						vista.mostrarConfiguracion();
 					}
 					 else if (e == ESTADOS.FINALIZADO) {
 						 System.out.println("------------ JUEGO FINALIZADO ------------");
+						 vista.mostrarMenuFinPartida();
 					 }else if(e== ESTADOS.INICIAR) {
 						 juego.iniciarJuego();
 					 }

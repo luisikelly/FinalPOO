@@ -42,6 +42,8 @@ public interface IVista {
 	void notificarSalio();
 
 	void inicio();
+	
+	void mostrarMenuFinPartida();
 
 
 
