@@ -427,7 +427,7 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 	
 
 	
-	// TODO PERSISTENCIA OBJETO JUGADOR -- REGISTRO DE GANADORES --
+// TODO PERSISTENCIA OBJETO JUGADOR -- REGISTRO DE GANADORES --
 	private ArrayList<IJugador> getHistorialGanadores() { // RECUPERO GANADORES
 
 		File ganadores = new File("historialGanadores.txt");
@@ -510,21 +510,11 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 		 }
 		
 	}
-
+	
+	
 	@Override
 	public void salir(int nroJugador) throws RemoteException {
-		/*if(! this.jugadores.isEmpty()) {
-			salioJug = new Jugador(jugadores.get(nroJugador).getNombre());
-			salioJug.setNroJugador(nroJugador);
-			//this.jugadores.get(nroJugador);
-			this.estado = ESTADOS.SALIO;
-			notificar(CambiosJuego.JUGADOR_SALIO);
-			if(jugadores.size() == 1) {
-				estado = ESTADOS.CONFIGURANDO;
-			}	
-		}
-		notificar(CambiosJuego.CAMBIO_ESTADO);
-	*/}
+	}
 
 	@Override
 	public void estadoReinicio() throws RemoteException {
@@ -534,11 +524,7 @@ public class Juego extends ObservableRemoto implements IJuego,Serializable {
 	}
 
 
-	/*@Override
-	public Jugador getSalio() {
-		return this.salioJug;
-	} */
-		
+	
 	
 	
 	
