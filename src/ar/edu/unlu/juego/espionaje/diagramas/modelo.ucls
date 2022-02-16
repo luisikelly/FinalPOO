@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class-diagram version="1.2.4" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
-  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+<class-diagram version="1.2.4" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <enumeration id="1" language="java" name="ar.edu.unlu.juego.espionaje.modelo.AGENTES" project="EspionajeFinal" 
     file="/EspionajeFinal/src/ar/edu/unlu/juego/espionaje/modelo/AGENTES.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="171" width="176" x="-11" y="-56"/>    
+    <position height="171" width="176" x="19" y="29"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -12,43 +12,43 @@
   </enumeration>  
   <enumeration id="2" language="java" name="ar.edu.unlu.juego.espionaje.modelo.CambiosJuego" project="EspionajeFinal" 
     file="/EspionajeFinal/src/ar/edu/unlu/juego/espionaje/modelo/CambiosJuego.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="171" width="245" x="187" y="-45"/>    
+    <position height="-1" width="-1" x="324" y="94"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <class id="3" language="java" name="ar.edu.unlu.juego.espionaje.modelo.Carta" project="EspionajeFinal" 
-    file="/EspionajeFinal/src/ar/edu/unlu/juego/espionaje/modelo/Carta.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="101" y="725"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <enumeration id="4" language="java" name="ar.edu.unlu.juego.espionaje.modelo.CIUDADES" project="EspionajeFinal" 
+  <enumeration id="3" language="java" name="ar.edu.unlu.juego.espionaje.modelo.CIUDADES" project="EspionajeFinal" 
     file="/EspionajeFinal/src/ar/edu/unlu/juego/espionaje/modelo/CIUDADES.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="171" width="156" x="767" y="-28"/>    
+    <position height="-1" width="-1" x="544" y="115"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <enumeration id="5" language="java" name="ar.edu.unlu.juego.espionaje.modelo.DISPOSITIVOS" project="EspionajeFinal" 
+  <enumeration id="4" language="java" name="ar.edu.unlu.juego.espionaje.modelo.DISPOSITIVOS" project="EspionajeFinal" 
     file="/EspionajeFinal/src/ar/edu/unlu/juego/espionaje/modelo/DISPOSITIVOS.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="632" y="43"/>    
+    <position height="-1" width="-1" x="736" y="114"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
+  <interface id="5" language="java" name="ar.edu.unlu.juego.espionaje.modelo.IJuego" project="EspionajeFinal" 
+    file="/EspionajeFinal/src/ar/edu/unlu/juego/espionaje/modelo/IJuego.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="150" y="552"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
   <class id="6" language="java" name="ar.edu.unlu.juego.espionaje.modelo.Juego" project="EspionajeFinal" 
     file="/EspionajeFinal/src/ar/edu/unlu/juego/espionaje/modelo/Juego.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="445" y="607"/>    
+    <position height="-1" width="-1" x="493" y="740"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -58,25 +58,25 @@
   <enumeration id="7" language="java" name="ar.edu.unlu.juego.espionaje.modelo.Juego.E_EN_JUEGO" 
     project="EspionajeFinal" file="/EspionajeFinal/src/ar/edu/unlu/juego/espionaje/modelo/Juego.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="191" y="269"/>    
+    <position height="-1" width="-1" x="429" y="1383"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <interface id="8" language="java" name="ar.edu.unlu.juego.espionaje.modelo.IJuego" project="EspionajeFinal" 
-    file="/EspionajeFinal/src/ar/edu/unlu/juego/espionaje/modelo/IJuego.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="786" y="430"/>    
+  <class id="8" language="java" name="ar.edu.unlu.juego.espionaje.modelo.Carta" project="EspionajeFinal" 
+    file="/EspionajeFinal/src/ar/edu/unlu/juego/espionaje/modelo/Carta.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="828" y="435"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
-  </interface>  
+  </class>  
   <interface id="9" language="java" name="ar.edu.unlu.juego.espionaje.modelo.IJugador" project="EspionajeFinal" 
     file="/EspionajeFinal/src/ar/edu/unlu/juego/espionaje/modelo/IJugador.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="788" y="808"/>    
+    <position height="-1" width="-1" x="795" y="1052"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -85,7 +85,7 @@
   </interface>  
   <class id="10" language="java" name="ar.edu.unlu.juego.espionaje.modelo.Jugador" project="EspionajeFinal" 
     file="/EspionajeFinal/src/ar/edu/unlu/juego/espionaje/modelo/Jugador.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="798" y="1112"/>    
+    <position height="-1" width="-1" x="1138" y="969"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -94,81 +94,79 @@
   </class>  
   <class id="11" language="java" name="ar.edu.unlu.juego.espionaje.modelo.Mazo" project="EspionajeFinal" 
     file="/EspionajeFinal/src/ar/edu/unlu/juego/espionaje/modelo/Mazo.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="295" y="1195"/>    
+    <position height="-1" width="-1" x="1109" y="581"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <enumeration id="12" language="java" name="ar.edu.unlu.juego.espionaje.modelo.ESTADOS" project="EspionajeFinal" 
-    file="/EspionajeFinal/src/ar/edu/unlu/juego/espionaje/modelo/ESTADOS.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="135" width="162" x="38" y="378"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </enumeration>  
-  <realization id="13">    
+  <realization id="12">    
     <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="8"/>  
+    <end type="TARGET" refId="5"/>  
   </realization>  
-  <association id="14">    
-    <end type="SOURCE" refId="11" navigable="false">      
-      <attribute id="15" name="mazo"/>      
-      <multiplicity id="16" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="17">    
+  <association id="13">    
     <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="18" name="jugadores"/>      
-      <multiplicity id="19" minimum="0" maximum="2147483647"/>    
+      <attribute id="14" name="salioJug"/>      
+      <multiplicity id="15" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="20">    
+  <realization id="16">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="9"/>  
+  </realization>  
+  <association id="17">    
     <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="21" name="ganador"/>      
-      <multiplicity id="22" minimum="0" maximum="1"/>    
+      <attribute id="18" name="ganador"/>      
+      <multiplicity id="19" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="9" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="23">    
+  <association id="20">    
     <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="24" name="estado"/>      
-      <multiplicity id="25" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="12" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="26">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="27" name="archivoConfidencial"/>      
-      <multiplicity id="28" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="29">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="30" name="eEJ"/>      
-      <multiplicity id="31" minimum="0" maximum="1"/>    
+      <attribute id="21" name="eEJ"/>      
+      <multiplicity id="22" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="32">    
-    <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="9"/>  
-  </realization>  
-  <association id="33">    
+  <association id="23">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="24" name="archivoConfidencial"/>      
+      <multiplicity id="25" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="26">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="27" name="mazo"/>      
+      <multiplicity id="28" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="29">    
     <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="34" name="cartasSecretas"/>      
+      <attribute id="30" name="cartasSecretas"/>      
+      <multiplicity id="31" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="32">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="7"/>  
+  </nesting>  
+  <association id="33">    
+    <bendpoint x="955" y="737"/>    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="34" name="agendaPersonal">        
+        <position height="18" width="86" x="968" y="726"/>      
+      </attribute>      
       <multiplicity id="35" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="11" navigable="true"/>    
@@ -179,21 +177,18 @@
       <attribute id="37" name="infoSecreta"/>      
       <multiplicity id="38" minimum="0" maximum="2147483647"/>    
     </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
+    <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="39">    
-    <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="40" name="agendaPersonal"/>      
-      <multiplicity id="41" minimum="0" maximum="1"/>    
+    <bendpoint x="812" y="748"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="40" name="jugadores"/>      
+      <multiplicity id="41" minimum="0" maximum="2147483647"/>    
     </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
+    <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <nesting id="42">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="7"/>  
-  </nesting>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    
