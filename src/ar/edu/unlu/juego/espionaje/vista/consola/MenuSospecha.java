@@ -45,7 +45,7 @@ public class MenuSospecha extends Menu{
 					this.mostrarMenu();
 					break;
 				case "2" : 
-					this.mostrarAP();
+					this.mostrarAC();
 					this.mostrarMenu();
 					break;
 				case "3" : this.mostrarMenuSospecha();
